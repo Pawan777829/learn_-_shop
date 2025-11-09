@@ -74,34 +74,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Items Carousel */}
-      <section className="py-12 md:py-20 bg-background">
-        <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold font-headline tracking-tight text-center mb-10">Featured Products & Courses</h2>
-            <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              className="w-full"
-            >
-              <CarouselContent>
-                {featuredItems.map((item) => (
-                  <CarouselItem key={item.id} className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-                    <div className="p-1 h-full">
-                      <ItemCard item={item} />
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="hidden sm:flex"/>
-              <CarouselNext className="hidden sm:flex"/>
-            </Carousel>
-        </div>
-      </section>
-
       {/* Why Choose Us Section */}
-      <section className="py-12 md:py-20 bg-card border-y">
+      <section className="py-12 md:py-20 bg-card border-b">
         <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-bold font-headline mb-12">What We Stand For</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-5xl mx-auto">
@@ -133,6 +107,32 @@ export default function Home() {
                 </p>
                 </div>
             </div>
+        </div>
+      </section>
+
+      {/* Featured Items Carousel */}
+      <section className="py-12 md:py-20 bg-background">
+        <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold font-headline tracking-tight text-center mb-10">Featured Products & Courses</h2>
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent>
+                {featuredItems.map((item) => (
+                  <CarouselItem key={item.id} className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+                    <div className="p-1 h-full">
+                      <ItemCard item={item} />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden sm:flex"/>
+              <CarouselNext className="hidden sm:flex"/>
+            </Carousel>
         </div>
       </section>
 
