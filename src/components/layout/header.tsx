@@ -16,11 +16,14 @@ import { useUser, useAuth } from '@/firebase';
 import { signOut } from 'firebase/auth';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useRouter } from 'next/navigation';
+import { useCart } from '@/context/cart-context';
+import { Badge } from '@/components/ui/badge';
 
 export default function Header() {
   const { user, isUserLoading } = useUser();
   const auth = useAuth();
   const router = useRouter();
+  const { cartItems } = useCart();
 
   const handleLogout = async () => {
     try {
@@ -35,6 +38,8 @@ export default function Header() {
     if (!email) return 'U';
     return email.charAt(0).toUpperCase();
   };
+  
+  const cartItemCount = cartItems.reduce((count, item) => count + item.quantity, 0);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -77,7 +82,10 @@ export default function Header() {
           </div>
           <nav className="flex items-center">
             <Link href="/cart">
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" className="relative">
+                {cartItemCount > 0 && (
+                  <Badge className="absolute -top-2 -right-2 h-5 w-5 justify-center p-0">{cartItemCount}</Badge>
+                )}
                 <ShoppingCart className="h-5 w-5" />
                 <span className="sr-only">Shopping Cart</span>
               </Button>

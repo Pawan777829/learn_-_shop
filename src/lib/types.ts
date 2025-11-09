@@ -10,6 +10,10 @@ export type Item = {
   stock?: number;
 };
 
+export type CartItem = Item & {
+  quantity: number;
+};
+
 export type Order = {
   id: string;
   userId: string;

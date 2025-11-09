@@ -1,3 +1,5 @@
+'use client';
+
 import Image from "next/image";
 import type { Item } from "@/lib/types";
 import { getImageById } from "@/lib/placeholder-images";
@@ -12,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, Plus } from "lucide-react";
+import { useCart } from "@/context/cart-context";
 
 type ItemCardProps = {
   item: Item;
@@ -19,6 +22,11 @@ type ItemCardProps = {
 
 export default function ItemCard({ item }: ItemCardProps) {
   const placeholder = getImageById(item.imageId);
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    addToCart(item);
+  };
 
   return (
     <Card className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
@@ -54,7 +62,7 @@ export default function ItemCard({ item }: ItemCardProps) {
             <span>{item.rating}</span>
           </div>
         </div>
-        <Button size="icon">
+        <Button size="icon" onClick={handleAddToCart}>
           <Plus className="h-5 w-5" />
           <span className="sr-only">
             {item.type === "course" ? "Enroll" : "Add to Cart"}

@@ -1,3 +1,5 @@
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -6,27 +8,12 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { getImageById } from "@/lib/placeholder-images";
 import { Minus, Plus, Trash2 } from "lucide-react";
-
-const cartItems = [
-    {
-        id: 'p2',
-        name: 'Ergo-Mechanical Keyboard',
-        price: 129.99,
-        quantity: 1,
-        imageId: 'prod2',
-    },
-    {
-        id: 'c1',
-        name: 'Full-Stack Web Development',
-        price: 499.0,
-        quantity: 1,
-        imageId: 'course1',
-    }
-];
+import { useCart } from "@/context/cart-context";
 
 export default function CartPage() {
+    const { cartItems, removeFromCart, updateQuantity } = useCart();
     const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-    const shipping = 15.00;
+    const shipping = subtotal > 0 ? 15.00 : 0;
     const total = subtotal + shipping;
 
     return (
@@ -36,38 +23,48 @@ export default function CartPage() {
                 <div className="lg:col-span-2">
                     <Card>
                         <CardContent className="p-6">
-                            <ul className="space-y-6">
-                                {cartItems.map((item) => {
-                                    const placeholder = getImageById(item.imageId);
-                                    return (
-                                    <li key={item.id} className="flex flex-col sm:flex-row gap-4">
-                                        {placeholder && <Image
-                                            src={placeholder.imageUrl}
-                                            alt={placeholder.description}
-                                            width={100}
-                                            height={100}
-                                            className="rounded-md object-cover"
-                                            data-ai-hint={placeholder.imageHint}
-                                        />}
-                                        <div className="flex-1 flex flex-col justify-between">
-                                            <div>
-                                                <h3 className="font-semibold">{item.name}</h3>
-                                                <p className="text-lg font-medium text-primary">${item.price.toFixed(2)}</p>
-                                            </div>
-                                            <div className="flex items-center justify-between mt-2">
-                                                <div className="flex items-center gap-2 border rounded-md p-1">
-                                                    <Button variant="ghost" size="icon" className="h-6 w-6"><Minus className="h-3 w-3"/></Button>
-                                                    <span className="w-8 text-center">{item.quantity}</span>
-                                                    <Button variant="ghost" size="icon" className="h-6 w-6"><Plus className="h-3 w-3"/></Button>
+                            {cartItems.length === 0 ? (
+                                <div className="text-center py-12">
+                                    <h2 className="text-2xl font-semibold">Your cart is empty</h2>
+                                    <p className="text-muted-foreground mt-2">Looks like you haven't added anything to your cart yet.</p>
+                                    <Button asChild className="mt-6">
+                                        <Link href="/">Continue Shopping</Link>
+                                    </Button>
+                                </div>
+                            ) : (
+                                <ul className="space-y-6">
+                                    {cartItems.map((item) => {
+                                        const placeholder = getImageById(item.imageId);
+                                        return (
+                                        <li key={item.id} className="flex flex-col sm:flex-row gap-4">
+                                            {placeholder && <Image
+                                                src={placeholder.imageUrl}
+                                                alt={placeholder.description}
+                                                width={100}
+                                                height={100}
+                                                className="rounded-md object-cover"
+                                                data-ai-hint={placeholder.imageHint}
+                                            />}
+                                            <div className="flex-1 flex flex-col justify-between">
+                                                <div>
+                                                    <h3 className="font-semibold">{item.name}</h3>
+                                                    <p className="text-lg font-medium text-primary">${item.price.toFixed(2)}</p>
                                                 </div>
-                                                <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive">
-                                                    <Trash2 className="h-5 w-5"/>
-                                                </Button>
+                                                <div className="flex items-center justify-between mt-2">
+                                                    <div className="flex items-center gap-2 border rounded-md p-1">
+                                                        <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => updateQuantity(item.id, item.quantity - 1)} disabled={item.quantity <= 1}><Minus className="h-3 w-3"/></Button>
+                                                        <span className="w-8 text-center">{item.quantity}</span>
+                                                        <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => updateQuantity(item.id, item.quantity + 1)}><Plus className="h-3 w-3"/></Button>
+                                                    </div>
+                                                    <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive" onClick={() => removeFromCart(item.id)}>
+                                                        <Trash2 className="h-5 w-5"/>
+                                                    </Button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </li>
-                                )})}
-                            </ul>
+                                        </li>
+                                    )})}
+                                </ul>
+                            )}
                         </CardContent>
                     </Card>
                 </div>
@@ -95,7 +92,7 @@ export default function CartPage() {
                                 <Button variant="outline" className="w-full">Apply Coupon</Button>
                             </div>
                             <Separator />
-                            <Button asChild size="lg" className="w-full">
+                            <Button asChild size="lg" className="w-full" disabled={cartItems.length === 0}>
                                 <Link href="/checkout">Proceed to Checkout</Link>
                             </Button>
                         </CardContent>
