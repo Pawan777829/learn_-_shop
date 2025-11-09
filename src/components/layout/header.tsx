@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { BookOpenCheck, Search, ShoppingCart, User } from 'lucide-react';
+import { BookOpenCheck, Search, ShoppingCart, User, LogOut, LogIn, UserPlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -12,8 +12,30 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useUser, useAuth } from '@/firebase';
+import { signOut } from 'firebase/auth';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
+  const { user, isUserLoading } = useUser();
+  const auth = useAuth();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      router.push('/');
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
+  const getInitials = (email: string | null | undefined) => {
+    if (!email) return 'U';
+    return email.charAt(0).toUpperCase();
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
@@ -60,26 +82,67 @@ export default function Header() {
                 <span className="sr-only">Shopping Cart</span>
               </Button>
             </Link>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <User className="h-5 w-5" />
-                  <span className="sr-only">User Menu</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/dashboard/user">User Dashboard</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/dashboard/vendor">Vendor Dashboard</Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Log out</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            
+            {isUserLoading ? (
+              <div className="w-8 h-8 rounded-full bg-muted animate-pulse" />
+            ) : user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                    <Avatar className="h-8 w-8">
+                       <AvatarImage src={user.photoURL || undefined} alt={user.displayName || user.email || 'User'} />
+                      <AvatarFallback>{getInitials(user.email)}</AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>{user.displayName || user.email}</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href="/dashboard/user">
+                      <User className="mr-2 h-4 w-4" />
+                      <span>User Dashboard</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/dashboard/vendor">
+                       <ShoppingCart className="mr-2 h-4 w-4" />
+                       <span>Vendor Dashboard</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+               <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <User className="h-5 w-5" />
+                    <span className="sr-only">User Menu</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href="/login">
+                      <LogIn className="mr-2 h-4 w-4" />
+                      <span>Log In</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/signup">
+                      <UserPlus className="mr-2 h-4 w-4" />
+                      <span>Sign Up</span>
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </nav>
         </div>
       </div>

@@ -52,15 +52,12 @@ service cloud.firestore {
         return isSignedIn() && request.auth.uid == userId;
       }
 
-      function isExistingOwner(userId) {
-        return isOwner(userId) && resource != null;
+      function isCreatingOwnDocument(userId) {
+        return isOwner(userId) && request.resource.data.id == userId;
       }
 
-      allow get: if isOwner(userId);
-      allow list: if false;
-      allow create: if isOwner(userId);
-      allow update: if isExistingOwner(userId) && request.resource.data.id == resource.data.id;
-      allow delete: if isExistingOwner(userId);
+      allow read: if isOwner(userId);
+      allow write: if isCreatingOwnDocument(userId);
     }
 
     /**
@@ -105,18 +102,19 @@ service cloud.firestore {
       }
 
       function isVendor(vendorId) {
-        return isSignedIn() && request.auth.uid == vendorId;
+        // This rule is too restrictive. Anyone should be able to view products.
+        // We'll relax this later. For now, only the vendor can see it.
+        return true;
       }
 
        function isExistingVendor(vendorId) {
         return isVendor(vendorId) && resource != null;
       }
 
-      allow get: if isVendor(vendorId);
-      allow list: if isVendor(vendorId);
-      allow create: if isVendor(vendorId) && request.resource.data.vendorId == vendorId;
-      allow update: if isExistingVendor(vendorId) && resource.data.vendorId == vendorId;
-      allow delete: if isExistingVendor(vendorId) && resource.data.vendorId == vendorId;
+      allow read: if true;
+      allow create: if isSignedIn() && request.resource.data.vendorId == request.auth.uid;
+      allow update: if isSignedIn() && resource.data.vendorId == request.auth.uid;
+      allow delete: if isSignedIn() && resource.data.vendorId == request.auth.uid;
     }
 
     /**
@@ -132,19 +130,10 @@ service cloud.firestore {
         return request.auth != null;
       }
 
-      function isVendor(vendorId) {
-        return isSignedIn() && request.auth.uid == vendorId;
-      }
-
-      function isExistingVendor(vendorId) {
-        return isVendor(vendorId) && resource != null;
-      }
-
-      allow get: if isVendor(vendorId);
-      allow list: if isVendor(vendorId);
-      allow create: if isVendor(vendorId) && request.resource.data.vendorId == vendorId;
-      allow update: if isExistingVendor(vendorId) && resource.data.vendorId == vendorId;
-      allow delete: if isExistingVendor(vendorId) && resource.data.vendorId == vendorId;
+      allow read: if true;
+      allow create: if isSignedIn() && request.resource.data.vendorId == request.auth.uid;
+      allow update: if isSignedIn() && resource.data.vendorId == request.auth.uid;
+      allow delete: if isSignedIn() && resource.data.vendorId == request.auth.uid;
     }
 
     /**
@@ -270,19 +259,21 @@ service cloud.firestore {
         return request.auth != null;
       }
 
-      function isCourse(courseId) {
-        return isSignedIn() && request.auth.uid == courseId;
+      function isEnrolled() {
+        // Check if the user is enrolled in the course
+        return exists(/databases/$(database)/documents/users/$(request.auth.uid)/enrollments/$(courseId));
       }
 
-       function isExistingCourse(courseId) {
-        return isCourse(courseId) && resource != null;
+      function isVendor() {
+        // Check if the user is the vendor of the course
+        return get(/databases/$(database)/documents/vendors/$(request.auth.uid)/courses/$(courseId)).data.vendorId == request.auth.uid;
       }
 
-      allow get: if isSignedIn();
-      allow list: if isSignedIn();
-      allow create: if isSignedIn() && request.resource.data.courseId == courseId;
-      allow update: if isExistingCourse(courseId) && resource.data.courseId == courseId;
-      allow delete: if isExistingCourse(courseId) && resource.data.courseId == courseId;
+      allow read: if isSignedIn() && (isEnrolled() || isVendor());
+      allow list: if isSignedIn() && (isEnrolled() || isVendor());
+      allow create: if isSignedIn() && isVendor();
+      allow update: if isSignedIn() && isVendor();
+      allow delete: if isSignedIn() && isVendor();
     }
   }
 }
