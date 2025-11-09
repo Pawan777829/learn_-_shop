@@ -30,13 +30,30 @@ export type CartItem = Item & {
   quantity: number;
 };
 
+export type OrderItem = {
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+    type: 'product' | 'course';
+    category: ItemCategory;
+    vendor: string;
+    imageId: string;
+}
+
 export type Order = {
   id: string;
   userId: string;
   orderDate: string;
   totalAmount: number;
   status: 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
-  items: CartItem[];
+  shippingInfo: {
+    firstName: string;
+    lastName: string;
+    address: string;
+    city: string;
+    zip: string;
+  };
 };
 
 export type Enrollment = {

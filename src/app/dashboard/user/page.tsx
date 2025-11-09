@@ -8,6 +8,9 @@ import { collection, query, where, orderBy, limit } from 'firebase/firestore';
 import { useFirestore } from '@/firebase';
 import type { Order, Enrollment } from '@/lib/types';
 import UserCourses from '@/components/dashboard/user/user-courses';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
 
 export default function UserDashboardPage() {
   const { user } = useUser();
@@ -48,21 +51,28 @@ export default function UserDashboardPage() {
             {isLoadingOrders ? (
               <p>Loading orders...</p>
             ) : orders && orders.length > 0 ? (
-              <ul className="space-y-4">
+              <ul className="space-y-2">
                 {orders.map(order => (
-                  <li key={order.id} className="flex justify-between items-center">
-                    <div>
-                      <p className="font-medium">Order #{order.id.substring(0, 7)}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {new Date(order.orderDate).toLocaleDateString()}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-semibold">${order.totalAmount.toFixed(2)}</p>
-                      <Badge variant={order.status === 'Delivered' ? 'default' : 'secondary'}>
-                        {order.status}
-                      </Badge>
-                    </div>
+                  <li key={order.id}>
+                    <Link href={`/dashboard/user/orders/${order.id}`} className="block p-3 rounded-lg hover:bg-muted -m-3">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <p className="font-medium">Order #{order.id.substring(0, 7)}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {new Date(order.orderDate).toLocaleDateString()}
+                          </p>
+                        </div>
+                        <div className="text-right flex items-center gap-4">
+                          <div>
+                            <p className="font-semibold">${order.totalAmount.toFixed(2)}</p>
+                            <Badge variant={order.status === 'Delivered' ? 'default' : 'secondary'}>
+                              {order.status}
+                            </Badge>
+                          </div>
+                          <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                        </div>
+                      </div>
+                    </Link>
                   </li>
                 ))}
               </ul>

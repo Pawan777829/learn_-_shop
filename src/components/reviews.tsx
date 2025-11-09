@@ -16,7 +16,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useUser, useFirestore, useCollection, useMemoFirebase, addDocumentNonBlocking } from '@/firebase';
 import { collection, query, where, orderBy, getDocs, collectionGroup } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
-import type { Review, Order } from '@/lib/types';
+import type { Review, Order, OrderItem } from '@/lib/types';
 import ReviewCard from './review-card';
 import { Star, Loader2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -62,8 +62,9 @@ export default function Reviews({ itemId, itemType }: ReviewsProps) {
                 const ordersCollectionRef = collection(firestore, `users/${user.uid}/orders`);
                 const ordersSnapshot = await getDocs(ordersCollectionRef);
                 for (const orderDoc of ordersSnapshot.docs) {
-                    const order = orderDoc.data() as Order;
-                    if (order.items && order.items.some(item => item.id === itemId)) {
+                    const orderItemsRef = collection(orderDoc.ref, 'orderItems');
+                    const orderItemsSnapshot = await getDocs(query(orderItemsRef, where('id', '==', itemId)));
+                    if (!orderItemsSnapshot.empty) {
                         purchased = true;
                         break;
                     }
