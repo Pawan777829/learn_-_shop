@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Card,
   CardContent,
@@ -15,13 +17,53 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { allItems } from "@/lib/data";
-import { DollarSign, Package, BookOpen } from "lucide-react";
+import { useUser, useFirestore, useCollection, useMemoFirebase } from "@/firebase";
+import { collection } from "firebase/firestore";
+import type { Item } from "@/lib/types";
+import { DollarSign, Package, BookOpen, Loader2 } from "lucide-react";
 
 export default function VendorDashboardPage() {
-    const totalRevenue = allItems.reduce((acc, item) => acc + item.price, 0);
-    const totalListings = allItems.length;
-    const productCount = allItems.filter(item => item.type === 'product').length;
+  const { user } = useUser();
+  const firestore = useFirestore();
+
+  const productsQuery = useMemoFirebase(() => {
+    if (!user) return null;
+    return collection(firestore, 'vendors', user.uid, 'products');
+  }, [firestore, user]);
+
+  const coursesQuery = useMemoFirebase(() => {
+    if (!user) return null;
+    return collection(firestore, 'vendors', user.uid, 'courses');
+  }, [firestore, user]);
+
+  const { data: products, isLoading: isLoadingProducts } = useCollection<Item>(productsQuery);
+  const { data: courses, isLoading: isLoadingCourses } = useCollection<Item>(coursesQuery);
+
+  const isLoading = isLoadingProducts || isLoadingCourses;
+
+  const allListings = useMemoFirebase(() => {
+    const combined = [];
+    if (products) {
+      combined.push(...products.map(p => ({...p, type: 'product' as const})));
+    }
+    if (courses) {
+      combined.push(...courses.map(c => ({...c, type: 'course' as const})));
+    }
+    return combined;
+  }, [products, courses]);
+
+  const totalRevenue = allListings?.reduce((acc, item) => acc + (item.price || 0), 0) || 0;
+  const totalListings = allListings?.length || 0;
+  const productCount = products?.length || 0;
+  const courseCount = courses?.length || 0;
+  
+  if (!user) {
+    return (
+        <div className="flex items-center justify-center h-full">
+            <p>Please log in to view your vendor dashboard.</p>
+        </div>
+    )
+  }
 
   return (
     <div className="space-y-8">
@@ -40,7 +82,7 @@ export default function VendorDashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">${totalRevenue.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
-            <p className="text-xs text-muted-foreground">+20.1% from last month</p>
+            <p className="text-xs text-muted-foreground">+20.1% from last month (mock data)</p>
           </CardContent>
         </Card>
         <Card>
@@ -50,7 +92,7 @@ export default function VendorDashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{totalListings}</div>
-            <p className="text-xs text-muted-foreground">{productCount} products, {totalListings - productCount} courses</p>
+            <p className="text-xs text-muted-foreground">{productCount} products, {courseCount} courses</p>
           </CardContent>
         </Card>
         <Card>
@@ -60,7 +102,7 @@ export default function VendorDashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">+1,234</div>
-            <p className="text-xs text-muted-foreground">+19% from last month</p>
+            <p className="text-xs text-muted-foreground">+19% from last month (mock data)</p>
           </CardContent>
         </Card>
       </div>
@@ -76,33 +118,47 @@ export default function VendorDashboardPage() {
           <Button>Add New Listing</Button>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead>Stock</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {allItems.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className="font-medium">{item.name}</TableCell>
-                  <TableCell>
-                    <Badge variant={item.type === 'product' ? 'secondary' : 'default'}>{item.type}</Badge>
-                  </TableCell>
-                  <TableCell>${item.price.toFixed(2)}</TableCell>
-                  <TableCell>{item.stock ?? 'N/A'}</TableCell>
-                  <TableCell className="text-right">
-                    <Button variant="ghost" size="sm">Edit</Button>
-                    <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive">Delete</Button>
-                  </TableCell>
+           {isLoading ? (
+            <div className="flex justify-center items-center py-10">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+           ): (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Price</TableHead>
+                  <TableHead>Stock</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {allListings && allListings.length > 0 ? (
+                  allListings.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell className="font-medium">{item.name}</TableCell>
+                      <TableCell>
+                        <Badge variant={item.type === 'product' ? 'secondary' : 'default'}>{item.type}</Badge>
+                      </TableCell>
+                      <TableCell>${item.price.toFixed(2)}</TableCell>
+                      <TableCell>{item.stock ?? 'N/A'}</TableCell>
+                      <TableCell className="text-right">
+                        <Button variant="ghost" size="sm">Edit</Button>
+                        <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive">Delete</Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={5} className="text-center h-24">
+                      You haven't listed any items yet.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+           )}
         </CardContent>
       </Card>
     </div>
