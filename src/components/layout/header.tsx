@@ -41,6 +41,15 @@ export default function Header() {
   
   const cartItemCount = cartItems.reduce((count, item) => count + item.quantity, 0);
 
+  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const searchQuery = formData.get('search') as string;
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
@@ -53,10 +62,10 @@ export default function Header() {
           </Link>
           <nav className="flex items-center space-x-6 text-sm font-medium">
             <Link
-              href="/"
+              href="/search"
               className="transition-colors hover:text-foreground/80 text-foreground"
             >
-              Home
+              Explore
             </Link>
             <Link
               href="/dashboard"
@@ -69,10 +78,11 @@ export default function Header() {
         
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <div className="w-full flex-1 md:w-auto md:flex-none">
-            <form>
+            <form onSubmit={handleSearch}>
               <div className="relative">
                 <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
+                  name="search"
                   type="search"
                   placeholder="Search products & courses..."
                   className="pl-8 sm:w-64 md:w-80"
