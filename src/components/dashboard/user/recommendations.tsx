@@ -11,9 +11,21 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { getPersonalizedRecommendations } from '@/ai/flows/personalized-recommendations';
-import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
-import type { Order, Enrollment } from '@/lib/types';
-import { collection, query } from 'firebase/firestore';
+import { useUser, useFirestore, useCollection, useMemoFirebase, useDoc } from '@/firebase';
+import type { Order, Enrollment, OrderItem, Item } from '@/lib/types';
+import { collection, query, getDocs } from 'firebase/firestore';
+import { allItems } from '@/lib/data';
+
+async function fetchOrderItems(firestore: any, userId: string, orderId: string): Promise<string[]> {
+    const items: string[] = [];
+    const orderItemsRef = collection(firestore, 'users', userId, 'orders', orderId, 'orderItems');
+    const querySnapshot = await getDocs(orderItemsRef);
+    querySnapshot.forEach((doc) => {
+        const item = doc.data() as OrderItem;
+        items.push(item.name);
+    });
+    return items;
+}
 
 export default function Recommendations() {
   const [recommendations, setRecommendations] = useState('');
@@ -35,29 +47,48 @@ export default function Recommendations() {
   const { data: enrollments, isLoading: isLoadingEnrollments } = useCollection<Enrollment>(enrollmentsQuery);
 
   const userHistory = useMemo(() => {
-    if (isLoadingOrders || isLoadingEnrollments || !orders || !enrollments) {
-      return '';
-    }
+    const generateHistory = async () => {
+        if (isLoadingOrders || isLoadingEnrollments || !user) {
+            return '';
+        }
 
-    let history = '';
+        let history = '';
+        
+        if (orders && orders.length > 0) {
+            const allItemNames = [];
+            for (const order of orders) {
+                const itemNames = await fetchOrderItems(firestore, user.uid, order.id);
+                allItemNames.push(...itemNames);
+            }
+            if(allItemNames.length > 0){
+                history += `The user has previously purchased these products: ${allItemNames.join(', ')}. `;
+            }
+        } else {
+            history += 'The user has not purchased any products yet. ';
+        }
+        
+        if (enrollments && enrollments.length > 0) {
+            const courseNames = enrollments.map(enrollment => {
+                const course = allItems.find(c => c.id === enrollment.courseId);
+                return course ? course.name : '';
+            }).filter(Boolean);
+            if(courseNames.length > 0){
+                history += `The user is enrolled in these courses: ${courseNames.join(', ')}.`;
+            }
+        } else {
+            history += 'The user is not enrolled in any courses yet.';
+        }
 
-    if (orders.length > 0) {
-      const productNames = orders.flatMap(order => order.items.map(item => item.name)).join(', ');
-      history += `The user has previously purchased these products: ${productNames}. `;
-    } else {
-      history += 'The user has not purchased any products yet. ';
-    }
+        return history;
+    };
     
-    if (enrollments.length > 0) {
-      // NOTE: For a real app, we would fetch course names from the courseId.
-      // For this demo, we'll just use the count.
-      history += `The user is enrolled in ${enrollments.length} course(s).`;
-    } else {
-       history += 'The user is not enrolled in any courses yet.';
-    }
-
+    // This is a bit of a hack to handle the async nature of fetching subcollections
+    // In a real app, you might structure this differently.
+    const [history, setHistory] = useState('');
+    generateHistory().then(setHistory);
     return history;
-  }, [orders, enrollments, isLoadingOrders, isLoadingEnrollments]);
+    
+  }, [orders, enrollments, isLoadingOrders, isLoadingEnrollments, firestore, user]);
 
 
   async function handleGetRecommendations() {

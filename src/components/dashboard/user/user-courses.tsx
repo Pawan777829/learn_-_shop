@@ -6,6 +6,7 @@ import { doc, collectionGroup, query, where, getDocs } from 'firebase/firestore'
 import type { Enrollment, Course, Item } from '@/lib/types';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { allItems } from '@/lib/data';
 
 function EnrolledCourse({ enrollment }: { enrollment: Enrollment }) {
     const firestore = useFirestore();
@@ -18,18 +19,21 @@ function EnrolledCourse({ enrollment }: { enrollment: Enrollment }) {
 
             setLoading(true);
             try {
-                // Since courses are in subcollections, we need to query across all vendors
-                const coursesRef = collectionGroup(firestore, 'courses');
-                const q = query(coursesRef, where('id', '==', enrollment.courseId));
-                const querySnapshot = await getDocs(q);
-
-                if (!querySnapshot.empty) {
-                    const courseDoc = querySnapshot.docs[0];
-                    setCourse(courseDoc.data() as Item);
+                // Since we don't know the vendor, we search in allItems first as a fallback.
+                const foundCourse = allItems.find(item => item.id === enrollment.courseId && item.type === 'course');
+                if (foundCourse) {
+                    setCourse(foundCourse);
                 } else {
-                     // Fallback for courses that might be in the top-level 'data'
-                    const courseFromAllItems = (await import('@/lib/data')).allItems.find(c => c.id === enrollment.courseId);
-                    if(courseFromAllItems) setCourse(courseFromAllItems)
+                    // If not in static data, query across all vendor subcollections.
+                    // This is less efficient but necessary if data isn't in allItems.
+                    const coursesRef = collectionGroup(firestore, 'courses');
+                    const q = query(coursesRef, where('id', '==', enrollment.courseId));
+                    const querySnapshot = await getDocs(q);
+
+                    if (!querySnapshot.empty) {
+                        const courseDoc = querySnapshot.docs[0];
+                        setCourse(courseDoc.data() as Item);
+                    }
                 }
             } catch (error) {
                 console.error("Error fetching course: ", error);
@@ -47,7 +51,7 @@ function EnrolledCourse({ enrollment }: { enrollment: Enrollment }) {
     }
     
     if (!course) {
-        return <li className="text-sm text-muted-foreground">Could not load course: {enrollment.courseId}</li>;
+        return <li className="text-sm text-muted-foreground">Could not load course: {enrollment.courseId.substring(0,5)}...</li>;
     }
 
 
