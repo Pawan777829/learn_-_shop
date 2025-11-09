@@ -15,12 +15,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from '@/context/cart-context';
-import { useUser, useFirestore } from '@/firebase';
-import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
-import { collection, serverTimestamp } from 'firebase/firestore';
+import { useUser, useFirestore, addDocumentNonBlocking } from '@/firebase';
+import { collection } from 'firebase/firestore';
+import { useToast } from '@/hooks/use-toast';
 
 const checkoutSchema = z.object({
     firstName: z.string().min(1, 'First name is required'),
@@ -28,9 +27,9 @@ const checkoutSchema = z.object({
     address: z.string().min(1, 'Address is required'),
     city: z.string().min(1, 'City is required'),
     zip: z.string().min(5, 'ZIP code must be 5 digits'),
-    cardNumber: z.string().min(16, 'Card number must be 16 digits'),
+    cardNumber: z.string().min(16, 'Card number must be 16 digits').max(16, 'Card number must be 16 digits'),
     expiryDate: z.string().regex(/^(0[1-9]|1[0-2])\/\d{2}$/, 'Expiry date must be MM/YY'),
-    cvc: z.string().min(3, 'CVC must be 3 digits'),
+    cvc: z.string().min(3, 'CVC must be 3 digits').max(4, 'CVC can be at most 4 digits'),
 });
 
 export default function CheckoutPage() {
@@ -38,6 +37,7 @@ export default function CheckoutPage() {
     const { user } = useUser();
     const firestore = useFirestore();
     const router = useRouter();
+    const { toast } = useToast();
 
     const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
     const shipping = subtotal > 0 ? 15.00 : 0;
@@ -59,7 +59,11 @@ export default function CheckoutPage() {
 
     async function onSubmit(values: z.infer<typeof checkoutSchema>) {
         if (!user || !firestore) {
-            // This should not happen if the user is on this page
+            toast({
+                variant: 'destructive',
+                title: 'Error',
+                description: 'You must be logged in to place an order.',
+            });
             return;
         }
 
@@ -68,14 +72,17 @@ export default function CheckoutPage() {
             userId: user.uid,
             orderDate: new Date().toISOString(),
             totalAmount: total,
-            status: 'Processing', // Changed from 'pending'
-            items: cartItems, // Storing items directly in the order for simplicity
+            status: 'Processing',
+            items: cartItems,
         };
 
-        // Non-blocking write
         addDocumentNonBlocking(ordersRef, orderData);
 
-        // Clear the cart and redirect
+        toast({
+            title: 'Order Placed!',
+            description: 'Thank you for your purchase.',
+        });
+
         clearCart();
         router.push('/dashboard/user');
     }
@@ -171,8 +178,8 @@ export default function CheckoutPage() {
                                 </div>
                             </CardContent>
                         </Card>
-                        <Button type="submit" size="lg" className="w-full text-lg h-12" disabled={cartItems.length === 0}>
-                            Place Order for ${total.toFixed(2)}
+                        <Button type="submit" size="lg" className="w-full text-lg h-12" disabled={cartItems.length === 0 || form.formState.isSubmitting}>
+                            {form.formState.isSubmitting ? 'Processing...' : `Place Order for $${total.toFixed(2)}`}
                         </Button>
                     </div>
                 </form>

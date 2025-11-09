@@ -1,15 +1,31 @@
 'use client';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { allItems } from "@/lib/data";
 import ItemCard from "@/components/item-card";
 import { Button } from "@/components/ui/button";
+import { allItems } from "@/lib/data";
+import type { Item } from "@/lib/types";
 import Link from "next/link";
 import Image from "next/image";
 
+// Helper function to render a category section
+const CategorySection = ({ title, items }: { title: string; items: Item[] }) => (
+  <section className="py-12">
+    <div className="container mx-auto px-4">
+      <h2 className="text-3xl font-bold font-headline tracking-tight mb-8">
+        {title}
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {items.map((item) => (
+          <ItemCard key={item.id} item={item} />
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
 export default function Home() {
-  const products = allItems.filter((item) => item.type === "product").slice(0, 4);
-  const courses = allItems.filter((item) => item.type === "course").slice(0, 4);
-  const featuredItems = [...products.slice(0, 2), ...courses.slice(0, 2)];
+  const electronics = allItems.filter((item) => item.category === "Electronics").slice(0, 4);
+  const software = allItems.filter((item) => item.category === "Software").slice(0, 4);
+  const art = allItems.filter((item) => item.category === "Art").slice(0, 4);
 
   return (
     <div className="flex flex-col">
@@ -31,63 +47,24 @@ export default function Home() {
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
-              <Link href="#featured">Shop Products</Link>
+              <Link href="#electronics">Shop Electronics</Link>
             </Button>
             <Button asChild size="lg" variant="secondary" className="bg-white text-primary hover:bg-gray-200">
-              <Link href="#featured">Explore Courses</Link>
+              <Link href="#software">Explore Courses</Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Featured Items Section */}
-      <section id="featured" className="py-16 sm:py-24">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold font-headline tracking-tight text-center">
-            Featured Products & Courses
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground text-center">
-            Handpicked for you. Quality you can trust.
-          </p>
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredItems.map((item) => (
-              <ItemCard key={item.id} item={item} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <div className="container mx-auto px-4 py-8">
-        <Tabs defaultValue="all" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 md:w-1/2 mx-auto lg:w-1/3">
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="products">Products</TabsTrigger>
-            <TabsTrigger value="courses">Courses</TabsTrigger>
-          </TabsList>
-          <div className="mt-8">
-            <TabsContent value="all">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {allItems.map((item) => (
-                  <ItemCard key={item.id} item={item} />
-                ))}
-              </div>
-            </TabsContent>
-            <TabsContent value="products">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {products.map((item) => (
-                  <ItemCard key={item.id} item={item} />
-                ))}
-              </div>
-            </TabsContent>
-            <TabsContent value="courses">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {courses.map((item) => (
-                  <ItemCard key={item.id} item={item} />
-                ))}
-              </div>
-            </TabsContent>
-          </div>
-        </Tabs>
+      {/* Categories Sections */}
+      <div id="electronics">
+        <CategorySection title="Top Electronics" items={electronics} />
+      </div>
+      <div id="software">
+       <CategorySection title="Popular Software Courses" items={software} />
+      </div>
+       <div id="art">
+        <CategorySection title="Creative Arts" items={art} />
       </div>
     </div>
   );

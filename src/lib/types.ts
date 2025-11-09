@@ -4,6 +4,7 @@ export type Item = {
   description: string;
   price: number;
   type: 'product' | 'course';
+  category: 'Electronics' | 'Software' | 'Books' | 'Art' | 'Lifestyle'; // Added category
   vendor: string;
   rating: number;
   imageId: string;
@@ -19,7 +20,8 @@ export type Order = {
   userId: string;
   orderDate: string;
   totalAmount: number;
-  status: 'pending' | 'processing' | 'shipped' | 'delivered';
+  status: 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
+  items: CartItem[];
 };
 
 export type Enrollment = {
