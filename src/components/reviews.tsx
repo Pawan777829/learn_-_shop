@@ -14,9 +14,9 @@ import {
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useUser, useFirestore, useCollection, useMemoFirebase, addDocumentNonBlocking } from '@/firebase';
-import { collection, query, where, orderBy } from 'firebase/firestore';
+import { collection, query, where, orderBy, getDocs, collectionGroup } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
-import type { Review } from '@/lib/types';
+import type { Review, Order } from '@/lib/types';
 import ReviewCard from './review-card';
 import { Star, Loader2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -36,34 +36,56 @@ export default function Reviews({ itemId, itemType }: ReviewsProps) {
   const firestore = useFirestore();
   const { toast } = useToast();
   const [hoveredRating, setHoveredRating] = useState(0);
+  const [isCheckingPurchase, setIsCheckingPurchase] = useState(true);
   const [hasPurchased, setHasPurchased] = useState(false);
 
   const reviewsCollectionPath = itemType === 'product' ? `products/${itemId}/reviews` : `courses/${itemId}/reviews`;
 
   const reviewsQuery = useMemoFirebase(() => {
+    if (!firestore) return null;
     return query(collection(firestore, reviewsCollectionPath), orderBy('createdAt', 'desc'));
   }, [firestore, reviewsCollectionPath]);
 
   const { data: reviews, isLoading: isLoadingReviews } = useCollection<Review>(reviewsQuery);
   
-  // Check if user has purchased the item or enrolled in the course
-  const checkPurchaseQuery = useMemoFirebase(() => {
-    if (!user) return null;
-    if (itemType === 'product') {
-        return query(collection(firestore, `users/${user.uid}/orders`), where('items', 'array-contains', itemId));
-    } else {
-        return query(collection(firestore, `users/${user.uid}/enrollments`), where('courseId', '==', itemId));
-    }
-  }, [firestore, user, itemId, itemType]);
-  
-  // A simplified purchase check. A real app might need a more complex query.
-  const {data: purchaseData} = useCollection(checkPurchaseQuery);
-  
   useEffect(() => {
-    if (purchaseData && purchaseData.length > 0) {
-      setHasPurchased(true);
-    }
-  }, [purchaseData]);
+    const checkPurchase = async () => {
+        if (!user || !firestore) {
+            setIsCheckingPurchase(false);
+            return;
+        }
+
+        setIsCheckingPurchase(true);
+        let purchased = false;
+        try {
+            if (itemType === 'product') {
+                const ordersCollectionRef = collection(firestore, `users/${user.uid}/orders`);
+                const ordersSnapshot = await getDocs(ordersCollectionRef);
+                for (const orderDoc of ordersSnapshot.docs) {
+                    const order = orderDoc.data() as Order;
+                    if (order.items && order.items.some(item => item.id === itemId)) {
+                        purchased = true;
+                        break;
+                    }
+                }
+            } else { // 'course'
+                const enrollmentsRef = collection(firestore, `users/${user.uid}/enrollments`);
+                const q = query(enrollmentsRef, where('courseId', '==', itemId));
+                const enrollmentsSnapshot = await getDocs(q);
+                if (!enrollmentsSnapshot.empty) {
+                    purchased = true;
+                }
+            }
+        } catch (error) {
+            console.error("Error checking purchase status:", error);
+        }
+        
+        setHasPurchased(purchased);
+        setIsCheckingPurchase(false);
+    };
+
+    checkPurchase();
+  }, [user, firestore, itemId, itemType]);
 
 
   const form = useForm<z.infer<typeof reviewSchema>>({
@@ -86,7 +108,7 @@ export default function Reviews({ itemId, itemType }: ReviewsProps) {
     const reviewData = {
       ...values,
       userId: user.uid,
-      userName: user.displayName || user.email,
+      userName: user.displayName || user.email?.split('@')[0] || 'Anonymous',
       itemId: itemId,
       createdAt: new Date().toISOString(),
     };
@@ -96,11 +118,13 @@ export default function Reviews({ itemId, itemType }: ReviewsProps) {
     form.reset();
   }
 
+  const canShowReviewForm = user && !isCheckingPurchase && hasPurchased;
+
   return (
     <div className="mt-12 space-y-8">
       <h2 className="text-2xl font-bold font-headline">Customer Reviews</h2>
       
-      {user && hasPurchased && (
+      {canShowReviewForm && (
         <div className="border rounded-lg p-6">
           <h3 className="text-lg font-semibold mb-4">Write a Review</h3>
           <Form {...form}>
@@ -172,5 +196,3 @@ export default function Reviews({ itemId, itemType }: ReviewsProps) {
     </div>
   );
 }
-
-    

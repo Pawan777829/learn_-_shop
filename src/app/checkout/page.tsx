@@ -20,6 +20,7 @@ import { useCart } from '@/context/cart-context';
 import { useUser, useFirestore, addDocumentNonBlocking } from '@/firebase';
 import { collection } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
+import { v4 as uuidv4 } from 'uuid'; // To generate unique order IDs
 
 const checkoutSchema = z.object({
     firstName: z.string().min(1, 'First name is required'),
@@ -57,6 +58,7 @@ export default function CheckoutPage() {
         },
     });
 
+    // Install uuid for this to work: npm install uuid @types/uuid
     async function onSubmit(values: z.infer<typeof checkoutSchema>) {
         if (!user || !firestore) {
             toast({
@@ -68,12 +70,27 @@ export default function CheckoutPage() {
         }
 
         const ordersRef = collection(firestore, 'users', user.uid, 'orders');
+        
+        // Sanitize items for Firestore by removing non-serializable properties if any
+        const itemsToSave = cartItems.map(item => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+            type: item.type,
+            category: item.category,
+            vendor: item.vendor,
+            imageId: item.imageId,
+        }));
+
         const orderData = {
+            id: uuidv4(),
             userId: user.uid,
             orderDate: new Date().toISOString(),
             totalAmount: total,
             status: 'Processing',
-            items: cartItems,
+            items: itemsToSave,
+            shippingInfo: values,
         };
 
         addDocumentNonBlocking(ordersRef, orderData);

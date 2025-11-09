@@ -47,7 +47,9 @@ export default function CartPage() {
                                             />}
                                             <div className="flex-1 flex flex-col justify-between">
                                                 <div>
-                                                    <h3 className="font-semibold">{item.name}</h3>
+                                                    <Link href={`/${item.type}s/${item.id}`} className="hover:underline">
+                                                        <h3 className="font-semibold">{item.name}</h3>
+                                                    </Link>
                                                     <p className="text-lg font-medium text-primary">${item.price.toFixed(2)}</p>
                                                 </div>
                                                 <div className="flex items-center justify-between mt-2">
