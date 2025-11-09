@@ -47,6 +47,54 @@
       "description": "A leather-bound journal and a pen.",
       "imageUrl": "https://images.unsplash.com/photo-1663809087021-21bdd11cad36?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bGVhdGhlciUyMGpvdXJuYWx8ZW58MHx8fHwxNzYyNTk2MTQzfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "leather journal"
+    },
+    {
+      "id": "prod4",
+      "description": "A central smart home hub device on a wooden table.",
+      "imageUrl": "https://images.unsplash.com/photo-1519558260268-cde7e03a0152?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzbWFydCUyMGhvbWV8ZW58MHx8fHwxNzYyNjg2NzI2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "smart home"
+    },
+    {
+      "id": "prod5",
+      "description": "A physical book with a JavaScript logo on the cover.",
+      "imageUrl": "https://images.unsplash.com/photo-1696402627658-43f79d8ed156?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxqYXZhc2NyaXB0JTIwYm9va3xlbnwwfHx8fDE3NjI2ODQ5NTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "javascript book"
+    },
+    {
+      "id": "prod6",
+      "description": "A rolled-up, high-quality yoga mat in a calm setting.",
+      "imageUrl": "https://images.unsplash.com/photo-1591291621164-2c6367723315?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx5b2dhJTIwbWF0fGVufDB8fHx8MTc2MjYwNjI3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "yoga mat"
+    },
+    {
+      "id": "prod7",
+      "description": "A digital drawing tablet with a stylus, displaying a colorful artwork.",
+      "imageUrl": "https://images.unsplash.com/photo-1671957694269-fe1eaa1f9385?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxkcmF3aW5nJTIwdGFibGV0fGVufDB8fHx8MTc2MjY4OTM0M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "drawing tablet"
+    },
+    {
+      "id": "course4",
+      "description": "A screen showing social media icons and marketing analytics.",
+      "imageUrl": "https://images.unsplash.com/photo-1586880244406-556ebe35f282?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZGlnaXRhbCUyMG1hcmtldGluZ3xlbnwwfHx8fDE3NjI2Nzc3Njl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "digital marketing"
+    },
+    {
+      "id": "course5",
+      "description": "A professional camera on a tripod, ready to take a picture of a landscape.",
+      "imageUrl": "https://images.unsplash.com/photo-1653924308766-73632d766dde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwaG90b2dyYXBoeSUyMGNsYXNzfGVufDB8fHx8MTc2MjY4OTM0M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "photography class"
+    },
+    {
+      "id": "course6",
+      "description": "A collection of coins, a piggy bank, and a calculator symbolizing personal finance.",
+      "imageUrl": "https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxwZXJzb25hbCUyMGZpbmFuY2V8ZW58MHx8fHwxNzYyNjA5NzcyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "personal finance"
+    },
+    {
+      "id": "course7",
+      "description": "An open notebook with handwritten notes, alongside a classic typewriter.",
+      "imageUrl": "https://images.unsplash.com/photo-1455390582262-044cdead277a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjcmVhdGl2ZSUyMHdyaXRpbmd8ZW58MHx8fHwxNzYyNjg5MzQzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "creative writing"
     }
   ]
 }
