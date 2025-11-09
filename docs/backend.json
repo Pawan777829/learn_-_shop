@@ -1,0 +1,557 @@
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the Learn & Shop platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user.",
+          "format": "uuid"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "The first name of the user."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "The last name of the user."
+        },
+        "email": {
+          "type": "string",
+          "description": "The email address of the user.",
+          "format": "email"
+        },
+        "profilePicture": {
+          "type": "string",
+          "description": "URL to the user's profile picture.",
+          "format": "uri"
+        },
+        "dateJoined": {
+          "type": "string",
+          "description": "The date and time the user joined the platform.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "email",
+        "dateJoined"
+      ]
+    },
+    "Vendor": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Vendor",
+      "type": "object",
+      "description": "Represents a vendor on the Learn & Shop platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the vendor.",
+          "format": "uuid"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the User entity. (Relationship: Vendor 1:1 User)"
+        },
+        "businessName": {
+          "type": "string",
+          "description": "The business name of the vendor."
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the vendor's business."
+        },
+        "contactEmail": {
+          "type": "string",
+          "description": "The contact email for the vendor.",
+          "format": "email"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "businessName",
+        "description",
+        "contactEmail"
+      ]
+    },
+    "Product": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Product",
+      "type": "object",
+      "description": "Represents a product listed on the platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the product.",
+          "format": "uuid"
+        },
+        "vendorId": {
+          "type": "string",
+          "description": "Reference to the Vendor entity. (Relationship: Vendor 1:N Product)"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the product."
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the product."
+        },
+        "price": {
+          "type": "number",
+          "description": "The price of the product."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL to the product image.",
+          "format": "uri"
+        },
+        "stockQuantity": {
+          "type": "number",
+          "description": "The number of units currently in stock."
+        }
+      },
+      "required": [
+        "id",
+        "vendorId",
+        "name",
+        "description",
+        "price",
+        "imageUrl",
+        "stockQuantity"
+      ]
+    },
+    "Course": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Course",
+      "type": "object",
+      "description": "Represents a course offered on the platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the course.",
+          "format": "uuid"
+        },
+        "vendorId": {
+          "type": "string",
+          "description": "Reference to the Vendor entity. (Relationship: Vendor 1:N Course)"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the course."
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the course."
+        },
+        "price": {
+          "type": "number",
+          "description": "The price of the course."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL to the course image.",
+          "format": "uri"
+        },
+        "lessons": {
+          "type": "array",
+          "description": "An array of lesson ids.",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "vendorId",
+        "name",
+        "description",
+        "price",
+        "imageUrl"
+      ]
+    },
+    "Order": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Order",
+      "type": "object",
+      "description": "Represents an order placed by a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the order.",
+          "format": "uuid"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the User entity. (Relationship: User 1:N Order)"
+        },
+        "orderDate": {
+          "type": "string",
+          "description": "The date the order was placed.",
+          "format": "date-time"
+        },
+        "totalAmount": {
+          "type": "number",
+          "description": "The total amount of the order."
+        },
+        "status": {
+          "type": "string",
+          "description": "The current status of the order (e.g., pending, processing, shipped, delivered)."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "orderDate",
+        "totalAmount",
+        "status"
+      ]
+    },
+    "OrderItem": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "OrderItem",
+      "type": "object",
+      "description": "Represents an item within an order.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the order item.",
+          "format": "uuid"
+        },
+        "orderId": {
+          "type": "string",
+          "description": "Reference to the Order entity. (Relationship: Order 1:N OrderItem)"
+        },
+        "productId": {
+          "type": "string",
+          "description": "Reference to the Product entity. (Relationship: Product 1:N OrderItem)"
+        },
+        "quantity": {
+          "type": "number",
+          "description": "The quantity of the product in the order item."
+        },
+        "price": {
+          "type": "number",
+          "description": "The price of the product at the time of the order."
+        }
+      },
+      "required": [
+        "id",
+        "orderId",
+        "productId",
+        "quantity",
+        "price"
+      ]
+    },
+    "Enrollment": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Enrollment",
+      "type": "object",
+      "description": "Represents a user's enrollment in a course.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the enrollment.",
+          "format": "uuid"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the User entity. (Relationship: User 1:N Enrollment)"
+        },
+        "courseId": {
+          "type": "string",
+          "description": "Reference to the Course entity. (Relationship: Course 1:N Enrollment)"
+        },
+        "enrollmentDate": {
+          "type": "string",
+          "description": "The date the user enrolled in the course.",
+          "format": "date-time"
+        },
+        "progress": {
+          "type": "number",
+          "description": "The user's progress in the course (e.g., percentage completed)."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "courseId",
+        "enrollmentDate",
+        "progress"
+      ]
+    },
+    "Recommendation": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Recommendation",
+      "type": "object",
+      "description": "Represents a product or course recommendation for a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the recommendation.",
+          "format": "uuid"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the User entity. (Relationship: User 1:N Recommendation)"
+        },
+        "productId": {
+          "type": "string",
+          "description": "Reference to the Product entity. (Relationship: Product 1:N Recommendation)"
+        },
+        "courseId": {
+          "type": "string",
+          "description": "Reference to the Course entity. (Relationship: Course 1:N Recommendation)"
+        },
+        "recommendationDate": {
+          "type": "string",
+          "description": "The date the recommendation was generated.",
+          "format": "date-time"
+        },
+        "algorithmUsed": {
+          "type": "string",
+          "description": "The algorithm used to generate the recommendation."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "recommendationDate",
+        "algorithmUsed"
+      ]
+    },
+    "Lesson": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Lesson",
+      "type": "object",
+      "description": "Represents a lesson within a course.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the lesson.",
+          "format": "uuid"
+        },
+        "courseId": {
+          "type": "string",
+          "description": "Reference to the Course entity. (Relationship: Course 1:N Lesson)"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the lesson."
+        },
+        "content": {
+          "type": "string",
+          "description": "The content of the lesson (e.g., text, video URL)."
+        },
+        "order": {
+          "type": "number",
+          "description": "The order of the lesson within the course."
+        }
+      },
+      "required": [
+        "id",
+        "courseId",
+        "title",
+        "content",
+        "order"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profiles. User ID is used for path-based ownership.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/vendors/{vendorId}",
+        "definition": {
+          "entityName": "Vendor",
+          "schema": {
+            "$ref": "#/backend/entities/Vendor"
+          },
+          "description": "Stores vendor profiles, owned by a user.  User ID and Vendor ID are used for path-based ownership.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "vendorId",
+              "description": "The unique identifier of the vendor."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/vendors/{vendorId}/products/{productId}",
+        "definition": {
+          "entityName": "Product",
+          "schema": {
+            "$ref": "#/backend/entities/Product"
+          },
+          "description": "Stores products listed by vendors. Vendor ID is included in the Product document for Authorization Independence.",
+          "params": [
+            {
+              "name": "vendorId",
+              "description": "The unique identifier of the vendor."
+            },
+            {
+              "name": "productId",
+              "description": "The unique identifier of the product."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/vendors/{vendorId}/courses/{courseId}",
+        "definition": {
+          "entityName": "Course",
+          "schema": {
+            "$ref": "#/backend/entities/Course"
+          },
+          "description": "Stores courses offered by vendors. Vendor ID is included in the Course document for Authorization Independence.",
+          "params": [
+            {
+              "name": "vendorId",
+              "description": "The unique identifier of the vendor."
+            },
+            {
+              "name": "courseId",
+              "description": "The unique identifier of the course."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/orders/{orderId}",
+        "definition": {
+          "entityName": "Order",
+          "schema": {
+            "$ref": "#/backend/entities/Order"
+          },
+          "description": "Stores order information for users. User ID is included in the Order document for path-based ownership and Authorization Independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "orderId",
+              "description": "The unique identifier of the order."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/orders/{orderId}/orderItems/{orderItemId}",
+        "definition": {
+          "entityName": "OrderItem",
+          "schema": {
+            "$ref": "#/backend/entities/OrderItem"
+          },
+          "description": "Stores order items associated with an order. Parent Order ID is implicitly used for authorization via path.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "orderId",
+              "description": "The unique identifier of the order."
+            },
+            {
+              "name": "orderItemId",
+              "description": "The unique identifier of the order item."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/enrollments/{enrollmentId}",
+        "definition": {
+          "entityName": "Enrollment",
+          "schema": {
+            "$ref": "#/backend/entities/Enrollment"
+          },
+          "description": "Stores enrollment information for users. User ID is included in the Enrollment document for path-based ownership and Authorization Independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "enrollmentId",
+              "description": "The unique identifier of the enrollment."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/recommendations/{recommendationId}",
+        "definition": {
+          "entityName": "Recommendation",
+          "schema": {
+            "$ref": "#/backend/entities/Recommendation"
+          },
+          "description": "Stores recommendations for users. User ID is included in the Recommendation document for path-based ownership and Authorization Independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "recommendationId",
+              "description": "The unique identifier of the recommendation."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/courses/{courseId}/lessons/{lessonId}",
+        "definition": {
+          "entityName": "Lesson",
+          "schema": {
+            "$ref": "#/backend/entities/Lesson"
+          },
+          "description": "Stores lessons associated with courses. Course ID is included in the Lesson document, and is implicitly used for authorization via path.",
+          "params": [
+            {
+              "name": "courseId",
+              "description": "The unique identifier of the course."
+            },
+            {
+              "name": "lessonId",
+              "description": "The unique identifier of the lesson."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore data structure is designed to support the Learn & Shop platform, focusing on secure and scalable data access for users, vendors, products, courses, orders, and related entities. It emphasizes Authorization Independence (CRITICAL) through denormalization of authorization data, DBAC (Database-Based Access Control), QAPs (Rules are not Filters), and clarity for debugging.\n\n**Authorization Independence and QAPs:**\n\n*   **Vendors, Products, Courses:** Vendor ID is included directly within Product and Course documents, enabling rules to validate vendor ownership without requiring `get()` calls, thus achieving Authorization Independence. This also enables secure `list` operations, as rules can filter based on the denormalized `vendorId`.\n*   **Orders, OrderItems:** User ID is included directly within Order documents, enabling rules to validate user ownership. OrderItems are stored as a subcollection to the Order document.\n*   **Enrollments:** User ID is included directly within Enrollment documents, enabling rules to validate user ownership.\n*   **Recommendations:** User ID is included directly within Recommendation documents, enabling rules to validate user ownership.\n*   **Lessons:** Course ID is included directly within Lesson documents, enabling rules to validate course ownership.\n\n**Structural Segregation:**\n\n*   User-specific data (Vendors, Orders, Enrollments, Recommendations) is stored under the `/users/{userId}` path, ensuring that only the owning user or authorized roles can access it. This adheres to the principle of homogeneous security posture.\n\n**Access Modeling:**\n\n*   Path-Based Ownership: The `/users/{userId}/vendors/{vendorId}` pattern provides clear ownership semantics. Similarly, `/users/{userId}/orders/{orderId}`, `/users/{userId}/enrollments/{enrollmentId}`, and `/users/{userId}/recommendations/{recommendationId}` follow this pattern.\n\n**Data Clarity and Predictability:**\n\n*   Entity relationships are explicitly defined through ID references (e.g., `productId` in `OrderItem`, `vendorId` in `Product` and `Course`).\n*   Consistent naming conventions are used (e.g., `userId`, `vendorId`, `courseId`) to improve readability and maintainability.\n"
+  }
+}
