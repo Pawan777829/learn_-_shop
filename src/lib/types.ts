@@ -1,15 +1,19 @@
 export type ItemCategory =
   | 'Electronics'
   | 'Computers & Accessories'
+  | 'Mobiles & Accessories'
   | 'Home & Kitchen'
-  | 'Clothing, Shoes & Jewelry'
-  | 'Books'
-  | 'Software'
-  | 'Courses'
+  | 'Home Appliances'
+  | 'Fashion'
+  | 'Beauty & Personal Care'
   | 'Health & Household'
   | 'Sports & Outdoors'
+  | 'Books'
   | 'Toys & Games'
+  | 'Automotive'
   | 'Art & Crafts'
+  | 'Software'
+  | 'Courses'
   | 'Lifestyle';
 
 export type Lesson = {

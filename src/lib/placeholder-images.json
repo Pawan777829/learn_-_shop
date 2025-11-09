@@ -209,6 +209,36 @@
       "description": "A person speaking confidently at a podium to an audience.",
       "imageUrl": "https://images.unsplash.com/photo-1710360683896-e0506fb3579a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxwdWJsaWMlMjBzcGVha2luZ3xlbnwwfHx8fDE3NjI1ODE1NjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "public speaking"
+    },
+    {
+      "id": "prod25",
+      "description": "A sleek, modern smartphone displaying a vibrant home screen.",
+      "imageUrl": "https://images.unsplash.com/photo-1580910051074-3eb694886505?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtb2JpbGUlMjBwaG9uZXxlbnwwfHx8fDE3NjI3MjA0MjJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "smartphone screen"
+    },
+    {
+      "id": "prod26",
+      "description": "A white, minimalist air purifier in a modern living room.",
+      "imageUrl": "https://images.unsplash.com/photo-1628157774945-c424483d3527?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhdXQlMjBwdXJpZmllcnxlbnwwfHx8fDE3NjI3MTk1ODJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "air purifier"
+    },
+    {
+      "id": "prod27",
+      "description": "A pair of stylish sunglasses resting on a sandy beach.",
+      "imageUrl": "https://images.unsplash.com/photo-1593998399332-5f2127278d65?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxzdW5nbGFzc2VzfGVufDB8fHx8MTc2MjcxOTUzMHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "stylish sunglasses"
+    },
+    {
+      "id": "prod28",
+      "description": "A set of aesthetic skincare bottles on a marble surface.",
+      "imageUrl": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxza2luY2FyZXxlbnwwfHx8fDE3NjI3MTE4MTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "skincare set"
+    },
+    {
+      "id": "prod29",
+      "description": "A close-up shot of a high-performance car tire.",
+      "imageUrl": "https://images.unsplash.com/photo-1588289018449-f4335aa94a73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjYXIlMjB0aXJlc3xlbnwwfHx8fDE3NjI3MjA0MjJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "car tire"
     }
   ]
 }

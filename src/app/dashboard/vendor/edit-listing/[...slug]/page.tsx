@@ -27,18 +27,22 @@ import { useEffect } from 'react';
 import { Loader2 } from 'lucide-react';
 
 const categories: ItemCategory[] = [
-    'Electronics',
-    'Computers & Accessories',
-    'Home & Kitchen',
-    'Clothing, Shoes & Jewelry',
-    'Books',
-    'Software',
-    'Courses',
-    'Health & Household',
-    'Sports & Outdoors',
-    'Toys & Games',
-    'Art & Crafts',
-    'Lifestyle',
+  'Electronics',
+  'Computers & Accessories',
+  'Mobiles & Accessories',
+  'Home & Kitchen',
+  'Home Appliances',
+  'Fashion',
+  'Beauty & Personal Care',
+  'Health & Household',
+  'Sports & Outdoors',
+  'Books',
+  'Toys & Games',
+  'Automotive',
+  'Art & Crafts',
+  'Software',
+  'Courses',
+  'Lifestyle',
 ];
 
 const listingSchema = z.object({
