@@ -28,7 +28,7 @@ export default function ItemCard({ item }: ItemCardProps) {
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault(); // Prevent navigation when clicking the button
     e.stopPropagation();
-    addToCart(item);
+    addToCart(item, 1);
   };
 
   const itemUrl = `/${item.type}s/${item.id}`;
@@ -68,7 +68,7 @@ export default function ItemCard({ item }: ItemCardProps) {
               <span>{item.rating}</span>
             </div>
           </div>
-          <Button size="icon" onClick={handleAddToCart}>
+          <Button size="icon" onClick={handleAddToCart} disabled={item.stock === 0}>
             <Plus className="h-5 w-5" />
             <span className="sr-only">
               {item.type === "course" ? "Enroll" : "Add to Cart"}

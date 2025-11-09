@@ -6,7 +6,7 @@ import { allItems } from '@/lib/data';
 import { getImageById } from '@/lib/placeholder-images';
 import { useCart } from '@/context/cart-context';
 import { Button } from '@/components/ui/button';
-import { Star, ShoppingCart, Heart } from 'lucide-react';
+import { Star, ShoppingCart, Heart, Minus, Plus, ShieldCheck, Truck, Undo2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import ItemCard from '@/components/item-card';
 import Reviews from '@/components/reviews';
@@ -15,6 +15,7 @@ import { doc } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 import type { Item, WishlistItem } from '@/lib/types';
 import { useEffect, useState } from 'react';
+import { Separator } from '@/components/ui/separator';
 
 export default function ProductDetailPage() {
   const { id } = useParams() as { id: string };
@@ -26,6 +27,8 @@ export default function ProductDetailPage() {
   const { user } = useUser();
   const firestore = useFirestore();
   const { toast } = useToast();
+
+  const [quantity, setQuantity] = useState(1);
   
   const wishlistItemRef = useMemoFirebase(() => {
     if (!user || !product) return null;
@@ -72,6 +75,8 @@ export default function ProductDetailPage() {
     );
   }
 
+  const isOutOfStock = product.stock !== undefined && product.stock === 0;
+
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
@@ -86,8 +91,8 @@ export default function ProductDetailPage() {
             />
           </div>
         </div>
-        <div className="flex flex-col justify-center">
-          <Badge variant="secondary" className="w-fit mb-2">{product.type}</Badge>
+        <div className="flex flex-col">
+          <Badge variant="secondary" className="w-fit mb-2">{product.category}</Badge>
           <h1 className="text-3xl lg:text-4xl font-bold font-headline">{product.name}</h1>
           <p className="text-lg text-muted-foreground mt-2">By {product.vendor}</p>
           <div className="flex items-center gap-2 mt-4">
@@ -99,15 +104,52 @@ export default function ProductDetailPage() {
             <span className="text-muted-foreground text-sm">{product.rating} / 5</span>
           </div>
           <p className="mt-6 text-foreground/80 text-base leading-relaxed">{product.description}</p>
-          <p className="text-4xl font-bold text-primary mt-6">${product.price.toFixed(2)}</p>
+          
+          <div className='flex items-center gap-4 mt-6'>
+            <p className="text-4xl font-bold text-primary">${product.price.toFixed(2)}</p>
+            <Badge variant={isOutOfStock ? 'destructive' : 'default'}>
+              {isOutOfStock ? 'Out of Stock' : 'In Stock'}
+            </Badge>
+          </div>
+
+          <div className="flex items-center gap-4 mt-6">
+            <p className="font-medium">Quantity:</p>
+            <div className="flex items-center gap-2 border rounded-md p-1">
+                <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setQuantity(q => Math.max(1, q-1))} disabled={isOutOfStock}>
+                    <Minus className="h-3 w-3"/>
+                </Button>
+                <span className="w-8 text-center">{quantity}</span>
+                <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setQuantity(q => q+1)} disabled={isOutOfStock}>
+                    <Plus className="h-3 w-3"/>
+                </Button>
+            </div>
+          </div>
+          
           <div className="mt-8 flex items-center gap-4">
-            <Button size="lg" className="h-12 text-lg sm:w-auto flex-grow" onClick={() => addToCart(product)}>
+            <Button size="lg" className="h-12 text-lg sm:w-auto flex-grow" onClick={() => addToCart(product, quantity)} disabled={isOutOfStock}>
               <ShoppingCart className="mr-2" />
               Add to Cart
             </Button>
             <Button variant="outline" size="icon" className="h-12 w-12" onClick={handleWishlistToggle} aria-label="Add to wishlist">
                 <Heart className={`h-6 w-6 ${isWishlisted ? 'fill-red-500 text-red-500' : ''}`} />
             </Button>
+          </div>
+          
+          <Separator className="my-8" />
+          
+          <div className="space-y-4 text-sm text-muted-foreground">
+            <div className="flex items-center gap-3">
+              <Truck className="h-5 w-5" />
+              <span>Standard Delivery (3-5 business days)</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <Undo2 className="h-5 w-5" />
+              <span>30-Day Easy Returns</span>
+            </div>
+             <div className="flex items-center gap-3">
+              <ShieldCheck className="h-5 w-5" />
+              <span>1 Year Manufacturer Warranty</span>
+            </div>
           </div>
         </div>
       </div>
@@ -125,5 +167,3 @@ export default function ProductDetailPage() {
     </div>
   );
 }
-
-    

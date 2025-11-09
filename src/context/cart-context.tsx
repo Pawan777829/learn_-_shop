@@ -6,7 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (item: Item) => void;
+  addToCart: (item: Item, quantity?: number) => void;
   removeFromCart: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
   clearCart: () => void;
@@ -18,19 +18,19 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const { toast } = useToast();
 
-  const addToCart = (item: Item) => {
+  const addToCart = (item: Item, quantity: number = 1) => {
     setCartItems(prevItems => {
       const existingItem = prevItems.find(i => i.id === item.id);
       if (existingItem) {
         return prevItems.map(i =>
-          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+          i.id === item.id ? { ...i, quantity: i.quantity + quantity } : i
         );
       }
-      return [...prevItems, { ...item, quantity: 1 }];
+      return [...prevItems, { ...item, quantity: quantity }];
     });
     toast({
       title: "Added to cart",
-      description: `${item.name} has been added to your cart.`,
+      description: `${item.name} (x${quantity}) has been added to your cart.`,
     });
   };
 

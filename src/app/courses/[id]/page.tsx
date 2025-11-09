@@ -128,7 +128,7 @@ export default function CourseDetailPage() {
                 <div className="border rounded-lg bg-card text-card-foreground shadow-sm p-6">
                     <p className="text-4xl font-bold text-primary mb-4">${course.price.toFixed(2)}</p>
                     <div className="flex items-center gap-2">
-                        <Button size="lg" className="h-12 text-lg flex-grow" onClick={() => addToCart(course)}>
+                        <Button size="lg" className="h-12 text-lg flex-grow" onClick={() => addToCart(course, 1)}>
                             <BookOpen className="mr-2" />
                             Enroll Now
                         </Button>
