@@ -21,6 +21,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc } from 'firebase/firestore';
 import { setDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import { useEffect } from 'react';
+import { useToast } from '@/hooks/use-toast';
 
 const signupSchema = z.object({
   firstName: z.string().min(1, { message: 'First name is required.' }),
@@ -33,6 +34,7 @@ export default function SignupPage() {
   const auth = useAuth();
   const firestore = useFirestore();
   const router = useRouter();
+  const { toast } = useToast();
   const { user, isUserLoading } = useUser();
 
   const form = useForm<z.infer<typeof signupSchema>>({
@@ -66,10 +68,18 @@ export default function SignupPage() {
           dateJoined: new Date().toISOString(),
         };
         setDocumentNonBlocking(userRef, userData, { merge: true });
+        toast({
+          title: "Account Created!",
+          description: "Welcome to Learn & Shop. You are now logged in.",
+        })
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error signing up:', error);
-      // You can use a toast to show the error to the user
+       toast({
+        variant: "destructive",
+        title: "Signup Failed",
+        description: error.message || "An unexpected error occurred. Please try again.",
+      });
     }
   }
 
@@ -85,8 +95,8 @@ export default function SignupPage() {
     <div className="container mx-auto flex items-center justify-center min-h-[calc(100vh-8rem)] py-12">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-headline">Create an Account</CardTitle>
-          <CardDescription>Join Learn & Shop today</CardDescription>
+          <CardTitle className="text-3xl font-headline">Create a Customer Account</CardTitle>
+          <CardDescription>Join Learn & Shop today to start learning and shopping.</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -145,8 +155,8 @@ export default function SignupPage() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full" size="lg">
-                Sign Up
+              <Button type="submit" className="w-full" size="lg" disabled={form.formState.isSubmitting}>
+                {form.formState.isSubmitting ? "Creating Account..." : "Sign Up"}
               </Button>
             </form>
           </Form>
@@ -155,6 +165,12 @@ export default function SignupPage() {
               Already have an account?{' '}
               <Link href="/login" className="font-medium text-primary hover:underline">
                 Log In
+              </Link>
+            </p>
+             <p className="text-muted-foreground mt-2">
+              Want to sell on our platform?{' '}
+              <Link href="/signup/vendor" className="font-medium text-primary hover:underline">
+                Become a Vendor
               </Link>
             </p>
           </div>

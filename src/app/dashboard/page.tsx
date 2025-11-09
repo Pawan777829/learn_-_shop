@@ -1,5 +1,51 @@
-import { redirect } from 'next/navigation';
+'use client';
+
+import { useUser, useFirestore, useDoc, useMemoFirebase } from '@/firebase';
+import { doc } from 'firebase/firestore';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function DashboardPage() {
-  redirect('/dashboard/user');
+  const { user, isUserLoading } = useUser();
+  const firestore = useFirestore();
+  const router = useRouter();
+
+  // Path to the potential vendor document for the current user
+  const vendorRef = useMemoFirebase(() => {
+    if (!user) return null;
+    // This path assumes a user can only have one vendor profile, stored with their UID as the doc ID.
+    // The vendor document is now stored under the user's own document.
+    return doc(firestore, 'users', user.uid, 'vendors', user.uid);
+  }, [firestore, user]);
+
+  const { data: vendorDoc, isLoading: isVendorLoading } = useDoc(vendorRef);
+
+  useEffect(() => {
+    if (isUserLoading || isVendorLoading) {
+      // Still loading, wait for auth and firestore data
+      return;
+    }
+
+    if (!user) {
+      // If no user is logged in, send them to the login page
+      router.replace('/login');
+      return;
+    }
+
+    if (vendorDoc) {
+      // If a vendor document exists, they are a vendor
+      router.replace('/dashboard/vendor');
+    } else {
+      // Otherwise, they are a regular user
+      router.replace('/dashboard/user');
+    }
+  }, [user, vendorDoc, isUserLoading, isVendorLoading, router]);
+
+  // Render a loading state while we determine the user's role
+  return (
+    <div className="flex h-full w-full items-center justify-center">
+      <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+      <p className="ml-4 text-lg">Redirecting to your dashboard...</p>
+    </div>
+  );
 }

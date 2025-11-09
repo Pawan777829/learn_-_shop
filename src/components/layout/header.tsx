@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { BookOpenCheck, Search, ShoppingCart, User, LogOut, LogIn, UserPlus } from 'lucide-react';
+import { BookOpenCheck, Search, ShoppingCart, User, LogOut, LogIn, UserPlus, Store } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -69,9 +69,15 @@ export default function Header() {
             </Link>
             <Link
               href="/dashboard"
-              className="transition-colors hover:text-foreground/80 text-foreground/60"
+              className="transition-colors hover:text-foreground/80 text-foreground"
             >
               Dashboard
+            </Link>
+             <Link
+              href="/signup/vendor"
+              className="transition-colors hover:text-foreground/80 text-foreground/60"
+            >
+              Become a Vendor
             </Link>
           </nav>
         </div>
@@ -117,14 +123,14 @@ export default function Header() {
                   <DropdownMenuLabel>{user.displayName || user.email}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link href="/dashboard/user">
+                    <Link href="/dashboard">
                       <User className="mr-2 h-4 w-4" />
-                      <span>User Dashboard</span>
+                      <span>Dashboard</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href="/dashboard/vendor">
-                       <ShoppingCart className="mr-2 h-4 w-4" />
+                       <Store className="mr-2 h-4 w-4" />
                        <span>Vendor Dashboard</span>
                     </Link>
                   </DropdownMenuItem>
@@ -156,6 +162,13 @@ export default function Header() {
                     <Link href="/signup">
                       <UserPlus className="mr-2 h-4 w-4" />
                       <span>Sign Up</span>
+                    </Link>
+                  </DropdownMenuItem>
+                   <DropdownMenuSeparator />
+                   <DropdownMenuItem asChild>
+                    <Link href="/signup/vendor">
+                      <Store className="mr-2 h-4 w-4" />
+                      <span>Become a Vendor</span>
                     </Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
