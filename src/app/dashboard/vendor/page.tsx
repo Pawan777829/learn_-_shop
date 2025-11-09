@@ -30,10 +30,13 @@ import { Button } from "@/components/ui/button";
 import { useUser, useFirestore, useCollection, useMemoFirebase, deleteDocumentNonBlocking } from "@/firebase";
 import { collection, doc } from "firebase/firestore";
 import type { Item } from "@/lib/types";
-import { DollarSign, Package, BookOpen, Loader2, Edit, Trash2 } from "lucide-react";
+import { Edit, Trash2, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import AnalyticsOverview from "@/components/dashboard/vendor/analytics-overview";
+import RevenueChart from "@/components/dashboard/vendor/revenue-chart";
+import RecentSales from "@/components/dashboard/vendor/recent-sales";
 
 export default function VendorDashboardPage() {
   const { user } = useUser();
@@ -64,7 +67,6 @@ export default function VendorDashboardPage() {
     if (courses) {
       combined.push(...courses.map(c => ({...c, type: 'course' as const})));
     }
-    // Add id to each item for key prop and deletion logic
     return combined.map((item, index) => ({...item, uniqueId: item.id || `item-${index}`}));
   }, [products, courses]);
 
@@ -82,16 +84,6 @@ export default function VendorDashboardPage() {
     });
     setItemToDelete(null);
   };
-
-
-  const totalRevenue = allListings?.reduce((acc, item) => {
-      // This is a mock calculation, a real app would track sales.
-      // Here we just sum up the prices of listed items.
-      return acc + (item.price || 0);
-  }, 0) || 0;
-  const totalListings = allListings?.length || 0;
-  const productCount = products?.length || 0;
-  const courseCount = courses?.length || 0;
   
   if (!user) {
     return (
@@ -111,38 +103,28 @@ export default function VendorDashboardPage() {
         </p>
       </header>
 
-      <div className="grid gap-6 md:grid-cols-3">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">${totalRevenue.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
-            <p className="text-xs text-muted-foreground">+20.1% from last month (mock data)</p>
-          </CardContent>
+      <AnalyticsOverview listings={allListings} />
+      
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
+        <Card className="lg:col-span-4">
+            <CardHeader>
+                <CardTitle>Revenue Overview</CardTitle>
+            </CardHeader>
+            <CardContent className="pl-2">
+                <RevenueChart />
+            </CardContent>
         </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Listings</CardTitle>
-            <Package className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{totalListings}</div>
-            <p className="text-xs text-muted-foreground">{productCount} products, {courseCount} courses</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Sales</CardTitle>
-            <BookOpen className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">+1,234</div>
-            <p className="text-xs text-muted-foreground">+19% from last month (mock data)</p>
-          </CardContent>
+        <Card className="lg:col-span-3">
+            <CardHeader>
+                <CardTitle>Recent Sales</CardTitle>
+                <CardDescription>You made 265 sales this month. (mock data)</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <RecentSales />
+            </CardContent>
         </Card>
       </div>
+
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
@@ -225,3 +207,5 @@ export default function VendorDashboardPage() {
     </>
   );
 }
+
+    
