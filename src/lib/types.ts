@@ -90,6 +90,8 @@ export type Review = {
     userId: string;
     userName: string;
     itemId: string;
+    itemType: 'product' | 'course';
+    itemName: string;
     rating: number;
     comment: string;
     createdAt: string;
@@ -102,6 +104,24 @@ export type WishlistItem = {
   itemType: 'product' | 'course';
   addedAt: string;
 }
-    
 
-    
+export type Address = {
+    id: string;
+    userId: string;
+    fullName: string;
+    addressLine1: string;
+    addressLine2?: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
+    isDefault: boolean;
+};
+
+export type UserProfile = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  dateJoined: string;
+}

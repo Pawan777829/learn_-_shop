@@ -16,10 +16,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { useUser, useFirestore, useCollection, useMemoFirebase, addDocumentNonBlocking } from '@/firebase';
 import { collection, query, where, orderBy, getDocs, collectionGroup } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
-import type { Review, Order, OrderItem } from '@/lib/types';
+import type { Review, Item } from '@/lib/types';
 import ReviewCard from './review-card';
 import { Star, Loader2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { allItems } from '@/lib/data';
 
 const reviewSchema = z.object({
   rating: z.number().min(1, 'Rating is required').max(5),
@@ -38,6 +39,8 @@ export default function Reviews({ itemId, itemType }: ReviewsProps) {
   const [hoveredRating, setHoveredRating] = useState(0);
   const [isCheckingPurchase, setIsCheckingPurchase] = useState(true);
   const [hasPurchased, setHasPurchased] = useState(false);
+
+  const item = allItems.find(i => i.id === itemId);
 
   const reviewsCollectionPath = itemType === 'product' ? `products/${itemId}/reviews` : `courses/${itemId}/reviews`;
 
@@ -100,17 +103,19 @@ export default function Reviews({ itemId, itemType }: ReviewsProps) {
   const selectedRating = form.watch('rating');
 
   function onSubmit(values: z.infer<typeof reviewSchema>) {
-    if (!user || !firestore) {
+    if (!user || !firestore || !item) {
       toast({ variant: 'destructive', title: 'Error', description: 'You must be logged in to submit a review.' });
       return;
     }
 
     const reviewsRef = collection(firestore, reviewsCollectionPath);
-    const reviewData = {
+    const reviewData: Omit<Review, 'id'> = {
       ...values,
       userId: user.uid,
       userName: user.displayName || user.email?.split('@')[0] || 'Anonymous',
       itemId: itemId,
+      itemType: itemType,
+      itemName: item.name,
       createdAt: new Date().toISOString(),
     };
 

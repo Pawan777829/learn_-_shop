@@ -10,6 +10,7 @@
  * Data Structure:
  * - /users/{userId}: Stores user profiles.
  * - /users/{userId}/vendors/{vendorId}: Stores vendor profiles owned by the user.
+ * - /users/{userId}/addresses/{addressId}: Stores user shipping addresses.
  * - /vendors/{vendorId}/products/{productId}: Stores products listed by vendors.
  * - /vendors/{vendorId}/courses/{courseId}: Stores courses offered by vendors.
  * - /users/{userId}/orders/{orderId}: Stores order information for users.
@@ -38,276 +39,135 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
     /**
      * @description Enforces user-ownership for user profiles.
      * @path /users/{userId}
+     * @allow (get, update) - Authenticated user with matching user ID can read or update their profile.
      * @allow (create) - Authenticated user creates their own profile with matching user ID.
-     * @allow (get, list, update, delete) - Authenticated user with matching user ID can read, update, or delete their profile.
-     * @deny (create) - Authenticated user attempts to create a profile with a mismatched user ID.
-     * @principle Enforces document ownership for writes.
+     * @deny (delete) - Users cannot delete their own profiles.
      */
     match /users/{userId} {
-      function isSignedIn() {
-        return request.auth != null;
-      }
-
-      function isOwner(userId) {
-        return isSignedIn() && request.auth.uid == userId;
-      }
-
-      function isCreatingOwnDocument(userId) {
-        return isOwner(userId) && request.resource.data.id == userId;
-      }
-
-      allow read: if isOwner(userId);
-      allow write: if isCreatingOwnDocument(userId);
+      allow read, update: if isOwner(userId);
+      allow create: if isOwner(userId) && request.resource.data.id == userId;
+    }
+    
+    /**
+     * @description Enforces user-ownership for addresses.
+     * @path /users/{userId}/addresses/{addressId}
+     * @allow (read, write) - Authenticated user with matching user ID can manage their addresses.
+     */
+    match /users/{userId}/addresses/{addressId} {
+      allow read, write: if isOwner(userId);
     }
 
     /**
      * @description Enforces user-ownership for vendor profiles.
      * @path /users/{userId}/vendors/{vendorId}
-     * @allow (create) - Authenticated user creates a vendor profile under their user ID.
-     * @allow (get, list, update, delete) - Authenticated user with matching user ID can read, update, or delete their vendor profile.
-     * @deny (create) - Authenticated user attempts to create a vendor profile under a mismatched user ID.
-     * @principle Enforces document ownership for writes.
+     * @allow (read, write) - Authenticated user with matching user ID can manage their vendor profile.
      */
     match /users/{userId}/vendors/{vendorId} {
-      function isSignedIn() {
-        return request.auth != null;
-      }
-
-      function isOwner(userId) {
-        return isSignedIn() && request.auth.uid == userId;
-      }
-
-      function isExistingOwner(userId) {
-        return isOwner(userId) && resource != null;
-      }
-
-      allow get: if isOwner(userId);
-      allow list: if isOwner(userId);
-      allow create: if isOwner(userId);
-      allow update: if isExistingOwner(userId);
-      allow delete: if isExistingOwner(userId);
+      allow read, write: if isOwner(userId);
     }
 
     /**
-     * @description Enforces vendor-ownership for products.
+     * @description Publicly readable products, but write access is restricted to the owning vendor.
      * @path /vendors/{vendorId}/products/{productId}
-     * @allow (create) - Authenticated user (vendor) creates a product under their vendor ID. The Product document MUST contain `vendorId`.
-     * @allow (get, list, update, delete) - Authenticated user (vendor) with matching vendor ID can read, update, or delete their product.
-     * @deny (create) - Authenticated user attempts to create a product under a mismatched vendor ID.
-     * @principle Enforces document ownership for writes.  Authorization Independence achieved via denormalized vendorId on Product.
+     * @principle Enforces document ownership for writes. Authorization Independence achieved via denormalized vendorId on Product.
      */
     match /vendors/{vendorId}/products/{productId} {
-      function isSignedIn() {
-        return request.auth != null;
-      }
-
-      function isVendor(vendorId) {
-        // This rule is too restrictive. Anyone should be able to view products.
-        // We'll relax this later. For now, only the vendor can see it.
-        return true;
-      }
-
-       function isExistingVendor(vendorId) {
-        return isVendor(vendorId) && resource != null;
-      }
-
       allow read: if true;
-      allow create: if isSignedIn() && request.resource.data.vendorId == request.auth.uid;
-      allow update: if isSignedIn() && resource.data.vendorId == request.auth.uid;
-      allow delete: if isSignedIn() && resource.data.vendorId == request.auth.uid;
+      allow write: if request.auth != null && request.resource.data.vendorId == request.auth.uid;
     }
     
+    /**
+     * @description Publicly readable reviews. Writes are restricted.
+     * @path /products/{productId}/reviews/{reviewId}
+     */
     match /products/{productId}/reviews/{reviewId} {
       allow read: if true;
-      // Allow write if user is signed in and they have purchased the product.
-      allow create: if request.auth != null && exists(/databases/$(database)/documents/users/$(request.auth.uid)/orders);
-      // Logic to check if a user has bought a specific item is complex in rules.
-      // For this prototype, we'll simplify: if they have any order, they can review.
-      // A more robust solution would involve checking order items.
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
     }
 
     /**
-     * @description Enforces vendor-ownership for courses.
+     * @description Publicly readable courses, but write access is restricted to the owning vendor.
      * @path /vendors/{vendorId}/courses/{courseId}
-     * @allow (create) - Authenticated user (vendor) creates a course under their vendor ID. The Course document MUST contain `vendorId`.
-     * @allow (get, list, update, delete) - Authenticated user (vendor) with matching vendor ID can read, update, or delete their course.
-     * @deny (create) - Authenticated user attempts to create a course under a mismatched vendor ID.
      * @principle Enforces document ownership for writes. Authorization Independence achieved via denormalized vendorId on Course.
      */
     match /vendors/{vendorId}/courses/{courseId} {
-      function isSignedIn() {
-        return request.auth != null;
-      }
-
       allow read: if true;
-      allow create: if isSignedIn() && request.resource.data.vendorId == request.auth.uid;
-      allow update: if isSignedIn() && resource.data.vendorId == request.auth.uid;
-      allow delete: if isSignedIn() && resource.data.vendorId == request.auth.uid;
+      allow write: if request.auth != null && request.resource.data.vendorId == request.auth.uid;
     }
-
+    
+    /**
+     * @description Publicly readable reviews. Writes are restricted to enrolled users.
+     * @path /courses/{courseId}/reviews/{reviewId}
+     */
     match /courses/{courseId}/reviews/{reviewId} {
         allow read: if true;
-        // Allow write if user is signed in and is enrolled in the course.
         allow create: if request.auth != null && exists(/databases/$(database)/documents/users/$(request.auth.uid)/enrollments/$(courseId));
     }
 
     /**
-     * @description Enforces user-ownership for orders.
+     * @description Enforces user-ownership for orders and their subcollections.
      * @path /users/{userId}/orders/{orderId}
-     * @allow (create) - Authenticated user creates an order under their user ID.  The Order document MUST contain `userId`.
-     * @allow (get, list, update, delete) - Authenticated user with matching user ID can read, update, or delete their order.
-     * @deny (create) - Authenticated user attempts to create an order under a mismatched user ID.
      * @principle Enforces document ownership for writes. Authorization Independence achieved via denormalized userId on Order.
      */
     match /users/{userId}/orders/{orderId} {
-      function isSignedIn() {
-        return request.auth != null;
+      allow read, write: if isOwner(userId);
+
+      // Rule for the orderItems subcollection
+      match /orderItems/{orderItemId} {
+        allow read, write: if isOwner(userId);
       }
-
-      function isOwner(userId) {
-        return isSignedIn() && request.auth.uid == userId;
-      }
-
-      function isExistingOwner(userId) {
-        return isOwner(userId) && resource != null;
-      }
-
-      allow get: if isOwner(userId);
-      allow list: if isOwner(userId);
-      allow create: if isOwner(userId) && request.resource.data.userId == userId;
-      allow update: if isExistingOwner(userId) && resource.data.userId == userId;
-      allow delete: if isExistingOwner(userId) && resource.data.userId == userId;
-    }
-
-    /**
-     * @description Enforces user-ownership for order items within an order.
-     * @path /users/{userId}/orders/{orderId}/orderItems/{orderItemId}
-     * @allow (create) - Authenticated user creates an order item under their order.
-     * @allow (get, list, update, delete) - Authenticated user with matching user ID can read, update, or delete their order item.
-     * @deny (create) - Authenticated user attempts to create an order item under a mismatched user ID.
-     * @principle Enforces document ownership for writes based on the parent order's ownership.
-     */
-    match /users/{userId}/orders/{orderId}/orderItems/{orderItemId} {
-      function isSignedIn() {
-        return request.auth != null;
-      }
-
-      function isOwner(userId) {
-        return isSignedIn() && request.auth.uid == userId;
-      }
-
-      function isExistingOwner(userId) {
-        return isOwner(userId) && resource != null;
-      }
-
-      allow get: if isOwner(userId);
-      allow list: if isOwner(userId);
-      allow create: if isOwner(userId);
-      allow update: if isExistingOwner(userId);
-      allow delete: if isExistingOwner(userId);
     }
 
     /**
      * @description Enforces user-ownership for enrollments.
      * @path /users/{userId}/enrollments/{enrollmentId}
-     * @allow (create) - Authenticated user creates an enrollment under their user ID. The Enrollment document MUST contain `userId`.
-     * @allow (get, list, update, delete) - Authenticated user with matching user ID can read, update, or delete their enrollment.
-     * @deny (create) - Authenticated user attempts to create an enrollment under a mismatched user ID.
      * @principle Enforces document ownership for writes. Authorization Independence achieved via denormalized userId on Enrollment.
      */
     match /users/{userId}/enrollments/{enrollmentId} {
-      function isSignedIn() {
-        return request.auth != null;
-      }
-
-      function isOwner(userId) {
-        return isSignedIn() && request.auth.uid == userId;
-      }
-
-      function isExistingOwner(userId) {
-        return isOwner(userId) && resource != null;
-      }
-
-      allow get: if isOwner(userId);
-      allow list: if isOwner(userId);
-      allow create: if isOwner(userId) && request.resource.data.userId == userId;
-      allow update: if isExistingOwner(userId) && resource.data.userId == userId;
-      allow delete: if isExistingOwner(userId) && resource.data.userId == userId;
+      allow read, write: if isOwner(userId) && request.resource.data.userId == userId;
     }
 
     /**
      * @description Enforces user-ownership for recommendations.
      * @path /users/{userId}/recommendations/{recommendationId}
-     * @allow (create) - Authenticated user creates a recommendation under their user ID. The Recommendation document MUST contain `userId`.
-     * @allow (get, list, update, delete) - Authenticated user with matching user ID can read, update, or delete their recommendation.
-     * @deny (create) - Authenticated user attempts to create a recommendation under a mismatched user ID.
      * @principle Enforces document ownership for writes. Authorization Independence achieved via denormalized userId on Recommendation.
      */
     match /users/{userId}/recommendations/{recommendationId} {
-      function isSignedIn() {
-        return request.auth != null;
-      }
-
-      function isOwner(userId) {
-        return isSignedIn() && request.auth.uid == userId;
-      }
-
-      function isExistingOwner(userId) {
-        return isOwner(userId) && resource != null;
-      }
-
-      allow get: if isOwner(userId);
-      allow list: if isOwner(userId);
-      allow create: if isOwner(userId) && request.resource.data.userId == userId;
-      allow update: if isExistingOwner(userId) && resource.data.userId == userId;
-      allow delete: if isExistingOwner(userId) && resource.data.userId == userId;
+      allow read, write: if isOwner(userId);
     }
 
     /**
-     * @description Enforces course-ownership for lessons.
+     * @description Lesson access is restricted to enrolled users or the course vendor.
      * @path /courses/{courseId}/lessons/{lessonId}
-     * @allow (create) - Any authenticated user can create a lesson under a course ID. The Lesson document MUST contain `courseId`.
-     * @allow (get, list, update, delete) - Any authenticated user can read, update, or delete a lesson.
      */
     match /courses/{courseId}/lessons/{lessonId} {
-       function isSignedIn() {
-        return request.auth != null;
-      }
-
-      function isEnrolled() {
-        // Check if the user is enrolled in the course
+       function isEnrolled() {
         return exists(/databases/$(database)/documents/users/$(request.auth.uid)/enrollments/$(courseId));
       }
 
-      function isVendor() {
-        // Check if the user is the vendor of the course
-        return get(/databases/$(database)/documents/vendors/$(request.auth.uid)/courses/$(courseId)).data.vendorId == request.auth.uid;
+      function isCourseVendor() {
+        // This rule assumes vendorId is denormalized on the course document.
+        let courseDoc = get(/databases/$(database)/documents/courses/$(courseId));
+        return courseDoc.data.vendorId == request.auth.uid;
       }
 
-      allow read: if isSignedIn() && (isEnrolled() || isVendor());
-      allow list: if isSignedIn() && (isEnrolled() || isVendor());
-      allow create: if isSignedIn() && isVendor();
-      allow update: if isSignedIn() && isVendor();
-      allow delete: if isSignedIn() && isVendor();
+      allow read: if request.auth != null && (isEnrolled() || isCourseVendor());
+      allow write: if request.auth != null && isCourseVendor();
     }
     
     /**
      * @description Enforces user-ownership for their wishlist.
      * @path /users/{userId}/wishlist/{wishlistItemId}
-     * @allow (read, write) - Authenticated user with a matching user ID can manage their wishlist.
-     * @principle Enforces document ownership for all operations.
      */
     match /users/{userId}/wishlist/{wishlistItemId} {
-      function isOwner(userId) {
-        return request.auth != null && request.auth.uid == userId;
-      }
-
       allow read, write: if isOwner(userId);
     }
   }
 }
-
-    

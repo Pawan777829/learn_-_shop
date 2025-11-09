@@ -10,7 +10,7 @@ import {
   SidebarHeader,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { BookOpenCheck, Home, User, ShoppingBag, Heart } from "lucide-react";
+import { BookOpenCheck, Home, User, ShoppingBag, Heart, Settings, Star } from "lucide-react";
 
 export function SidebarNav() {
   const pathname = usePathname();
@@ -64,6 +64,30 @@ export function SidebarNav() {
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
+           <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              isActive={pathname.startsWith("/dashboard/user/reviews")}
+              tooltip={{ children: "My Reviews" }}
+            >
+              <Link href="/dashboard/user/reviews">
+                <Star />
+                <span>My Reviews</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              isActive={pathname.startsWith("/dashboard/user/settings")}
+              tooltip={{ children: "Profile Settings" }}
+            >
+              <Link href="/dashboard/user/settings">
+                <Settings />
+                <span>Profile Settings</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
@@ -81,5 +105,3 @@ export function SidebarNav() {
     </>
   );
 }
-
-    
