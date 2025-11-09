@@ -1,10 +1,11 @@
+
 import type { Item } from './types';
 
 export const allItems: Item[] = [
   {
     id: 'p1',
     name: 'Wireless Pro Headphones',
-    description: 'Experience immersive sound with our new noise-cancelling headphones.',
+    description: 'Experience immersive, high-fidelity sound with our cutting-edge Wireless Pro Headphones. Featuring advanced active noise-cancellation, you can block out distractions and focus on what matters. With a comfortable over-ear design, plush memory foam earcups, and an impressive 30-hour battery life, these headphones are perfect for travel, work, and everyday listening. Connect seamlessly via Bluetooth 5.2 and enjoy crystal-clear audio.',
     price: 249.99,
     type: 'product',
     category: 'Electronics',
@@ -16,7 +17,7 @@ export const allItems: Item[] = [
   {
     id: 'p2',
     name: 'Ergo-Mechanical Keyboard',
-    description: 'Type faster and more comfortably with our ergonomic keyboard.',
+    description: 'Upgrade your typing experience with the Ergo-Mechanical Keyboard. Designed for comfort and speed, its split layout and tactile switches reduce strain during long work sessions. Features fully customizable RGB backlighting, programmable macro keys, and a durable aluminum frame. Perfect for programmers, writers, and gamers who demand performance and ergonomics.',
     price: 129.99,
     type: 'product',
     category: 'Computers & Accessories',
@@ -28,7 +29,7 @@ export const allItems: Item[] = [
   {
     id: 'c1',
     name: 'Full-Stack Web Development',
-    description: 'Master front-end and back-end technologies to build complete web applications. This course covers everything from HTML/CSS to advanced Node.js and React.',
+    description: 'Go from beginner to job-ready with our comprehensive Full-Stack Web Development bootcamp. This course covers everything from front-end essentials like HTML, CSS, and React to back-end technologies like Node.js, Express, and databases. You will build and deploy several real-world projects to create a stunning portfolio. Perfect for aspiring developers looking for a complete curriculum.',
     price: 499.0,
     type: 'course',
     category: 'Courses',
@@ -47,7 +48,7 @@ export const allItems: Item[] = [
   {
     id: 'p3',
     name: 'HealthTracker Smartwatch',
-    description: 'Monitor your fitness goals and stay connected on the go.',
+    description: 'Achieve your fitness goals and stay connected with the HealthTracker Smartwatch. It offers 24/7 heart rate monitoring, sleep tracking, GPS, and dozens of workout modes. The vibrant AMOLED display shows your notifications, and with a water-resistance rating of 5ATM, you can take it swimming. A single charge lasts up to 14 days, making it the perfect companion for a healthy lifestyle.',
     price: 199.5,
     type: 'product',
     category: 'Electronics',
@@ -59,7 +60,7 @@ export const allItems: Item[] = [
   {
     id: 'c2',
     name: 'Advanced Graphic Design',
-    description: 'Unlock your creativity with advanced techniques in branding and illustration. This course is for designers looking to take their skills to the next level.',
+    description: 'Take your design skills to the next level with our Advanced Graphic Design course. This curriculum is for designers who want to master branding, illustration, and layout. You will learn advanced techniques in Adobe Illustrator and Photoshop, explore color theory, and work on a client-based project to build a professional portfolio piece. Ideal for those looking to transition into a senior designer role.',
     price: 350.0,
     type: 'course',
     category: 'Courses',
@@ -77,7 +78,7 @@ export const allItems: Item[] = [
   {
     id: 'c3',
     name: 'Data Science with Python',
-    description: 'Learn to analyze data, create visualizations, and build predictive models. This comprehensive course covers Pandas, Matplotlib, and Scikit-learn.',
+    description: 'Unlock the power of data with our comprehensive Data Science with Python course. You will learn to analyze data, create beautiful visualizations, and build predictive machine learning models. This course covers essential libraries like Pandas, NumPy, Matplotlib, and Scikit-learn. It is project-based, so you will get hands-on experience working with real-world datasets.',
     price: 550.0,
     type: 'course',
     category: 'Courses',
@@ -95,7 +96,7 @@ export const allItems: Item[] = [
   {
     id: 'p4',
     name: 'Smart Home Hub',
-    description: 'Control all your smart devices from one central hub with voice commands.',
+    description: 'Unify your smart home with the Smart Home Hub. Control lights, thermostats, locks, and more from a single app or with your voice. Compatible with Alexa, Google Assistant, and Apple HomeKit, it supports thousands of devices from different brands. Automate your home with custom routines and scenes for convenience and security. Easy to set up, even easier to use.',
     price: 99.99,
     type: 'product',
     category: 'Home Appliances',
@@ -107,7 +108,7 @@ export const allItems: Item[] = [
   {
     id: 'p5',
     name: 'The Complete JavaScript Guide',
-    description: 'A comprehensive book covering everything from fundamentals to advanced JS.',
+    description: 'This comprehensive book is your ultimate guide to mastering JavaScript. Starting with the fundamentals, it takes you through advanced topics like closures, asynchronous programming, and modern ES6+ features. Whether you are a beginner or an experienced developer looking to solidify your knowledge, this book provides clear explanations and practical examples to make you a JavaScript expert.',
     price: 45.50,
     type: 'product',
     category: 'Books',
@@ -119,7 +120,7 @@ export const allItems: Item[] = [
   {
     id: 'p6',
     name: 'Eco-Friendly Yoga Mat',
-    description: 'A non-slip, eco-friendly mat perfect for your daily yoga practice.',
+    description: 'Find your zen with our Eco-Friendly Yoga Mat. Made from sustainably sourced, non-toxic materials, it provides excellent grip and cushioning for your practice. It is lightweight, durable, and easy to clean. The alignment lines help you perfect your poses, making it ideal for both beginners and experienced yogis. Comes with a free carrying strap for easy transport.',
     price: 65.00,
     type: 'product',
     category: 'Sports & Outdoors',
@@ -131,7 +132,7 @@ export const allItems: Item[] = [
   {
     id: 'p7',
     name: 'Digital Drawing Tablet',
-    description: 'Unleash your inner artist with this professional-grade drawing tablet.',
+    description: 'Unleash your creativity with this professional-grade digital drawing tablet. Featuring a large, high-resolution drawing area, 8192 levels of pressure sensitivity, and a battery-free stylus, it provides a natural and precise drawing experience. Compatible with all major design software on both Mac and Windows, it is perfect for digital illustration, photo editing, and 3D modeling.',
     price: 320.00,
     type: 'product',
     category: 'Computers & Accessories',
@@ -143,7 +144,7 @@ export const allItems: Item[] = [
   {
     id: 'c4',
     name: 'Introduction to Digital Marketing',
-    description: 'Learn SEO, social media marketing, and content strategy to grow businesses. Perfect for beginners and business owners.',
+    description: 'Learn the essential skills to grow a business online in our Introduction to Digital Marketing course. This beginner-friendly program covers SEO, social media marketing, content strategy, and email marketing. You will learn how to create a marketing funnel, attract new customers, and measure your success. Perfect for small business owners, aspiring marketers, and anyone looking to boost their online presence.',
     price: 299.00,
     type: 'course',
     category: 'Courses',
@@ -161,7 +162,7 @@ export const allItems: Item[] = [
    {
     id: 'p8',
     name: 'Portable Bluetooth Speaker',
-    description: 'Take your music anywhere with this compact and powerful speaker.',
+    description: 'Take your music anywhere with this compact and powerful Portable Bluetooth Speaker. Despite its small size, it delivers rich sound and deep bass. It is waterproof (IPX7), dustproof, and features a 12-hour battery life, making it the perfect companion for beach trips, hikes, and parties. Pair two speakers for a stereo sound experience.',
     price: 79.99,
     type: 'product',
     category: 'Electronics',
@@ -173,7 +174,7 @@ export const allItems: Item[] = [
   {
     id: 'p9',
     name: '4K Action Camera',
-    description: 'Capture your adventures in stunning 4K detail with this rugged camera.',
+    description: 'Capture your adventures in stunning detail with this 4K Action Camera. It is rugged, waterproof up to 30 meters, and features advanced image stabilization for smooth footage. The intuitive touchscreen makes it easy to frame shots and change settings. With multiple shooting modes like time-lapse and slow-motion, you can get creative with your content.',
     price: 189.99,
     type: 'product',
     category: 'Electronics',
@@ -185,7 +186,7 @@ export const allItems: Item[] = [
   {
     id: 'p10',
     name: 'Gaming Mouse Pro',
-    description: 'High-precision gaming mouse with customizable buttons and RGB lighting.',
+    description: 'Gain a competitive edge with the Gaming Mouse Pro. It features a high-precision 16,000 DPI optical sensor, ultra-responsive switches, and a lightweight, ergonomic design for maximum comfort and control. Customize the 8 programmable buttons and RGB lighting to match your setup and playstyle. The low-friction feet ensure smooth gliding for quick movements.',
     price: 89.99,
     type: 'product',
     category: 'Computers & Accessories',
@@ -197,7 +198,7 @@ export const allItems: Item[] = [
   {
     id: 'p11',
     name: 'Ultra-Wide Curved Monitor',
-    description: 'Immerse yourself in work or play with this stunning 34-inch curved monitor.',
+    description: 'Immerse yourself in work and play with this stunning 34-inch Ultra-Wide Curved Monitor. The 21:9 aspect ratio provides an expansive view, perfect for multitasking and immersive gaming. With a vibrant QHD resolution and HDR support, colors are vivid and details are sharp. The 144Hz refresh rate ensures buttery-smooth motion. It also features adjustable height and tilt for ergonomic comfort.',
     price: 599.99,
     type: 'product',
     category: 'Computers & Accessories',
@@ -209,7 +210,7 @@ export const allItems: Item[] = [
   {
     id: 'p12',
     name: 'Espresso Maker Machine',
-    description: 'Become your own barista with this professional-grade espresso machine.',
+    description: 'Become your own barista with this professional-grade Espresso Maker. It features a built-in grinder, precise temperature control (PID), and a powerful steam wand for creating perfect microfoam for lattes and cappuccinos. The intuitive interface makes it easy to pull rich, flavorful espresso shots every time. Comes with a stainless steel milk frothing pitcher and tamper.',
     price: 499.99,
     type: 'product',
     category: 'Home Appliances',
@@ -221,7 +222,7 @@ export const allItems: Item[] = [
   {
     id: 'p13',
     name: 'Robotic Vacuum Cleaner',
-    description: 'Keep your floors spotless with this intelligent, self-charging robotic vacuum.',
+    description: 'Keep your floors spotless with this intelligent Robotic Vacuum Cleaner. It uses LiDAR navigation to map your home and clean in efficient, systematic paths. With powerful suction and smart-mopping capabilities, it handles dirt, dust, and spills with ease. Control it via the app, set no-go zones, and schedule cleanings, even when you are not home. It automatically returns to its base to recharge.',
     price: 299.00,
     type: 'product',
     category: 'Home Appliances',
@@ -233,7 +234,7 @@ export const allItems: Item[] = [
   {
     id: 'p14',
     name: 'Air Fryer XL',
-    description: 'Enjoy your favorite fried foods with up to 80% less fat.',
+    description: 'Enjoy your favorite fried foods with up to 80% less fat with the Air Fryer XL. Its large capacity is perfect for families, and its Rapid Air technology circulates hot air for crispy results. In addition to frying, it can also grill, roast, and bake. The digital touchscreen has several presets for popular dishes, and all removable parts are dishwasher-safe for easy cleanup.',
     price: 119.99,
     type: 'product',
     category: 'Home & Kitchen',
@@ -245,7 +246,7 @@ export const allItems: Item[] = [
   {
     id: 'p15',
     name: 'Classic Leather Jacket',
-    description: 'A timeless and stylish leather jacket made from high-quality materials.',
+    description: 'A timeless and stylish jacket made from 100% genuine, full-grain leather. This classic moto jacket features a comfortable quilted lining, durable hardware, and a flattering fit that will never go out of style. It is a versatile wardrobe staple that adds a touch of edge to any outfit, from casual jeans to a formal dress.',
     price: 289.00,
     type: 'product',
     category: 'Fashion',
@@ -257,7 +258,7 @@ export const allItems: Item[] = [
   {
     id: 'p16',
     name: 'Trail Running Shoes',
-    description: 'Durable and comfortable shoes designed for the toughest terrains.',
+    description: 'Conquer any terrain with these durable and comfortable Trail Running Shoes. The rugged outsole provides superior grip on wet and dry surfaces, while the cushioned midsole absorbs impact. A breathable yet water-resistant upper keeps your feet dry and comfortable. The reinforced toe cap adds extra protection against rocks and debris.',
     price: 139.99,
     type: 'product',
     category: 'Fashion',
@@ -269,7 +270,7 @@ export const allItems: Item[] = [
   {
     id: 'p17',
     name: 'The Art of Programming',
-    description: 'A deep dive into computer science principles and best practices.',
+    description: 'A deep dive into computer science principles and timeless best practices for software development. This classic book covers topics like code structure, debugging, concurrency, and performance optimization. It is an essential read for any programmer looking to improve their craft and write more elegant, efficient, and maintainable code.',
     price: 59.99,
     type: 'product',
     category: 'Books',
@@ -281,7 +282,7 @@ export const allItems: Item[] = [
   {
     id: 'c5',
     name: 'Photography Masterclass',
-    description: 'From beginner to pro, learn composition, lighting, and editing. This course will teach you how to take stunning photos with any camera.',
+    description: 'Learn how to take stunning photos with any camera in our Photography Masterclass. This course covers the fundamentals of composition, lighting, and exposure. You will master your camera\'s manual settings and learn to edit your photos like a pro using Adobe Lightroom. Perfect for beginners who want to move beyond automatic mode and start creating art.',
     price: 450.00,
     type: 'course',
     category: 'Courses',
@@ -299,7 +300,7 @@ export const allItems: Item[] = [
   {
     id: 'c6',
     name: 'Personal Finance 101',
-    description: 'Master budgeting, saving, and investing for a secure financial future. This course is designed to give you control over your money.',
+    description: 'Take control of your financial future with Personal Finance 101. This practical course teaches you how to create a budget that works, build an emergency fund, manage debt, and start investing for retirement. You will learn the principles of wealth-building in simple, easy-to-understand terms. This course is essential for anyone who wants to achieve financial independence.',
     price: 199.00,
     type: 'course',
     category: 'Courses',
@@ -317,7 +318,7 @@ export const allItems: Item[] = [
   {
     id: 'c7',
     name: 'Creative Writing Workshop',
-    description: 'Learn to write compelling stories, characters, and dialogue. This workshop will help you find your voice and tell your story.',
+    description: 'Find your voice and tell your story in our Creative Writing Workshop. This course will guide you through the process of creating compelling plots, memorable characters, and powerful dialogue. Through a series of writing exercises and peer feedback, you will hone your craft and complete a short story. Ideal for aspiring novelists and storytellers.',
     price: 250.00,
     type: 'course',
     category: 'Courses',
@@ -335,7 +336,7 @@ export const allItems: Item[] = [
   {
     id: 'c8',
     name: 'AI & Machine Learning Foundations',
-    description: 'An introduction to the core concepts of AI and machine learning. This course is perfect for those curious about the future of technology.',
+    description: 'Curious about the future of technology? This course provides a gentle introduction to the core concepts of Artificial Intelligence and Machine Learning. You will learn about different types of ML models, build a simple neural network in Python, and discuss the ethical implications of AI. No advanced math or programming experience is required.',
     price: 650.00,
     type: 'course',
     category: 'Courses',
@@ -353,7 +354,7 @@ export const allItems: Item[] = [
    {
     id: 'p18',
     name: 'Drone with 4K Camera',
-    description: 'Capture breathtaking aerial footage with this easy-to-fly drone.',
+    description: 'Capture breathtaking aerial footage with this easy-to-fly drone. It features a 4K camera on a 3-axis gimbal for incredibly smooth and stable video. With a 30-minute flight time and a 5km range, you can explore and film from new perspectives. Intelligent flight modes like "Follow Me" and "Orbit" make getting cinematic shots effortless. The drone is foldable and compact for easy transport.',
     price: 450.00,
     type: 'product',
     category: 'Electronics',
@@ -365,7 +366,7 @@ export const allItems: Item[] = [
   {
     id: 'p19',
     name: 'Noise-Isolating Earbuds',
-    description: 'Crystal-clear audio in a compact, comfortable design.',
+    description: 'Enjoy crystal-clear audio in a compact, comfortable design with these noise-isolating earbuds. The secure in-ear fit provides passive noise cancellation, while the custom-tuned drivers deliver rich bass and crisp highs. They come with multiple ear tip sizes for a perfect fit and feature an inline microphone for calls. Perfect for commuting, the gym, and focused listening.',
     price: 119.99,
     type: 'product',
     category: 'Electronics',
@@ -377,7 +378,7 @@ export const allItems: Item[] = [
   {
     id: 'p20',
     name: 'Laptop Stand with Cooling Fan',
-    description: 'Improve your posture and keep your laptop cool with this adjustable stand.',
+    description: 'Improve your ergonomics and keep your laptop performing at its best with this adjustable stand. It raises your screen to eye level to reduce neck strain and features a built-in, whisper-quiet cooling fan to prevent overheating during intensive tasks. Made from lightweight aluminum, it is both sturdy and portable. Suitable for all laptops up to 17 inches.',
     price: 49.99,
     type: 'product',
     category: 'Computers & Accessories',
@@ -389,7 +390,7 @@ export const allItems: Item[] = [
   {
     id: 'p21',
     name: 'Smart Coffee Maker',
-    description: 'Schedule your brew from your phone and wake up to fresh coffee.',
+    description: 'Start your day perfectly with the Smart Coffee Maker. Schedule your brew from your phone with the companion app, so you can wake up to the aroma of fresh coffee. You can customize the brew strength and temperature to your liking. It is compatible with Alexa and Google Assistant for voice control. The thermal carafe keeps your coffee hot for hours.',
     price: 89.99,
     type: 'product',
     category: 'Home Appliances',
@@ -401,7 +402,7 @@ export const allItems: Item[] = [
   {
     id: 'p22',
     name: 'Minimalist Wrist Watch',
-    description: 'A sleek and elegant watch for any occasion.',
+    description: 'A sleek and elegant watch that complements any outfit. This minimalist timepiece features a clean dial, a high-quality quartz movement, and a genuine leather strap. The stainless steel case is durable and water-resistant. It is a timeless accessory for those who appreciate understated design and reliable craftsmanship.',
     price: 159.00,
     type: 'product',
     category: 'Fashion',
@@ -413,7 +414,7 @@ export const allItems: Item[] = [
   {
     id: 'p23',
     name: 'The Pragmatic Programmer',
-    description: 'A classic book for any software developer looking to improve their craft.',
+    description: 'A must-read for every software developer. "The Pragmatic Programmer" is filled with practical advice for improving your coding skills and career. From writing flexible, dynamic, and adaptable code to avoiding the pitfalls of software development, this book\'s lessons will help you become a more effective and productive programmer. This 20th Anniversary Edition is fully updated for modern development.',
     price: 49.95,
     type: 'product',
     category: 'Books',
@@ -425,7 +426,7 @@ export const allItems: Item[] = [
   {
     id: 'p24',
     name: 'Science Fiction Anthology',
-    description: 'A collection of the best sci-fi short stories from new and classic authors.',
+    description: 'Journey to other worlds with this curated collection of the best science fiction short stories. Featuring tales from both legendary authors and exciting new voices, this anthology explores themes of space exploration, artificial intelligence, and the future of humanity. A must-have for any fan of the genre.',
     price: 29.99,
     type: 'product',
     category: 'Books',
@@ -437,7 +438,7 @@ export const allItems: Item[] = [
   {
     id: 'c9',
     name: 'The Art of Public Speaking',
-    description: 'Build confidence and captivate any audience with powerful speaking skills. This course will transform the way you communicate.',
+    description: 'Build confidence and captivate any audience with our Art of Public Speaking course. You will learn proven techniques to manage anxiety, structure a compelling speech, and use body language effectively. This interactive course includes practice sessions with constructive feedback from peers and instructors. Whether for work presentations or personal growth, this course will transform how you communicate.',
     price: 180.00,
     type: 'course',
     category: 'Courses',
@@ -455,7 +456,7 @@ export const allItems: Item[] = [
   {
     id: 'p25',
     name: 'Latest Smartphone Model',
-    description: 'The latest smartphone with a stunning display and professional-grade camera.',
+    description: 'Experience the future with the latest smartphone. It boasts a stunning edge-to-edge ProMotion display, a powerful A18 Bionic chip for lightning-fast performance, and a professional-grade triple-camera system for breathtaking photos and videos. With all-day battery life and advanced privacy features, it is the most powerful and secure personal device yet.',
     price: 1099.00,
     type: 'product',
     category: 'Mobiles & Accessories',
@@ -467,7 +468,7 @@ export const allItems: Item[] = [
   {
     id: 'p26',
     name: 'Smart Air Purifier',
-    description: 'Breathe cleaner air with our HEPA filter air purifier, controllable via app.',
+    description: 'Breathe cleaner air with our Smart Air Purifier. Its 3-stage filtration system with a True HEPA filter captures 99.97% of airborne particles like dust, pollen, and smoke. It monitors your air quality in real-time and automatically adjusts its fan speed. Control it from anywhere with the companion app or with voice commands via Alexa and Google Assistant.',
     price: 189.99,
     type: 'product',
     category: 'Home Appliances',
@@ -479,7 +480,7 @@ export const allItems: Item[] = [
   {
     id: 'p27',
     name: 'Designer Sunglasses',
-    description: 'Protect your eyes in style with these designer sunglasses.',
+    description: 'Protect your eyes and make a style statement with these designer sunglasses. They feature high-quality polarized lenses that reduce glare and provide 100% UV protection. The lightweight yet durable frame is handcrafted from premium acetate. A timeless design that combines classic elegance with modern sophistication.',
     price: 250.00,
     type: 'product',
     category: 'Fashion',
@@ -491,7 +492,7 @@ export const allItems: Item[] = [
   {
     id: 'p28',
     name: 'Organic Skincare Set',
-    description: 'A complete set of organic skincare products for a healthy glow.',
+    description: 'Reveal your natural glow with this complete organic skincare set. It includes a gentle cleanser, a hydrating toner, a powerful serum, and a nourishing moisturizer. Made from certified organic ingredients and free from harsh chemicals, it is suitable for all skin types. This set provides everything you need for a healthy, radiant complexion.',
     price: 120.00,
     type: 'product',
     category: 'Beauty & Personal Care',
@@ -503,7 +504,7 @@ export const allItems: Item[] = [
   {
     id: 'p29',
     name: 'Performance Car Tires (Set of 4)',
-    description: 'High-performance tires for superior grip and handling in all conditions.',
+    description: 'Upgrade your driving experience with these high-performance all-season tires. They are engineered for superior grip and handling in both wet and dry conditions. The advanced tread design provides a quiet, comfortable ride while ensuring maximum safety and durability. This set of four tires is a smart investment in your car\'s performance and your safety.',
     price: 800.00,
     type: 'product',
     category: 'Automotive',
@@ -515,7 +516,7 @@ export const allItems: Item[] = [
   {
     id: 'p30',
     name: 'Smartphone Gimbal Stabilizer',
-    description: 'Capture smooth, cinematic video with your smartphone.',
+    description: 'Capture smooth, cinematic video with your smartphone using this 3-axis gimbal stabilizer. It eliminates shakes and jitters, resulting in professional-looking footage. The intuitive controls and companion app unlock creative features like object tracking, time-lapse, and dolly zoom. It is lightweight, foldable, and perfect for vloggers, content creators, and travelers.',
     price: 139.99,
     type: 'product',
     category: 'Mobiles & Accessories',
@@ -527,7 +528,7 @@ export const allItems: Item[] = [
   {
     id: 'p31',
     name: 'Wireless Charging Pad',
-    description: 'Fast, convenient wireless charging for all your compatible devices.',
+    description: 'Simplify your charging routine with this sleek and fast wireless charging pad. Just place your compatible smartphone or earbuds on the pad for convenient, cable-free charging. It supports up to 15W fast charging and has built-in safety features to prevent overheating. The non-slip surface ensures your device stays in place.',
     price: 49.99,
     type: 'product',
     category: 'Mobiles & Accessories',
@@ -539,7 +540,7 @@ export const allItems: Item[] = [
   {
     id: 'p32',
     name: 'Portable Power Bank 20000mAh',
-    description: 'High-capacity power bank to charge your devices on the go.',
+    description: 'Never run out of battery again with this high-capacity 20000mAh power bank. It can charge most smartphones up to 4 times and even power up a tablet or laptop. With multiple USB-A and USB-C ports, you can charge several devices at once. The compact design makes it an essential travel companion.',
     price: 59.99,
     type: 'product',
     category: 'Mobiles & Accessories',
@@ -551,7 +552,7 @@ export const allItems: Item[] = [
   {
     id: 'p33',
     name: 'Bluetooth Car Adapter',
-    description: 'Add Bluetooth connectivity to any car stereo with an AUX input.',
+    description: 'Instantly upgrade your car\'s audio system with this Bluetooth adapter. It plugs into any standard AUX port, allowing you to stream music and podcasts wirelessly from your phone. The built-in microphone provides clear, hands-free calling. It is simple to set up and provides a reliable connection for a better driving experience.',
     price: 24.99,
     type: 'product',
     category: 'Mobiles & Accessories',
@@ -563,7 +564,7 @@ export const allItems: Item[] = [
   {
     id: 'p34',
     name: 'Professional Chef\'s Knife',
-    description: 'A high-carbon stainless steel knife for precision cutting.',
+    description: 'The most important tool in any kitchen. This 8-inch chef\'s knife is forged from high-carbon German stainless steel for exceptional sharpness and edge retention. The full-tang, ergonomic handle provides perfect balance and comfort, giving you precise control for chopping, slicing, and dicing. A true workhorse for both home cooks and professional chefs.',
     price: 159.00,
     type: 'product',
     category: 'Home & Kitchen',
@@ -575,7 +576,7 @@ export const allItems: Item[] = [
   {
     id: 'p35',
     name: 'Non-Stick Cookware Set',
-    description: 'A complete 10-piece set of non-stick pots and pans.',
+    description: 'Outfit your kitchen with this durable and versatile 10-piece non-stick cookware set. It includes frying pans, saucepans, and a stockpot to handle any recipe. The multi-layer non-stick coating is metal-utensil safe and makes cleanup a breeze. The hard-anodized aluminum construction ensures fast, even heating. Oven-safe and suitable for all stovetops.',
     price: 249.99,
     type: 'product',
     category: 'Home & Kitchen',
@@ -587,7 +588,7 @@ export const allItems: Item[] = [
   {
     id: 'p36',
     name: 'Electric Kettle',
-    description: 'Boil water in minutes with this stylish and fast electric kettle.',
+    description: 'Boil water faster and safer with this stylish electric kettle. It features a 1.7-liter capacity and a powerful 1500W heating element that brings water to a boil in minutes. The stainless steel construction is durable and easy to clean, and it has an automatic shut-off feature for peace of mind. Perfect for tea, coffee, oatmeal, and more.',
     price: 49.99,
     type: 'product',
     category: 'Home & Kitchen',
@@ -599,7 +600,7 @@ export const allItems: Item[] = [
   {
     id: 'p37',
     name: 'French Press Coffee Maker',
-    description: 'Brew rich, flavorful coffee with this classic French press.',
+    description: 'Brew rich, aromatic coffee with this classic French press. The 34-ounce capacity is perfect for making multiple cups. Its fine mesh filter ensures a smooth, sediment-free brew, bringing out the full flavor of your coffee beans. The durable borosilicate glass carafe and stainless steel frame are built to last.',
     price: 34.99,
     type: 'product',
     category: 'Home & Kitchen',
@@ -611,7 +612,7 @@ export const allItems: Item[] = [
   {
     id: 'p38',
     name: 'Organic Face Moisturizer',
-    description: 'A lightweight, hydrating moisturizer for all skin types.',
+    description: 'Hydrate and nourish your skin with this lightweight, organic face moisturizer. Formulated with natural ingredients like aloe vera, jojoba oil, and green tea extract, it provides long-lasting hydration without clogging pores. It is gentle enough for all skin types, including sensitive skin. Use daily for a soft, healthy-looking complexion.',
     price: 39.99,
     type: 'product',
     category: 'Beauty & Personal Care',
@@ -623,7 +624,7 @@ export const allItems: Item[] = [
   {
     id: 'p39',
     name: 'Vitamin C Serum',
-    description: 'Brighten your skin and reduce fine lines with this powerful serum.',
+    description: 'Brighten your complexion and fight signs of aging with this potent Vitamin C Serum. It helps to reduce the appearance of fine lines, wrinkles, and dark spots while improving skin texture and elasticity. Enriched with Hyaluronic Acid and Vitamin E, this serum provides powerful antioxidant protection and deep hydration for a youthful glow.',
     price: 45.00,
     type: 'product',
     category: 'Beauty & Personal Care',
@@ -635,7 +636,7 @@ export const allItems: Item[] = [
   {
     id: 'p40',
     name: 'Electric Toothbrush',
-    description: 'Achieve a superior clean with this advanced electric toothbrush.',
+    description: 'Achieve a dentist-level clean with this advanced sonic electric toothbrush. It performs up to 40,000 strokes per minute to remove 10x more plaque than a manual toothbrush. It features 5 brushing modes, a 2-minute timer to ensure proper brushing time, and a long-lasting battery. Includes 4 replacement heads.',
     price: 129.99,
     type: 'product',
     category: 'Beauty & Personal Care',
@@ -647,7 +648,7 @@ export const allItems: Item[] = [
   {
     id: 'p41',
     name: 'Natural Deodorant',
-    description: 'An effective, aluminum-free deodorant with a fresh scent.',
+    description: 'Stay fresh all day with this effective, aluminum-free natural deodorant. Formulated with plant-based ingredients and essential oils, it neutralizes odor without blocking your sweat glands. It glides on smoothly, leaves no residue, and is gentle on sensitive skin. Available in a variety of clean, refreshing scents.',
     price: 14.99,
     type: 'product',
     category: 'Beauty & Personal Care',
@@ -659,7 +660,7 @@ export const allItems: Item[] = [
   {
     id: 'p42',
     name: 'Digital Body Weight Scale',
-    description: 'Track your weight and BMI with this accurate smart scale.',
+    description: 'Track your health journey with this accurate digital smart scale. It provides not just your weight, but also metrics like BMI, body fat percentage, and muscle mass. It syncs seamlessly with your favorite fitness apps via Bluetooth to help you monitor your progress. The sleek tempered glass design looks great in any bathroom.',
     price: 49.99,
     type: 'product',
     category: 'Health & Household',
@@ -671,7 +672,7 @@ export const allItems: Item[] = [
   {
     id: 'p43',
     name: 'Resistance Bands Set',
-    description: 'A set of 5 resistance bands for a full-body workout at home.',
+    description: 'Get a full-body workout anywhere, anytime with this set of 5 resistance bands. Each band offers a different level of resistance, making them perfect for beginners and advanced users. Use them for strength training, physical therapy, stretching, and more. The set includes a door anchor, ankle straps, and a convenient carrying bag.',
     price: 29.99,
     type: 'product',
     category: 'Sports & Outdoors',
@@ -683,7 +684,7 @@ export const allItems: Item[] = [
   {
     id: 'p44',
     name: 'Insulated Water Bottle',
-    description: 'Keep your drinks cold for 24 hours or hot for 12 hours.',
+    description: 'Keep your beverages at the perfect temperature with this double-wall insulated water bottle. It keeps drinks cold for up to 24 hours or hot for up to 12 hours. Made from durable, food-grade stainless steel, it is BPA-free and won\'t sweat. The leak-proof lid and convenient handle make it perfect for the gym, office, or hiking trail.',
     price: 34.99,
     type: 'product',
     category: 'Sports & Outdoors',
@@ -695,7 +696,7 @@ export const allItems: Item[] = [
   {
     id: 'p45',
     name: 'Foam Roller',
-    description: 'Relieve muscle soreness and improve recovery with this foam roller.',
+    description: 'Relieve muscle soreness, improve flexibility, and speed up recovery with this high-density foam roller. Its textured surface provides a deep tissue massage to release tight knots and trigger points. It is an essential tool for athletes, fitness enthusiasts, or anyone experiencing muscle stiffness. Lightweight and durable, it is easy to use at home or at the gym.',
     price: 24.99,
     type: 'product',
     category: 'Sports & Outdoors',
@@ -707,7 +708,7 @@ export const allItems: Item[] = [
   {
     id: 'p46',
     name: 'Adjustable Dumbbells Set',
-    description: 'Save space with these adjustable dumbbells, perfect for a home gym.',
+    description: 'Save space and get a versatile workout with this adjustable dumbbell set. With a simple turn of a dial, you can change the weight from 5 to 52.5 lbs, replacing an entire rack of traditional dumbbells. The set is perfect for building strength, toning muscle, and performing a wide variety of exercises in your home gym.',
     price: 399.99,
     type: 'product',
     category: 'Sports & Outdoors',
@@ -719,7 +720,7 @@ export const allItems: Item[] = [
   {
     id: 'p47',
     name: 'Dash Cam 1080p',
-    description: 'Record your drives for safety and security with this full HD dash cam.',
+    description: 'Record your drives for safety and security with this Full HD 1080p dash cam. It features a wide-angle lens to capture the entire road, a G-sensor that automatically saves footage in case of an impact, and loop recording so you never run out of space. The compact design is discreet and won\'t obstruct your view.',
     price: 79.99,
     type: 'product',
     category: 'Automotive',
@@ -731,7 +732,7 @@ export const allItems: Item[] = [
   {
     id: 'p48',
     name: 'Car Phone Mount',
-    description: 'A sturdy and secure phone mount for hands-free navigation.',
+    description: 'Keep your smartphone secure and accessible for hands-free navigation with this sturdy car phone mount. It attaches easily to your dashboard or windshield with a strong suction cup. The adjustable arm and 360-degree rotation allow you to find the perfect viewing angle. It is compatible with all major smartphone models.',
     price: 19.99,
     type: 'product',
     category: 'Automotive',
@@ -743,7 +744,7 @@ export const allItems: Item[] = [
   {
     id: 'p49',
     name: 'Portable Tire Inflator',
-    description: 'An essential tool for any car owner to handle flat tires.',
+    description: 'Be prepared for any roadside emergency with this portable tire inflator. This compact yet powerful air compressor can inflate a standard car tire in minutes. It features an automatic shut-off function to prevent over-inflation and a digital display for easy pressure reading. A must-have tool for every car owner.',
     price: 69.99,
     type: 'product',
     category: 'Automotive',
@@ -755,7 +756,7 @@ export const allItems: Item[] = [
   {
     id: 'p50',
     name: 'Water-based Acrylic Paint Set',
-    description: 'A vibrant set of 24 acrylic paints for artists of all levels.',
+    description: 'Bring your artistic visions to life with this vibrant set of 24 acrylic paints. The rich, highly pigmented colors are water-based, non-toxic, and dry to a beautiful matte finish. Perfect for canvas, wood, fabric, and more. This set is ideal for artists of all levels, from beginners to experienced painters.',
     price: 39.99,
     type: 'product',
     category: 'Art & Crafts',
