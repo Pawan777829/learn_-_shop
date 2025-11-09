@@ -67,4 +67,13 @@ export type Review = {
     createdAt: string;
 }
 
+export type WishlistItem = {
+  id: string;
+  userId: string;
+  itemId: string;
+  itemType: 'product' | 'course';
+  addedAt: string;
+}
+    
+
     

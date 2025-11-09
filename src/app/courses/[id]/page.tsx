@@ -6,19 +6,63 @@ import { allItems } from '@/lib/data';
 import { getImageById } from '@/lib/placeholder-images';
 import { useCart } from '@/context/cart-context';
 import { Button } from '@/components/ui/button';
-import { Star, BookOpen, Clock } from 'lucide-react';
+import { Star, BookOpen, Clock, Heart } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import ItemCard from '@/components/item-card';
 import Reviews from '@/components/reviews';
+import { useUser, useFirestore, useDoc, useMemoFirebase, setDocumentNonBlocking, deleteDocumentNonBlocking } from '@/firebase';
+import { doc } from 'firebase/firestore';
+import { useToast } from '@/hooks/use-toast';
+import type { Item, WishlistItem } from '@/lib/types';
+import { useEffect, useState } from 'react';
 
 
 export default function CourseDetailPage() {
   const { id } = useParams() as { id: string };
   const { addToCart } = useCart();
-  const course = allItems.find(item => item.id === id && item.type === 'course');
+  const course = allItems.find(item => item.id === id && item.type === 'course') as Item | undefined;
   const placeholder = course ? getImageById(course.imageId) : null;
   const relatedCourses = allItems.filter(item => item.type === 'course' && item.id !== id).slice(0, 4);
+
+  const { user } = useUser();
+  const firestore = useFirestore();
+  const { toast } = useToast();
+
+  const wishlistItemRef = useMemoFirebase(() => {
+    if (!user || !course) return null;
+    return doc(firestore, 'users', user.uid, 'wishlist', course.id);
+  }, [firestore, user, course]);
+
+  const { data: wishlistItem } = useDoc<WishlistItem>(wishlistItemRef);
+  const [isWishlisted, setIsWishlisted] = useState(false);
+
+  useEffect(() => {
+    setIsWishlisted(!!wishlistItem);
+  }, [wishlistItem]);
+
+
+  const handleWishlistToggle = async () => {
+    if (!user || !course || !wishlistItemRef) {
+      toast({ variant: 'destructive', title: 'Please log in', description: 'You need to be logged in to manage your wishlist.' });
+      return;
+    }
+
+    if (isWishlisted) {
+      deleteDocumentNonBlocking(wishlistItemRef);
+      toast({ title: 'Removed from Wishlist', description: `${course.name} has been removed from your wishlist.` });
+    } else {
+      const newItem: WishlistItem = {
+        id: course.id,
+        userId: user.uid,
+        itemId: course.id,
+        itemType: 'course',
+        addedAt: new Date().toISOString(),
+      };
+      setDocumentNonBlocking(wishlistItemRef, newItem, { merge: false });
+      toast({ title: 'Added to Wishlist', description: `${course.name} has been added to your wishlist.` });
+    }
+  };
 
   // Mock lessons for demonstration
   const lessons = [
@@ -83,10 +127,15 @@ export default function CourseDetailPage() {
             <div className="sticky top-24">
                 <div className="border rounded-lg bg-card text-card-foreground shadow-sm p-6">
                     <p className="text-4xl font-bold text-primary mb-4">${course.price.toFixed(2)}</p>
-                    <Button size="lg" className="h-12 text-lg w-full" onClick={() => addToCart(course)}>
-                        <BookOpen className="mr-2" />
-                        Enroll Now
-                    </Button>
+                    <div className="flex items-center gap-2">
+                        <Button size="lg" className="h-12 text-lg flex-grow" onClick={() => addToCart(course)}>
+                            <BookOpen className="mr-2" />
+                            Enroll Now
+                        </Button>
+                        <Button variant="outline" size="icon" className="h-12 w-12" onClick={handleWishlistToggle} aria-label="Add to wishlist">
+                            <Heart className={`h-6 w-6 ${isWishlisted ? 'fill-red-500 text-red-500' : ''}`} />
+                        </Button>
+                    </div>
                     <div className="mt-6 space-y-3 text-sm text-muted-foreground">
                         <div className="flex items-center gap-2">
                             <Star className="w-4 h-4 text-amber-500 fill-current" />

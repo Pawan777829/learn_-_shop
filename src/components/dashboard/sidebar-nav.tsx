@@ -10,7 +10,7 @@ import {
   SidebarHeader,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { BookOpenCheck, Home, User, ShoppingBag } from "lucide-react";
+import { BookOpenCheck, Home, User, ShoppingBag, Heart } from "lucide-react";
 
 export function SidebarNav() {
   const pathname = usePathname();
@@ -55,6 +55,18 @@ export function SidebarNav() {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
+              isActive={pathname === "/dashboard/wishlist"}
+              tooltip={{ children: "My Wishlist" }}
+            >
+              <Link href="/dashboard/wishlist">
+                <Heart />
+                <span>My Wishlist</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
               isActive={pathname === "/dashboard/vendor"}
               tooltip={{ children: "Vendor Dashboard" }}
             >
@@ -69,3 +81,5 @@ export function SidebarNav() {
     </>
   );
 }
+
+    

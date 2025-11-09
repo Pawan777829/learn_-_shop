@@ -6,17 +6,62 @@ import { allItems } from '@/lib/data';
 import { getImageById } from '@/lib/placeholder-images';
 import { useCart } from '@/context/cart-context';
 import { Button } from '@/components/ui/button';
-import { Star, ShoppingCart } from 'lucide-react';
+import { Star, ShoppingCart, Heart } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import ItemCard from '@/components/item-card';
 import Reviews from '@/components/reviews';
+import { useUser, useFirestore, useDoc, useMemoFirebase, setDocumentNonBlocking, deleteDocumentNonBlocking } from '@/firebase';
+import { doc } from 'firebase/firestore';
+import { useToast } from '@/hooks/use-toast';
+import type { Item, WishlistItem } from '@/lib/types';
+import { useEffect, useState } from 'react';
 
 export default function ProductDetailPage() {
   const { id } = useParams() as { id: string };
   const { addToCart } = useCart();
-  const product = allItems.find(item => item.id === id && item.type === 'product');
+  const product = allItems.find(item => item.id === id && item.type === 'product') as Item | undefined;
   const placeholder = product ? getImageById(product.imageId) : null;
   const relatedProducts = allItems.filter(item => item.type === 'product' && item.id !== id).slice(0, 4);
+  
+  const { user } = useUser();
+  const firestore = useFirestore();
+  const { toast } = useToast();
+  
+  const wishlistItemRef = useMemoFirebase(() => {
+    if (!user || !product) return null;
+    return doc(firestore, 'users', user.uid, 'wishlist', product.id);
+  }, [firestore, user, product]);
+
+  const { data: wishlistItem } = useDoc<WishlistItem>(wishlistItemRef);
+  const [isWishlisted, setIsWishlisted] = useState(false);
+
+  useEffect(() => {
+    setIsWishlisted(!!wishlistItem);
+  }, [wishlistItem]);
+
+
+  const handleWishlistToggle = async () => {
+    if (!user || !product || !wishlistItemRef) {
+      toast({ variant: 'destructive', title: 'Please log in', description: 'You need to be logged in to manage your wishlist.' });
+      return;
+    }
+
+    if (isWishlisted) {
+      deleteDocumentNonBlocking(wishlistItemRef);
+      toast({ title: 'Removed from Wishlist', description: `${product.name} has been removed from your wishlist.` });
+    } else {
+      const newItem: WishlistItem = {
+        id: product.id,
+        userId: user.uid,
+        itemId: product.id,
+        itemType: 'product',
+        addedAt: new Date().toISOString(),
+      };
+      setDocumentNonBlocking(wishlistItemRef, newItem, { merge: false });
+      toast({ title: 'Added to Wishlist', description: `${product.name} has been added to your wishlist.` });
+    }
+  };
+
 
   if (!product || !placeholder) {
     return (
@@ -55,10 +100,13 @@ export default function ProductDetailPage() {
           </div>
           <p className="mt-6 text-foreground/80 text-base leading-relaxed">{product.description}</p>
           <p className="text-4xl font-bold text-primary mt-6">${product.price.toFixed(2)}</p>
-          <div className="mt-8">
-            <Button size="lg" className="h-12 text-lg w-full sm:w-auto" onClick={() => addToCart(product)}>
+          <div className="mt-8 flex items-center gap-4">
+            <Button size="lg" className="h-12 text-lg sm:w-auto flex-grow" onClick={() => addToCart(product)}>
               <ShoppingCart className="mr-2" />
               Add to Cart
+            </Button>
+            <Button variant="outline" size="icon" className="h-12 w-12" onClick={handleWishlistToggle} aria-label="Add to wishlist">
+                <Heart className={`h-6 w-6 ${isWishlisted ? 'fill-red-500 text-red-500' : ''}`} />
             </Button>
           </div>
         </div>

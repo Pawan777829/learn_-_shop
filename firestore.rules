@@ -19,6 +19,7 @@
  * - /courses/{courseId}/lessons/{lessonId}: Stores lessons associated with courses.
  * - /products/{productId}/reviews/{reviewId}: Stores reviews for products.
  * - /courses/{courseId}/reviews/{reviewId}: Stores reviews for courses.
+ * - /users/{userId}/wishlist/{wishlistItemId}: Stores items on a user's wishlist.
  *
  * Key Security Decisions:
  * - All write operations are restricted to authenticated users.
@@ -291,6 +292,20 @@ service cloud.firestore {
       allow create: if isSignedIn() && isVendor();
       allow update: if isSignedIn() && isVendor();
       allow delete: if isSignedIn() && isVendor();
+    }
+    
+    /**
+     * @description Enforces user-ownership for their wishlist.
+     * @path /users/{userId}/wishlist/{wishlistItemId}
+     * @allow (read, write) - Authenticated user with a matching user ID can manage their wishlist.
+     * @principle Enforces document ownership for all operations.
+     */
+    match /users/{userId}/wishlist/{wishlistItemId} {
+      function isOwner(userId) {
+        return request.auth != null && request.auth.uid == userId;
+      }
+
+      allow read, write: if isOwner(userId);
     }
   }
 }
