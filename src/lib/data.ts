@@ -28,13 +28,21 @@ export const allItems: Item[] = [
   {
     id: 'c1',
     name: 'Full-Stack Web Development',
-    description: 'Master front-end and back-end technologies to build complete web applications.',
+    description: 'Master front-end and back-end technologies to build complete web applications. This course covers everything from HTML/CSS to advanced Node.js and React.',
     price: 499.0,
     type: 'course',
     category: 'Courses',
     vendor: 'CodeAcademy',
     rating: 4.7,
     imageId: 'course1',
+    lessons: [
+      { title: 'Introduction to Web Development', duration: '1 hr', content: 'Get an overview of the web development landscape and the tools you will be using.' },
+      { title: 'HTML & CSS Fundamentals', duration: '3 hr', content: 'Learn the building blocks of web pages with HTML and how to style them with CSS.' },
+      { title: 'JavaScript for Beginners', duration: '4 hr', content: 'Dive into the most popular programming language for the web.' },
+      { title: 'Building with React', duration: '5 hr', content: 'Master the React library to build dynamic user interfaces.' },
+      { title: 'Server-side with Node.js & Express', duration: '5 hr', content: 'Learn how to build a robust backend for your applications.' },
+      { title: 'Final Project: Build a Full-Stack App', duration: '8 hr', content: 'Apply all your skills to build a complete application from scratch.' },
+    ]
   },
   {
     id: 'p3',
@@ -51,24 +59,38 @@ export const allItems: Item[] = [
   {
     id: 'c2',
     name: 'Advanced Graphic Design',
-    description: 'Unlock your creativity with advanced techniques in branding and illustration.',
+    description: 'Unlock your creativity with advanced techniques in branding and illustration. This course is for designers looking to take their skills to the next level.',
     price: 350.0,
     type: 'course',
     category: 'Courses',
     vendor: 'DesignMasters',
     rating: 4.8,
     imageId: 'course2',
+    lessons: [
+      { title: 'The Principles of Design', duration: '2 hr', content: 'A refresher on the core principles that make a design work.' },
+      { title: 'Advanced Typography', duration: '3 hr', content: 'Learn how to use type as a powerful element in your designs.' },
+      { title: 'Brand Identity Design', duration: '4 hr', content: 'Go through the process of creating a complete brand identity for a client.' },
+      { title: 'Digital Illustration Techniques', duration: '4 hr', content: 'Explore advanced techniques in Adobe Illustrator and Procreate.' },
+      { title: 'Portfolio Project', duration: '6 hr', content: 'Create a stunning piece for your portfolio under expert guidance.' },
+    ]
   },
   {
     id: 'c3',
     name: 'Data Science with Python',
-    description: 'Learn to analyze data, create visualizations, and build predictive models.',
+    description: 'Learn to analyze data, create visualizations, and build predictive models. This comprehensive course covers Pandas, Matplotlib, and Scikit-learn.',
     price: 550.0,
     type: 'course',
     category: 'Courses',
     vendor: 'DataWiz',
     rating: 4.9,
     imageId: 'course3',
+    lessons: [
+      { title: 'Python for Data Analysis', duration: '3 hr', content: 'Learn the Python basics needed for data science.' },
+      { title: 'Data Manipulation with Pandas', duration: '5 hr', content: 'Become proficient in cleaning, transforming, and analyzing data with Pandas.' },
+      { title: 'Data Visualization with Matplotlib & Seaborn', duration: '4 hr', content: 'Create insightful and beautiful data visualizations.' },
+      { title: 'Machine Learning with Scikit-learn', duration: '6 hr', content: 'Build your first machine learning models for classification and regression.' },
+      { title: 'Capstone Project', duration: '8 hr', content: 'Work on a real-world dataset to solve a business problem.' },
+    ]
   },
   {
     id: 'p4',
@@ -121,13 +143,20 @@ export const allItems: Item[] = [
   {
     id: 'c4',
     name: 'Introduction to Digital Marketing',
-    description: 'Learn SEO, social media marketing, and content strategy to grow businesses.',
+    description: 'Learn SEO, social media marketing, and content strategy to grow businesses. Perfect for beginners and business owners.',
     price: 299.00,
     type: 'course',
     category: 'Courses',
     vendor: 'MarketProfs',
     rating: 4.6,
     imageId: 'course4',
+    lessons: [
+      { title: 'Understanding the Digital Marketing Funnel', duration: '1.5 hr', content: 'Learn how customers move from awareness to purchase.' },
+      { title: 'Search Engine Optimization (SEO) Basics', duration: '3 hr', content: 'Get your website to rank higher on Google.' },
+      { title: 'Social Media Marketing', duration: '3 hr', content: 'Build and engage a community on platforms like Instagram and Facebook.' },
+      { title: 'Content Marketing Strategy', duration: '2.5 hr', content: 'Learn to create content that attracts and converts.' },
+      { title: 'Email Marketing & Automation', duration: '2 hr', content: 'Build a powerful email list and automate your marketing.' },
+    ]
   },
    {
     id: 'p8',
@@ -252,46 +281,74 @@ export const allItems: Item[] = [
   {
     id: 'c5',
     name: 'Photography Masterclass',
-    description: 'From beginner to pro, learn composition, lighting, and editing.',
+    description: 'From beginner to pro, learn composition, lighting, and editing. This course will teach you how to take stunning photos with any camera.',
     price: 450.00,
     type: 'course',
     category: 'Courses',
     vendor: 'LensMasters',
     rating: 4.9,
     imageId: 'course5',
+    lessons: [
+      { title: 'Understanding Your Camera', duration: '2 hr', content: 'Learn the fundamentals of shutter speed, aperture, and ISO.' },
+      { title: 'Composition and Framing', duration: '3 hr', content: 'Discover the rules of composition to create more compelling images.' },
+      { title: 'Lighting Techniques', duration: '3 hr', content: 'Master natural and artificial light to set the mood.' },
+      { title: 'Photo Editing with Lightroom', duration: '4 hr', content: 'Learn to edit your photos like a professional.' },
+      { title: 'Final Project: Photo Series', duration: '5 hr', content: 'Create a series of photos that tell a story.' },
+    ]
   },
   {
     id: 'c6',
     name: 'Personal Finance 101',
-    description: 'Master budgeting, saving, and investing for a secure financial future.',
+    description: 'Master budgeting, saving, and investing for a secure financial future. This course is designed to give you control over your money.',
     price: 199.00,
     type: 'course',
     category: 'Courses',
     vendor: 'WealthWise',
     rating: 4.8,
     imageId: 'course6',
+    lessons: [
+      { title: 'Creating a Budget That Works', duration: '1.5 hr', content: 'Learn different budgeting methods and find the one that fits your lifestyle.' },
+      { title: 'Strategies for Saving', duration: '2 hr', content: 'Discover effective strategies to save money for your goals.' },
+      { title: 'Introduction to Investing', duration: '3 hr', content: 'Understand the basics of stocks, bonds, and retirement accounts.' },
+      { title: 'Managing Debt', duration: '2 hr', content: 'Learn how to tackle debt and improve your credit score.' },
+      { title: 'Building Your Financial Plan', duration: '2.5 hr', content: 'Create a long-term financial plan for your future.' },
+    ]
   },
   {
     id: 'c7',
     name: 'Creative Writing Workshop',
-    description: 'Learn to write compelling stories, characters, and dialogue.',
+    description: 'Learn to write compelling stories, characters, and dialogue. This workshop will help you find your voice and tell your story.',
     price: 250.00,
     type: 'course',
     category: 'Courses',
     vendor: 'StoryCraft',
     rating: 4.7,
     imageId: 'course7',
+    lessons: [
+      { title: 'Finding Your Story', duration: '2 hr', content: 'Brainstorm ideas and develop a compelling plot.' },
+      { title: 'Creating Memorable Characters', duration: '3 hr', content: 'Learn techniques to bring your characters to life.' },
+      { title: 'Writing Powerful Dialogue', duration: '2.5 hr', content: 'Craft dialogue that is realistic and moves the story forward.' },
+      { title: 'The Art of Revision', duration: '3 hr', content: 'Learn how to revise your work and make it shine.' },
+      { title: 'Publishing Your Work', duration: '2 hr', content: 'Get an overview of the publishing industry and how to get your work out there.' },
+    ]
   },
   {
     id: 'c8',
     name: 'AI & Machine Learning Foundations',
-    description: 'An introduction to the core concepts of AI and machine learning.',
+    description: 'An introduction to the core concepts of AI and machine learning. This course is perfect for those curious about the future of technology.',
     price: 650.00,
     type: 'course',
     category: 'Courses',
     vendor: 'DataWiz',
     rating: 4.9,
     imageId: 'course8',
+    lessons: [
+      { title: 'What is AI?', duration: '1 hr', content: 'A high-level overview of Artificial Intelligence and its applications.' },
+      { title: 'Types of Machine Learning', duration: '2 hr', content: 'Learn about supervised, unsupervised, and reinforcement learning.' },
+      { title: 'Your First Neural Network', duration: '4 hr', content: 'Build a simple neural network from scratch using Python.' },
+      { title: 'The Ethics of AI', duration: '2 hr', content: 'Discuss the important ethical considerations in AI development.' },
+      { title: 'The Future of AI', duration: '1.5 hr', content: 'Explore where AI is heading and its potential impact on society.' },
+    ]
   },
    {
     id: 'p18',
@@ -380,12 +437,19 @@ export const allItems: Item[] = [
   {
     id: 'c9',
     name: 'The Art of Public Speaking',
-    description: 'Build confidence and captivate any audience with powerful speaking skills.',
+    description: 'Build confidence and captivate any audience with powerful speaking skills. This course will transform the way you communicate.',
     price: 180.00,
     type: 'course',
     category: 'Courses',
     vendor: 'CommunicateCo',
     rating: 4.8,
     imageId: 'course9',
+    lessons: [
+      { title: 'Overcoming Stage Fright', duration: '1.5 hr', content: 'Learn proven techniques to manage anxiety and speak with confidence.' },
+      { title: 'Structuring Your Speech', duration: '2 hr', content: 'Craft a compelling narrative with a clear beginning, middle, and end.' },
+      { title: 'Vocal Variety and Body Language', duration: '2.5 hr', content: 'Use your voice and body to engage and persuade your audience.' },
+      { title: 'Handling Q&A Sessions', duration: '1.5 hr', content: 'Learn to handle questions with grace and authority.' },
+      { title: 'Final Presentation', duration: '2 hr', content: 'Deliver a speech to your peers and receive constructive feedback.' },
+    ]
   }
 ];

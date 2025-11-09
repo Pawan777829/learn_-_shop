@@ -12,6 +12,12 @@ export type ItemCategory =
   | 'Art & Crafts'
   | 'Lifestyle';
 
+export type Lesson = {
+  title: string;
+  duration: string;
+  content: string;
+}
+
 export type Item = {
   id: string;
   name: string;
@@ -23,6 +29,7 @@ export type Item = {
   rating: number;
   imageId: string;
   stock?: number;
+  lessons?: Lesson[];
   [key: string]: any; // To allow for extra properties like uniqueId
 };
 

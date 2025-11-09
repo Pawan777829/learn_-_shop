@@ -64,8 +64,7 @@ export default function CourseDetailPage() {
     }
   };
 
-  // Mock lessons for demonstration
-  const lessons = [
+  const lessons = course?.lessons || [
     { title: 'Introduction to the Course', duration: '15 min' },
     { title: 'Core Concepts of the Subject', duration: '45 min' },
     { title: 'First Project: Building the Foundation', duration: '1 hr 30 min' },
@@ -99,17 +98,18 @@ export default function CourseDetailPage() {
 
             <Badge className="w-fit mb-2">{course.type}</Badge>
             <h1 className="text-3xl lg:text-4xl font-bold font-headline">{course.name}</h1>
+            <p className="text-lg text-muted-foreground mt-2">By {course.vendor}</p>
             <p className="mt-4 text-foreground/80 text-lg leading-relaxed">{course.description}</p>
             
             <div className="mt-8">
                 <h2 className="text-2xl font-bold font-headline mb-4">Course Content</h2>
                 <Accordion type="single" collapsible className="w-full">
-                    {lessons.map((lesson, index) => (
+                    {lessons.map((lesson: any, index: number) => (
                     <AccordionItem value={`item-${index}`} key={index}>
                         <AccordionTrigger>{`Section ${index + 1}: ${lesson.title}`}</AccordionTrigger>
                         <AccordionContent>
                         <div className="flex items-center justify-between text-muted-foreground">
-                            <p>Detailed content for this lesson will appear here.</p>
+                            <p>{lesson.content || 'Detailed content for this lesson will appear here.'}</p>
                             <span className="flex items-center gap-2 text-sm">
                                 <Clock className="h-4 w-4" />
                                 {lesson.duration}
@@ -142,7 +142,11 @@ export default function CourseDetailPage() {
                             <span>{course.rating} average rating</span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <p>By {course.vendor}</p>
+                            <p>Taught by <span className="font-semibold text-foreground">{course.vendor}</span></p>
+                        </div>
+                         <div className="flex items-center gap-2">
+                            <BookOpen className="w-4 h-4" />
+                            <span>{lessons.length} lessons</span>
                         </div>
                     </div>
                 </div>
@@ -163,5 +167,3 @@ export default function CourseDetailPage() {
     </div>
   );
 }
-
-    
