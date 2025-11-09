@@ -22,13 +22,29 @@ import { useUser, useFirestore, addDocumentNonBlocking } from '@/firebase';
 import { collection } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 import { placeholderImages } from '@/lib/placeholder-images';
+import type { ItemCategory } from '@/lib/types';
+
+const categories: ItemCategory[] = [
+    'Electronics',
+    'Computers & Accessories',
+    'Home & Kitchen',
+    'Clothing, Shoes & Jewelry',
+    'Books',
+    'Software',
+    'Courses',
+    'Health & Household',
+    'Sports & Outdoors',
+    'Toys & Games',
+    'Art & Crafts',
+    'Lifestyle',
+];
 
 const listingSchema = z.object({
   name: z.string().min(3, 'Name must be at least 3 characters'),
   description: z.string().min(10, 'Description must be at least 10 characters'),
   price: z.coerce.number().min(0, 'Price must be a positive number'),
   type: z.enum(['product', 'course']),
-  category: z.enum(['Electronics', 'Software', 'Books', 'Art', 'Lifestyle']),
+  category: z.enum(categories),
   imageId: z.string().min(1, 'Please select an image'),
   stock: z.coerce.number().optional(),
 }).refine(data => {
@@ -143,11 +159,9 @@ export default function NewListingPage() {
                                             <SelectTrigger><SelectValue placeholder="Select a category" /></SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
-                                            <SelectItem value="Electronics">Electronics</SelectItem>
-                                            <SelectItem value="Software">Software</SelectItem>
-                                            <SelectItem value="Books">Books</SelectItem>
-                                            <SelectItem value="Art">Art</SelectItem>
-                                            <SelectItem value="Lifestyle">Lifestyle</SelectItem>
+                                            {categories.map(cat => (
+                                                <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />

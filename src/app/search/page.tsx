@@ -2,9 +2,9 @@
 
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { allItems } from '@/lib/data';
-import type { Item } from '@/lib/types';
+import type { Item, ItemCategory } from '@/lib/types';
 import ItemCard from '@/components/item-card';
 import {
   Select,
@@ -18,10 +18,19 @@ import { Input } from '@/components/ui/input';
 function SearchPageContent() {
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get('q') || '';
+  const initialCategory = searchParams.get('category') || 'all';
   
   const [searchTerm, setSearchTerm] = useState(initialQuery);
   const [typeFilter, setTypeFilter] = useState<'all' | 'product' | 'course'>('all');
-  const [categoryFilter, setCategoryFilter] = useState<string>('all');
+  const [categoryFilter, setCategoryFilter] = useState<string>(initialCategory);
+
+  useEffect(() => {
+    setSearchTerm(initialQuery);
+  }, [initialQuery]);
+
+  useEffect(() => {
+    setCategoryFilter(initialCategory);
+  }, [initialCategory]);
   
   const categories = useMemo(() => {
     const allCategories = allItems.map(item => item.category);

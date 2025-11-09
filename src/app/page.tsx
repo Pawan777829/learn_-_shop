@@ -2,17 +2,22 @@
 import ItemCard from "@/components/item-card";
 import { Button } from "@/components/ui/button";
 import { allItems } from "@/lib/data";
-import type { Item } from "@/lib/types";
+import type { Item, ItemCategory } from "@/lib/types";
 import Link from "next/link";
 import Image from "next/image";
 
 // Helper function to render a category section
-const CategorySection = ({ title, items }: { title: string; items: Item[] }) => (
-  <section className="py-12">
+const CategorySection = ({ title, items, categoryId }: { title: string; items: Item[], categoryId: string }) => (
+  <section className="py-12" id={categoryId}>
     <div className="container mx-auto px-4">
-      <h2 className="text-3xl font-bold font-headline tracking-tight mb-8">
-        {title}
-      </h2>
+      <div className="flex justify-between items-center mb-8">
+        <h2 className="text-3xl font-bold font-headline tracking-tight">
+          {title}
+        </h2>
+        <Button variant="outline" asChild>
+          <Link href={`/search?category=${encodeURIComponent(title)}`}>View All</Link>
+        </Button>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {items.map((item) => (
           <ItemCard key={item.id} item={item} />
@@ -23,9 +28,13 @@ const CategorySection = ({ title, items }: { title: string; items: Item[] }) => 
 );
 
 export default function Home() {
-  const electronics = allItems.filter((item) => item.category === "Electronics").slice(0, 4);
-  const software = allItems.filter((item) => item.category === "Software").slice(0, 4);
-  const art = allItems.filter((item) => item.category === "Art").slice(0, 4);
+  const getItemsByCategory = (category: ItemCategory, limit: number) => {
+    return allItems.filter((item) => item.category === category).slice(0, limit);
+  };
+
+  const electronics = getItemsByCategory("Electronics", 4);
+  const courses = getItemsByCategory("Courses", 4);
+  const accessories = getItemsByCategory("Computers & Accessories", 4);
 
   return (
     <div className="flex flex-col">
@@ -50,22 +59,17 @@ export default function Home() {
               <Link href="#electronics">Shop Electronics</Link>
             </Button>
             <Button asChild size="lg" variant="secondary" className="bg-white text-primary hover:bg-gray-200">
-              <Link href="#software">Explore Courses</Link>
+              <Link href="#courses">Explore Courses</Link>
             </Button>
           </div>
         </div>
       </section>
 
       {/* Categories Sections */}
-      <div id="electronics">
-        <CategorySection title="Top Electronics" items={electronics} />
-      </div>
-      <div id="software">
-       <CategorySection title="Popular Software Courses" items={software} />
-      </div>
-       <div id="art">
-        <CategorySection title="Creative Arts" items={art} />
-      </div>
+      {electronics.length > 0 && <CategorySection title="Top Electronics" items={electronics} categoryId="electronics" />}
+      {courses.length > 0 && <CategorySection title="Popular Courses" items={courses} categoryId="courses" />}
+      {accessories.length > 0 && <CategorySection title="Computers & Accessories" items={accessories} categoryId="accessories" />}
+      
     </div>
   );
 }

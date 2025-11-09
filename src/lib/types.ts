@@ -1,10 +1,24 @@
+export type ItemCategory =
+  | 'Electronics'
+  | 'Computers & Accessories'
+  | 'Home & Kitchen'
+  | 'Clothing, Shoes & Jewelry'
+  | 'Books'
+  | 'Software'
+  | 'Courses'
+  | 'Health & Household'
+  | 'Sports & Outdoors'
+  | 'Toys & Games'
+  | 'Art & Crafts'
+  | 'Lifestyle';
+
 export type Item = {
   id: string;
   name: string;
   description: string;
   price: number;
   type: 'product' | 'course';
-  category: 'Electronics' | 'Software' | 'Books' | 'Art' | 'Lifestyle'; // Added category
+  category: ItemCategory;
   vendor: string;
   rating: number;
   imageId: string;
