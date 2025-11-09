@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from "next/image";
@@ -35,7 +36,7 @@ export default function ItemCard({ item }: ItemCardProps) {
 
   return (
     <Link href={itemUrl} className="group">
-      <Card className="flex flex-col overflow-hidden transition-all duration-300 group-hover:shadow-lg group-hover:-translate-y-1 h-full">
+      <Card className="flex flex-col overflow-hidden transition-all duration-200 group-hover:shadow-lg group-hover:-translate-y-1 h-full group-active:scale-[0.98]">
         <CardHeader className="p-0 relative">
           <Badge
             className="absolute top-2 right-2 z-10"
