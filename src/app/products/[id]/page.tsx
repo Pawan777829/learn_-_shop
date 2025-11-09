@@ -9,9 +9,10 @@ import { Button } from '@/components/ui/button';
 import { Star, ShoppingCart } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import ItemCard from '@/components/item-card';
+import Reviews from '@/components/reviews';
 
 export default function ProductDetailPage() {
-  const { id } = useParams();
+  const { id } = useParams() as { id: string };
   const { addToCart } = useCart();
   const product = allItems.find(item => item.id === id && item.type === 'product');
   const placeholder = product ? getImageById(product.imageId) : null;
@@ -63,6 +64,8 @@ export default function ProductDetailPage() {
         </div>
       </div>
 
+      <Reviews itemId={id} itemType="product" />
+
       <div className="mt-20">
           <h2 className="text-2xl font-bold font-headline mb-6">Related Products</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -74,3 +77,5 @@ export default function ProductDetailPage() {
     </div>
   );
 }
+
+    

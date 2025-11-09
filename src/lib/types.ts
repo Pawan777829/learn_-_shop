@@ -56,3 +56,15 @@ export type Course = {
     imageUrl: string;
     lessons: string[];
 };
+
+export type Review = {
+    id: string;
+    userId: string;
+    userName: string;
+    itemId: string;
+    rating: number;
+    comment: string;
+    createdAt: string;
+}
+
+    

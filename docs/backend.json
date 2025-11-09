@@ -361,6 +361,47 @@
         "content",
         "order"
       ]
+    },
+    "Review": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Review",
+      "type": "object",
+      "description": "Represents a user review for a product or course.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the review.",
+          "format": "uuid"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the User who wrote the review."
+        },
+        "userName": {
+          "type": "string",
+          "description": "The name of the user who wrote the review."
+        },
+        "itemId": {
+          "type": "string",
+          "description": "The ID of the product or course being reviewed."
+        },
+        "rating": {
+          "type": "number",
+          "description": "A star rating from 1 to 5.",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "comment": {
+          "type": "string",
+          "description": "The text content of the review."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "The date the review was submitted.",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "userId", "userName", "itemId", "rating", "comment", "createdAt"]
     }
   },
   "auth": {
@@ -426,6 +467,18 @@
           ]
         }
       },
+       {
+        "path": "/products/{productId}/reviews/{reviewId}",
+        "definition": {
+          "entityName": "Review",
+          "schema": { "$ref": "#/backend/entities/Review" },
+          "description": "Stores reviews for a specific product. Publicly readable.",
+          "params": [
+            { "name": "productId", "description": "The unique ID of the product." },
+            { "name": "reviewId", "description": "The unique ID of the review." }
+          ]
+        }
+      },
       {
         "path": "/vendors/{vendorId}/courses/{courseId}",
         "definition": {
@@ -443,6 +496,18 @@
               "name": "courseId",
               "description": "The unique identifier of the course."
             }
+          ]
+        }
+      },
+      {
+        "path": "/courses/{courseId}/reviews/{reviewId}",
+        "definition": {
+          "entityName": "Review",
+          "schema": { "$ref": "#/backend/entities/Review" },
+          "description": "Stores reviews for a specific course. Publicly readable.",
+          "params": [
+            { "name": "courseId", "description": "The unique ID of the course." },
+            { "name": "reviewId", "description": "The unique ID of the review." }
           ]
         }
       },
@@ -551,6 +616,8 @@
         }
       }
     ],
-    "reasoning": "The Firestore data structure is designed to support the Learn & Shop platform, focusing on secure and scalable data access for users, vendors, products, courses, orders, and related entities. It emphasizes Authorization Independence (CRITICAL) through denormalization of authorization data, DBAC (Database-Based Access Control), QAPs (Rules are not Filters), and clarity for debugging.\n\n**Authorization Independence and QAPs:**\n\n*   **Vendors, Products, Courses:** Vendor ID is included directly within Product and Course documents, enabling rules to validate vendor ownership without requiring `get()` calls, thus achieving Authorization Independence. This also enables secure `list` operations, as rules can filter based on the denormalized `vendorId`.\n*   **Orders, OrderItems:** User ID is included directly within Order documents, enabling rules to validate user ownership. OrderItems are stored as a subcollection to the Order document.\n*   **Enrollments:** User ID is included directly within Enrollment documents, enabling rules to validate user ownership.\n*   **Recommendations:** User ID is included directly within Recommendation documents, enabling rules to validate user ownership.\n*   **Lessons:** Course ID is included directly within Lesson documents, enabling rules to validate course ownership.\n\n**Structural Segregation:**\n\n*   User-specific data (Vendors, Orders, Enrollments, Recommendations) is stored under the `/users/{userId}` path, ensuring that only the owning user or authorized roles can access it. This adheres to the principle of homogeneous security posture.\n\n**Access Modeling:**\n\n*   Path-Based Ownership: The `/users/{userId}/vendors/{vendorId}` pattern provides clear ownership semantics. Similarly, `/users/{userId}/orders/{orderId}`, `/users/{userId}/enrollments/{enrollmentId}`, and `/users/{userId}/recommendations/{recommendationId}` follow this pattern.\n\n**Data Clarity and Predictability:**\n\n*   Entity relationships are explicitly defined through ID references (e.g., `productId` in `OrderItem`, `vendorId` in `Product` and `Course`).\n*   Consistent naming conventions are used (e.g., `userId`, `vendorId`, `courseId`) to improve readability and maintainability.\n"
+    "reasoning": "The Firestore data structure is designed to support the Learn & Shop platform, focusing on secure and scalable data access for users, vendors, products, courses, orders, and related entities. It emphasizes Authorization Independence (CRITICAL) through denormalization of authorization data, DBAC (Database-Based Access Control), QAPs (Rules are not Filters), and clarity for debugging.\n\n**Authorization Independence and QAPs:**\n\n*   **Vendors, Products, Courses:** Vendor ID is included directly within Product and Course documents, enabling rules to validate vendor ownership without requiring `get()` calls, thus achieving Authorization Independence. This also enables secure `list` operations, as rules can filter based on the denormalized `vendorId`.\n*   **Orders, OrderItems:** User ID is included directly within Order documents, enabling rules to validate user ownership. OrderItems are stored as a subcollection to the Order document.\n*   **Enrollments:** User ID is included directly within Enrollment documents, enabling rules to validate user ownership.\n*   **Recommendations:** User ID is included directly within Recommendation documents, enabling rules to validate user ownership.\n*   **Lessons:** Course ID is included directly within Lesson documents, enabling rules to validate course ownership.\n**Reviews:** Reviews for products and courses are stored in subcollections under their respective items. This allows for easy querying of all reviews for a specific item. The rules allow public read access but restrict writes to authenticated users who have purchased the item.\n\n**Structural Segregation:**\n\n*   User-specific data (Vendors, Orders, Enrollments, Recommendations) is stored under the `/users/{userId}` path, ensuring that only the owning user or authorized roles can access it. This adheres to the principle of homogeneous security posture.\n\n**Access Modeling:**\n\n*   Path-Based Ownership: The `/users/{userId}/vendors/{vendorId}` pattern provides clear ownership semantics. Similarly, `/users/{userId}/orders/{orderId}`, `/users/{userId}/enrollments/{enrollmentId}`, and `/users/{userId}/recommendations/{recommendationId}` follow this pattern.\n\n**Data Clarity and Predictability:**\n\n*   Entity relationships are explicitly defined through ID references (e.g., `productId` in `OrderItem`, `vendorId` in `Product` and `Course`).\n*   Consistent naming conventions are used (e.g., `userId`, `vendorId`, `courseId`) to improve readability and maintainability.\n"
   }
 }
+
+    

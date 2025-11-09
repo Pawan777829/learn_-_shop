@@ -10,10 +10,11 @@ import { Star, BookOpen, Clock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import ItemCard from '@/components/item-card';
+import Reviews from '@/components/reviews';
 
 
 export default function CourseDetailPage() {
-  const { id } = useParams();
+  const { id } = useParams() as { id: string };
   const { addToCart } = useCart();
   const course = allItems.find(item => item.id === id && item.type === 'course');
   const placeholder = course ? getImageById(course.imageId) : null;
@@ -99,6 +100,8 @@ export default function CourseDetailPage() {
             </div>
         </div>
       </div>
+
+      <Reviews itemId={id} itemType="course" />
       
        <div className="mt-20">
           <h2 className="text-2xl font-bold font-headline mb-6">Related Courses</h2>
@@ -111,3 +114,5 @@ export default function CourseDetailPage() {
     </div>
   );
 }
+
+    
