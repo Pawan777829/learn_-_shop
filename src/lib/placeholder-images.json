@@ -1,3 +1,52 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "prod1",
+      "description": "A pair of modern, sleek, white wireless headphones on a clean background.",
+      "imageUrl": "https://images.unsplash.com/photo-1713618651165-a3cf7f85506c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBoZWFkcGhvbmVzfGVufDB8fHx8MTc2MjY3Mjk4NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "modern headphones"
+    },
+    {
+      "id": "prod2",
+      "description": "An ergonomic mechanical keyboard with backlit keys.",
+      "imageUrl": "https://images.unsplash.com/photo-1760708551269-6967f18ed919?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZXJnb25vbWljJTIwa2V5Ym9hcmR8ZW58MHx8fHwxNzYyNTg0MTQ1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ergonomic keyboard"
+    },
+    {
+      "id": "prod3",
+      "description": "A smartwatch with a dark screen displaying the time and health metrics.",
+      "imageUrl": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzbWFydCUyMHdhdGNofGVufDB8fHx8MTc2MjU4MTYwN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "smart watch"
+    },
+    {
+      "id": "course1",
+      "description": "A computer screen showing lines of code for a web development project.",
+      "imageUrl": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3ZWIlMjBkZXZlbG9wbWVudHxlbnwwfHx8fDE3NjI2NDA4ODR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "web development"
+    },
+    {
+      "id": "course2",
+      "description": "A graphic designer's desk with a tablet showing a colorful illustration.",
+      "imageUrl": "https://images.unsplash.com/photo-1626785774625-ddcddc3445e9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxncmFwaGljJTIwZGVzaWdufGVufDB8fHx8MTc2MjYyOTY5NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "graphic design"
+    },
+    {
+      "id": "course3",
+      "description": "A complex data visualization chart on a digital display, representing data science.",
+      "imageUrl": "https://images.unsplash.com/photo-1662638600476-d563fffbb072?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxkYXRhJTIwc2NpZW5jZXxlbnwwfHx8fDE3NjI1NjczODJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "data science"
+    },
+    {
+      "id": "cart-item-1",
+      "description": "A close up of a wireless mouse.",
+      "imageUrl": "https://images.unsplash.com/photo-1739742473235-34a7bd9b8f87?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3aXJlbGVzcyUyMG1vdXNlfGVufDB8fHx8MTc2MjYyODYzOHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "wireless mouse"
+    },
+    {
+      "id": "cart-item-2",
+      "description": "A leather-bound journal and a pen.",
+      "imageUrl": "https://images.unsplash.com/photo-1663809087021-21bdd11cad36?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bGVhdGhlciUyMGpvdXJuYWx8ZW58MHx8fHwxNzYyNTk2MTQzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "leather journal"
+    }
+  ]
 }
