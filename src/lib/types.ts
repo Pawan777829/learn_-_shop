@@ -23,6 +23,7 @@ export type Item = {
   rating: number;
   imageId: string;
   stock?: number;
+  [key: string]: any; // To allow for extra properties like uniqueId
 };
 
 export type CartItem = Item & {

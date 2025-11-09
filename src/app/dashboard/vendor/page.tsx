@@ -15,18 +15,31 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useUser, useFirestore, useCollection, useMemoFirebase } from "@/firebase";
-import { collection } from "firebase/firestore";
+import { useUser, useFirestore, useCollection, useMemoFirebase, deleteDocumentNonBlocking } from "@/firebase";
+import { collection, doc } from "firebase/firestore";
 import type { Item } from "@/lib/types";
-import { DollarSign, Package, BookOpen, Loader2 } from "lucide-react";
+import { DollarSign, Package, BookOpen, Loader2, Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function VendorDashboardPage() {
   const { user } = useUser();
   const firestore = useFirestore();
+  const { toast } = useToast();
+  const [itemToDelete, setItemToDelete] = useState<Item | null>(null);
 
   const productsQuery = useMemoFirebase(() => {
     if (!user) return null;
@@ -44,15 +57,32 @@ export default function VendorDashboardPage() {
   const isLoading = isLoadingProducts || isLoadingCourses;
 
   const allListings = useMemo(() => {
-    const combined = [];
+    const combined: Item[] = [];
     if (products) {
       combined.push(...products.map(p => ({...p, type: 'product' as const})));
     }
     if (courses) {
       combined.push(...courses.map(c => ({...c, type: 'course' as const})));
     }
-    return combined;
+    // Add id to each item for key prop and deletion logic
+    return combined.map((item, index) => ({...item, uniqueId: item.id || `item-${index}`}));
   }, [products, courses]);
+
+  const handleDelete = () => {
+    if (!itemToDelete || !user) return;
+    
+    const collectionName = itemToDelete.type === 'product' ? 'products' : 'courses';
+    const docRef = doc(firestore, 'vendors', user.uid, collectionName, itemToDelete.id);
+
+    deleteDocumentNonBlocking(docRef);
+
+    toast({
+        title: "Listing Deleted",
+        description: `${itemToDelete.name} has been removed.`,
+    });
+    setItemToDelete(null);
+  };
+
 
   const totalRevenue = allListings?.reduce((acc, item) => {
       // This is a mock calculation, a real app would track sales.
@@ -72,6 +102,7 @@ export default function VendorDashboardPage() {
   }
 
   return (
+    <>
     <div className="space-y-8">
       <header>
         <h1 className="text-3xl font-bold font-headline">Vendor Dashboard</h1>
@@ -144,7 +175,7 @@ export default function VendorDashboardPage() {
               <TableBody>
                 {allListings && allListings.length > 0 ? (
                   allListings.map((item) => (
-                    <TableRow key={item.id}>
+                    <TableRow key={item.uniqueId}>
                       <TableCell className="font-medium">{item.name}</TableCell>
                       <TableCell>
                         <Badge variant={item.type === 'product' ? 'secondary' : 'default'}>{item.type}</Badge>
@@ -152,8 +183,14 @@ export default function VendorDashboardPage() {
                       <TableCell>${item.price.toFixed(2)}</TableCell>
                       <TableCell>{item.stock ?? 'N/A'}</TableCell>
                       <TableCell className="text-right">
-                        <Button variant="ghost" size="sm">Edit</Button>
-                        <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive">Delete</Button>
+                        <Button variant="ghost" size="icon" asChild>
+                            <Link href={`/dashboard/vendor/edit-listing/${item.type}/${item.id}`}>
+                                <Edit className="h-4 w-4" />
+                            </Link>
+                        </Button>
+                        <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive" onClick={() => setItemToDelete(item)}>
+                            <Trash2 className="h-4 w-4" />
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))
@@ -170,5 +207,21 @@ export default function VendorDashboardPage() {
         </CardContent>
       </Card>
     </div>
+    <AlertDialog open={!!itemToDelete} onOpenChange={(open) => !open && setItemToDelete(null)}>
+        <AlertDialogContent>
+            <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete your listing
+                for "{itemToDelete?.name}".
+            </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
+            </AlertDialogFooter>
+        </AlertDialogContent>
+    </AlertDialog>
+    </>
   );
 }
