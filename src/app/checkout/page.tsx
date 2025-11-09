@@ -1,105 +1,182 @@
+'use client';
+
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { useRouter } from 'next/navigation';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { useCart } from '@/context/cart-context';
+import { useUser, useFirestore } from '@/firebase';
+import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
+import { collection, serverTimestamp } from 'firebase/firestore';
+
+const checkoutSchema = z.object({
+    firstName: z.string().min(1, 'First name is required'),
+    lastName: z.string().min(1, 'Last name is required'),
+    address: z.string().min(1, 'Address is required'),
+    city: z.string().min(1, 'City is required'),
+    zip: z.string().min(5, 'ZIP code must be 5 digits'),
+    cardNumber: z.string().min(16, 'Card number must be 16 digits'),
+    expiryDate: z.string().regex(/^(0[1-9]|1[0-2])\/\d{2}$/, 'Expiry date must be MM/YY'),
+    cvc: z.string().min(3, 'CVC must be 3 digits'),
+});
 
 export default function CheckoutPage() {
-    const total = 643.99;
+    const { cartItems, clearCart } = useCart();
+    const { user } = useUser();
+    const firestore = useFirestore();
+    const router = useRouter();
+
+    const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const shipping = subtotal > 0 ? 15.00 : 0;
+    const total = subtotal + shipping;
+
+    const form = useForm<z.infer<typeof checkoutSchema>>({
+        resolver: zodResolver(checkoutSchema),
+        defaultValues: {
+            firstName: '',
+            lastName: '',
+            address: '',
+            city: '',
+            zip: '',
+            cardNumber: '',
+            expiryDate: '',
+            cvc: '',
+        },
+    });
+
+    async function onSubmit(values: z.infer<typeof checkoutSchema>) {
+        if (!user || !firestore) {
+            // This should not happen if the user is on this page
+            return;
+        }
+
+        const ordersRef = collection(firestore, 'users', user.uid, 'orders');
+        const orderData = {
+            userId: user.uid,
+            orderDate: new Date().toISOString(),
+            totalAmount: total,
+            status: 'Processing', // Changed from 'pending'
+            items: cartItems, // Storing items directly in the order for simplicity
+        };
+
+        // Non-blocking write
+        addDocumentNonBlocking(ordersRef, orderData);
+
+        // Clear the cart and redirect
+        clearCart();
+        router.push('/dashboard/user');
+    }
+
+    if (cartItems.length === 0) {
+        return (
+            <div className="container mx-auto px-4 py-8 text-center">
+                <h1 className="text-2xl font-bold">Your cart is empty.</h1>
+                <p className="text-muted-foreground mt-2">Add items to your cart to proceed to checkout.</p>
+            </div>
+        );
+    }
+
     return (
         <div className="container mx-auto px-4 py-8">
             <h1 className="text-3xl font-bold font-headline mb-6 text-center">Checkout</h1>
-            <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="space-y-6">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Shipping Information</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <Label htmlFor="first-name">First Name</Label>
-                                    <Input id="first-name" placeholder="John" />
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Shipping Information</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <div className="grid grid-cols-2 gap-4">
+                                    <FormField control={form.control} name="firstName" render={({ field }) => (
+                                        <FormItem><FormLabel>First Name</FormLabel><FormControl><Input placeholder="John" {...field} /></FormControl><FormMessage /></FormItem>
+                                    )} />
+                                    <FormField control={form.control} name="lastName" render={({ field }) => (
+                                        <FormItem><FormLabel>Last Name</FormLabel><FormControl><Input placeholder="Doe" {...field} /></FormControl><FormMessage /></FormItem>
+                                    )} />
                                 </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="last-name">Last Name</Label>
-                                    <Input id="last-name" placeholder="Doe" />
+                                <FormField control={form.control} name="address" render={({ field }) => (
+                                    <FormItem><FormLabel>Address</FormLabel><FormControl><Input placeholder="123 Main St" {...field} /></FormControl><FormMessage /></FormItem>
+                                )} />
+                                <div className="grid grid-cols-3 gap-4">
+                                    <div className="col-span-2">
+                                        <FormField control={form.control} name="city" render={({ field }) => (
+                                            <FormItem><FormLabel>City</FormLabel><FormControl><Input placeholder="Anytown" {...field} /></FormControl><FormMessage /></FormItem>
+                                        )} />
+                                    </div>
+                                    <FormField control={form.control} name="zip" render={({ field }) => (
+                                        <FormItem><FormLabel>ZIP Code</FormLabel><FormControl><Input placeholder="12345" {...field} /></FormControl><FormMessage /></FormItem>
+                                    )} />
                                 </div>
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="address">Address</Label>
-                                <Input id="address" placeholder="123 Main St" />
-                            </div>
-                            <div className="grid grid-cols-3 gap-4">
-                                <div className="space-y-2 col-span-2">
-                                    <Label htmlFor="city">City</Label>
-                                    <Input id="city" placeholder="Anytown" />
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Payment Details</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <FormField control={form.control} name="cardNumber" render={({ field }) => (
+                                    <FormItem><FormLabel>Card Number</FormLabel><FormControl><Input placeholder="**** **** **** 1234" {...field} /></FormControl><FormMessage /></FormItem>
+                                )} />
+                                <div className="grid grid-cols-2 gap-4">
+                                    <FormField control={form.control} name="expiryDate" render={({ field }) => (
+                                        <FormItem><FormLabel>Expiry Date</FormLabel><FormControl><Input placeholder="MM/YY" {...field} /></FormControl><FormMessage /></FormItem>
+                                    )} />
+                                    <FormField control={form.control} name="cvc" render={({ field }) => (
+                                        <FormItem><FormLabel>CVC</FormLabel><FormControl><Input placeholder="123" {...field} /></FormControl><FormMessage /></FormItem>
+                                    )} />
                                 </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="zip">ZIP Code</Label>
-                                    <Input id="zip" placeholder="12345" />
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Payment Details</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <div className="space-y-2">
-                                <Label htmlFor="card-number">Card Number</Label>
-                                <Input id="card-number" placeholder="**** **** **** 1234" />
-                            </div>
-                             <div className="grid grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <Label htmlFor="expiry-date">Expiry Date</Label>
-                                    <Input id="expiry-date" placeholder="MM/YY" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="cvc">CVC</Label>
-                                    <Input id="cvc" placeholder="123" />
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
-                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
 
-                <div className="space-y-6">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Order Summary</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                             <div className="flex justify-between">
-                                <span>Ergo-Mechanical Keyboard x1</span>
-                                <span>$129.99</span>
-                            </div>
-                            <div className="flex justify-between">
-                                <span>Full-Stack Web Development x1</span>
-                                <span>$499.00</span>
-                            </div>
-                            <Separator />
-                            <div className="flex justify-between">
-                                <span>Subtotal</span>
-                                <span>$628.99</span>
-                            </div>
-                            <div className="flex justify-between">
-                                <span>Shipping</span>
-                                <span>$15.00</span>
-                            </div>
-                            <Separator />
-                            <div className="flex justify-between font-bold text-lg">
-                                <span>Total</span>
-                                <span>${total.toFixed(2)}</span>
-                            </div>
-                        </CardContent>
-                    </Card>
-                    <Button size="lg" className="w-full text-lg h-12">
-                        Place Order for ${total.toFixed(2)}
-                    </Button>
-                </div>
-            </div>
+                    <div className="space-y-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Order Summary</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                {cartItems.map(item => (
+                                    <div key={item.id} className="flex justify-between">
+                                        <span>{item.name} x{item.quantity}</span>
+                                        <span>${(item.price * item.quantity).toFixed(2)}</span>
+                                    </div>
+                                ))}
+                                <Separator />
+                                <div className="flex justify-between">
+                                    <span>Subtotal</span>
+                                    <span>${subtotal.toFixed(2)}</span>
+                                </div>
+                                <div className="flex justify-between text-muted-foreground">
+                                    <span>Shipping</span>
+                                    <span>${shipping.toFixed(2)}</span>
+                                </div>
+                                <Separator />
+                                <div className="flex justify-between font-bold text-lg">
+                                    <span>Total</span>
+                                    <span>${total.toFixed(2)}</span>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <Button type="submit" size="lg" className="w-full text-lg h-12" disabled={cartItems.length === 0}>
+                            Place Order for ${total.toFixed(2)}
+                        </Button>
+                    </div>
+                </form>
+            </Form>
         </div>
     );
 }
