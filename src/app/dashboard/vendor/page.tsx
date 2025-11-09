@@ -21,6 +21,8 @@ import { useUser, useFirestore, useCollection, useMemoFirebase } from "@/firebas
 import { collection } from "firebase/firestore";
 import type { Item } from "@/lib/types";
 import { DollarSign, Package, BookOpen, Loader2 } from "lucide-react";
+import Link from "next/link";
+import { useMemo } from "react";
 
 export default function VendorDashboardPage() {
   const { user } = useUser();
@@ -41,7 +43,7 @@ export default function VendorDashboardPage() {
 
   const isLoading = isLoadingProducts || isLoadingCourses;
 
-  const allListings = useMemoFirebase(() => {
+  const allListings = useMemo(() => {
     const combined = [];
     if (products) {
       combined.push(...products.map(p => ({...p, type: 'product' as const})));
@@ -52,7 +54,11 @@ export default function VendorDashboardPage() {
     return combined;
   }, [products, courses]);
 
-  const totalRevenue = allListings?.reduce((acc, item) => acc + (item.price || 0), 0) || 0;
+  const totalRevenue = allListings?.reduce((acc, item) => {
+      // This is a mock calculation, a real app would track sales.
+      // Here we just sum up the prices of listed items.
+      return acc + (item.price || 0);
+  }, 0) || 0;
   const totalListings = allListings?.length || 0;
   const productCount = products?.length || 0;
   const courseCount = courses?.length || 0;
@@ -115,7 +121,9 @@ export default function VendorDashboardPage() {
               A list of all your products and courses.
             </CardDescription>
           </div>
-          <Button>Add New Listing</Button>
+          <Button asChild>
+            <Link href="/dashboard/vendor/new-listing">Add New Listing</Link>
+          </Button>
         </CardHeader>
         <CardContent>
            {isLoading ? (
