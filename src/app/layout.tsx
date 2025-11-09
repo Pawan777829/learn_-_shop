@@ -7,6 +7,7 @@ import Footer from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/toaster";
 import { FirebaseClientProvider } from "@/firebase";
 import { CartProvider } from "@/context/cart-context";
+import Chatbot from "@/components/chatbot";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const poppins = Poppins({
@@ -41,6 +42,7 @@ export default function RootLayout({
               <main className="flex-1">{children}</main>
               <Footer />
             </div>
+            <Chatbot />
             <Toaster />
           </CartProvider>
         </FirebaseClientProvider>
