@@ -47,17 +47,15 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative w-full h-[70vh] min-h-[500px] flex items-center justify-center text-center bg-gray-900 text-white">
-        <Image
-          src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="Students learning and shopping"
-          fill
-          className="object-cover opacity-30"
-          priority
-          data-ai-hint="learning shopping"
-        />
-        <div className="relative z-10 p-4 max-w-4xl mx-auto">
-          <h1 className="text-4xl font-headline font-extrabold tracking-tight text-white sm:text-5xl md:text-7xl">
+      <section
+        className="relative w-full h-[70vh] min-h-[500px] flex items-center justify-center text-center bg-cover bg-fixed bg-center"
+        style={{
+          backgroundImage: "url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+        }}
+      >
+        <div className="absolute inset-0 bg-black/50 z-0"></div>
+        <div className="relative z-10 p-4 max-w-4xl mx-auto text-white">
+          <h1 className="text-4xl font-headline font-extrabold tracking-tight sm:text-5xl md:text-7xl">
             Where Knowledge Meets Opportunity
           </h1>
           <p className="mt-6 mx-auto text-lg text-gray-200 md:text-xl">
