@@ -83,7 +83,10 @@ export default function EditListingPage() {
 
     useEffect(() => {
         if (itemData) {
-            form.reset(itemData);
+            form.reset({
+                ...itemData,
+                stock: itemData.stock ?? 0,
+            });
         }
     }, [itemData, form]);
 
@@ -95,7 +98,7 @@ export default function EditListingPage() {
             return;
         }
 
-        const listingData = { ...values };
+        const listingData: Partial<Item> & { name: string; description: string; price: number; type: 'product' | 'course'; category: ItemCategory; imageId: string; stock?: number | undefined; } = { ...values };
         if (values.type === 'course') {
             delete listingData.stock;
         }
@@ -131,7 +134,7 @@ export default function EditListingPage() {
                         <FormField control={form.control} name="type" render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Listing Type</FormLabel>
-                                <Select onValueChange={field.onChange} defaultValue={field.value} disabled>
+                                <Select onValueChange={field.onChange} value={field.value} disabled>
                                     <FormControl>
                                         <SelectTrigger><SelectValue placeholder="Select a type" /></SelectTrigger>
                                     </FormControl>
@@ -168,7 +171,7 @@ export default function EditListingPage() {
                             <FormField control={form.control} name="category" render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Category</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select onValueChange={field.onChange} value={field.value}>
                                         <FormControl>
                                             <SelectTrigger><SelectValue placeholder="Select a category" /></SelectTrigger>
                                         </FormControl>
@@ -185,7 +188,7 @@ export default function EditListingPage() {
                             <FormField control={form.control} name="imageId" render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Image</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select onValueChange={field.onChange} value={field.value}>
                                         <FormControl>
                                             <SelectTrigger><SelectValue placeholder="Select a placeholder image" /></SelectTrigger>
                                         </FormControl>

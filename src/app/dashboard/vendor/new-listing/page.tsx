@@ -22,7 +22,7 @@ import { useUser, useFirestore, addDocumentNonBlocking } from '@/firebase';
 import { collection } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 import { placeholderImages } from '@/lib/placeholder-images';
-import type { ItemCategory } from '@/lib/types';
+import type { Item, ItemCategory } from '@/lib/types';
 
 const categories: ItemCategory[] = [
     'Electronics',
@@ -88,7 +88,7 @@ export default function NewListingPage() {
         const collectionName = values.type === 'product' ? 'products' : 'courses';
         const listingCollectionRef = collection(firestore, 'vendors', user.uid, collectionName);
         
-        const listingData = {
+        const listingData: Partial<Item> & { vendorId: string; vendor: string | null; rating: number; name: string; description: string; price: number; type: 'product' | 'course'; category: ItemCategory; imageId: string; stock?: number | undefined; } = {
             vendorId: user.uid,
             vendor: user.displayName || user.email,
             rating: Math.round((Math.random() * (5 - 3.5) + 3.5) * 10) / 10, // Mock rating
@@ -117,7 +117,7 @@ export default function NewListingPage() {
                         <FormField control={form.control} name="type" render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Listing Type</FormLabel>
-                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <Select onValueChange={field.onChange} value={field.value}>
                                     <FormControl>
                                         <SelectTrigger><SelectValue placeholder="Select a type" /></SelectTrigger>
                                     </FormControl>
@@ -154,7 +154,7 @@ export default function NewListingPage() {
                             <FormField control={form.control} name="category" render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Category</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select onValueChange={field.onChange} value={field.value}>
                                         <FormControl>
                                             <SelectTrigger><SelectValue placeholder="Select a category" /></SelectTrigger>
                                         </FormControl>
@@ -171,7 +171,7 @@ export default function NewListingPage() {
                             <FormField control={form.control} name="imageId" render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Image</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select onValueChange={field.onChange} value={field.value}>
                                         <FormControl>
                                             <SelectTrigger><SelectValue placeholder="Select a placeholder image" /></SelectTrigger>
                                         </FormControl>
