@@ -3,8 +3,23 @@ import Link from 'next/link';
 import { BookOpenCheck, Twitter, Facebook, Instagram } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 export default function Footer() {
+  const { toast } = useToast();
+
+  const handleNewsletterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const email = e.currentTarget.email.value;
+    if (email) {
+        toast({
+            title: "Subscribed!",
+            description: "Thanks for subscribing to our newsletter.",
+        });
+        e.currentTarget.reset();
+    }
+  };
+
   return (
     <footer className="bg-card text-card-foreground border-t">
       <div className="container mx-auto px-4 py-12">
@@ -20,8 +35,8 @@ export default function Footer() {
             <p className="text-muted-foreground text-sm">
               Subscribe to our newsletter for the latest updates on products and courses.
             </p>
-            <form className="flex gap-2">
-              <Input type="email" placeholder="Your email address" className="bg-background" />
+            <form className="flex gap-2" onSubmit={handleNewsletterSubmit}>
+              <Input name="email" type="email" placeholder="Your email address" className="bg-background" required />
               <Button type="submit">Subscribe</Button>
             </form>
           </div>
@@ -40,10 +55,10 @@ export default function Footer() {
             <div>
               <h3 className="font-semibold mb-4">Categories</h3>
               <ul className="space-y-2">
-                <li><Link href="#" className="text-muted-foreground hover:text-primary transition-colors">Products</Link></li>
-                <li><Link href="#" className="text-muted-foreground hover:text-primary transition-colors">Courses</Link></li>
-                <li><Link href="#" className="text-muted-foreground hover:text-primary transition-colors">Technology</Link></li>
-                <li><Link href="#" className="text-muted-foreground hover:text-primary transition-colors">Design</Link></li>
+                <li><Link href="/search?type=product" className="text-muted-foreground hover:text-primary transition-colors">Products</Link></li>
+                <li><Link href="/search?type=course" className="text-muted-foreground hover:text-primary transition-colors">Courses</Link></li>
+                <li><Link href="/search?category=Electronics" className="text-muted-foreground hover:text-primary transition-colors">Technology</Link></li>
+                <li><Link href="/search?category=Courses" className="text-muted-foreground hover:text-primary transition-colors">Design</Link></li>
               </ul>
             </div>
             <div>
