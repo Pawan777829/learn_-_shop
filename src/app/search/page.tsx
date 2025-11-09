@@ -19,9 +19,10 @@ function SearchPageContent() {
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get('q') || '';
   const initialCategory = searchParams.get('category') || 'all';
+  const initialType = (searchParams.get('type') as 'product' | 'course' | null) || 'all';
   
   const [searchTerm, setSearchTerm] = useState(initialQuery);
-  const [typeFilter, setTypeFilter] = useState<'all' | 'product' | 'course'>('all');
+  const [typeFilter, setTypeFilter] = useState<'all' | 'product' | 'course'>(initialType);
   const [categoryFilter, setCategoryFilter] = useState<string>(initialCategory);
 
   useEffect(() => {
@@ -31,11 +32,27 @@ function SearchPageContent() {
   useEffect(() => {
     setCategoryFilter(initialCategory);
   }, [initialCategory]);
+
+  useEffect(() => {
+    setTypeFilter(initialType);
+  }, [initialType]);
   
   const categories = useMemo(() => {
-    const allCategories = allItems.map(item => item.category);
+    let relevantItems = allItems;
+    if (typeFilter !== 'all') {
+      relevantItems = allItems.filter(item => item.type === typeFilter);
+    }
+    const allCategories = relevantItems.map(item => item.category);
     return ['all', ...Array.from(new Set(allCategories))];
-  }, []);
+  }, [typeFilter]);
+
+  // Effect to reset category if it's not available for the selected type
+  useEffect(() => {
+    if (!categories.includes(categoryFilter)) {
+        setCategoryFilter('all');
+    }
+  }, [categories, categoryFilter]);
+
 
   const filteredItems = useMemo(() => {
     return allItems.filter(item => {
