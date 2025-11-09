@@ -79,6 +79,66 @@
       "imageHint": "digital marketing"
     },
     {
+      "id": "prod8",
+      "description": "A portable bluetooth speaker on a desk.",
+      "imageUrl": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxibHVldG9vdGglMjBzcGVha2VyfGVufDB8fHx8MTc2MjYzMjA2OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "bluetooth speaker"
+    },
+    {
+      "id": "prod9",
+      "description": "An action camera mounted on a helmet.",
+      "imageUrl": "https://images.unsplash.com/photo-1644959069577-f62c1f6b584d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YWN0aW9uJTIwY2FtZXJhfGVufDB8fHx8MTc2MjY4OTgzNHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "action camera"
+    },
+    {
+      "id": "prod10",
+      "description": "A gaming mouse with RGB lighting.",
+      "imageUrl": "https://images.unsplash.com/photo-1629429408708-3a59f51979c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Z2FtaW5nJTIwbW91c2V8ZW58MHx8fHwxNzYyNjYzMzk1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "gaming mouse"
+    },
+    {
+      "id": "prod11",
+      "description": "A wide curved computer monitor showing a game.",
+      "imageUrl": "https://images.unsplash.com/photo-1668979324621-67bb2cf542f7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjdXJ2ZWQlMjBtb25pdG9yfGVufDB8fHx8MTc2MjYxMzk1MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "curved monitor"
+    },
+    {
+      "id": "prod12",
+      "description": "An espresso machine brewing coffee.",
+      "imageUrl": "https://images.unsplash.com/photo-1627902511858-6ad7e004fd35?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxlc3ByZXNzbyUyMG1hY2hpbmV8ZW58MHx8fHwxNzYyNTg1ODI0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "espresso machine"
+    },
+    {
+      "id": "prod13",
+      "description": "A robotic vacuum cleaning a wooden floor.",
+      "imageUrl": "https://images.unsplash.com/photo-1754297813436-28cba2aec2da?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cm9ib3RpYyUyMHZhY3V1bXxlbnwwfHx8fDE3NjI2ODcwNTF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "robotic vacuum"
+    },
+    {
+      "id": "prod14",
+      "description": "An air fryer with french fries inside.",
+      "imageUrl": "https://images.unsplash.com/photo-1690642109567-940e7fc2cd5d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhaXIlMjBmcnllcnxlbnwwfHx8fDE3NjI2MDEyNjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "air fryer"
+    },
+    {
+      "id": "prod15",
+      "description": "A person wearing a classic black leather jacket.",
+      "imageUrl": "https://images.unsplash.com/photo-1553640662-9ab20b8fa2ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxsZWF0aGVyJTIwamFja2V0fGVufDB8fHx8MTc2MjYxODIwMnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "leather jacket"
+    },
+    {
+      "id": "prod16",
+      "description": "A pair of trail running shoes on a rock.",
+      "imageUrl": "https://images.unsplash.com/photo-1597892657493-6847b9640bac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxydW5uaW5nJTIwc2hvZXN8ZW58MHx8fHwxNzYyNjE4MzU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "running shoes"
+    },
+    {
+      "id": "prod17",
+      "description": "A book titled 'The Art of Programming' on a desk.",
+      "imageUrl": "https://images.unsplash.com/photo-1674664985250-4d023c679b39?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxwcm9ncmFtbWluZyUyMGJvb2t8ZW58MHx8fHwxNzYyNjc2MjA5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "programming book"
+    },
+    {
       "id": "course5",
       "description": "A professional camera on a tripod, ready to take a picture of a landscape.",
       "imageUrl": "https://images.unsplash.com/photo-1653924308766-73632d766dde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwaG90b2dyYXBoeSUyMGNsYXNzfGVufDB8fHx8MTc2MjY4OTM0M3ww&ixlib=rb-4.1.0&q=80&w=1080",
@@ -95,6 +155,60 @@
       "description": "An open notebook with handwritten notes, alongside a classic typewriter.",
       "imageUrl": "https://images.unsplash.com/photo-1455390582262-044cdead277a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjcmVhdGl2ZSUyMHdyaXRpbmd8ZW58MHx8fHwxNzYyNjg5MzQzfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "creative writing"
+    },
+    {
+      "id": "course8",
+      "description": "Abstract visualization of neural networks and AI.",
+      "imageUrl": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlfGVufDB8fHx8MTc2MjY4MjExMXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "artificial intelligence"
+    },
+    {
+      "id": "prod18",
+      "description": "A quadcopter drone flying over a mountain range.",
+      "imageUrl": "https://images.unsplash.com/photo-1712489899293-120c6378a0f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxkcm9uZSUyMGZseWluZ3xlbnwwfHx8fDE3NjI2NDI4MjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "drone flying"
+    },
+    {
+      "id": "prod19",
+      "description": "A pair of white wireless earbuds in their charging case.",
+      "imageUrl": "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx3aXJlbGVzcyUyMGVhcmJ1ZHN8ZW58MHx8fHwxNzYyNjQ4NzY1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "wireless earbuds"
+    },
+    {
+      "id": "prod20",
+      "description": "A sleek metal laptop stand on a clean desk.",
+      "imageUrl": "https://images.unsplash.com/photo-1629317480826-910f729d1709?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxsYXB0b3AlMjBzdGFuZHxlbnwwfHx8fDE3NjI2NzU5Njh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "laptop stand"
+    },
+    {
+      "id": "prod21",
+      "description": "A smart coffee maker brewing coffee into a glass carafe.",
+      "imageUrl": "https://images.unsplash.com/photo-1458060390477-1b8bc1cfe017?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjb2ZmZWUlMjBtYWtlcnxlbnwwfHx8fDE3NjI2Mjg2MzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "coffee maker"
+    },
+    {
+      "id": "prod22",
+      "description": "A minimalist watch with a black strap on a person's wrist.",
+      "imageUrl": "https://images.unsplash.com/photo-1580226223521-5412ec88237a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtaW5pbWFsaXN0JTIwd2F0Y2h8ZW58MHx8fHwxNzYyNjU3ODA2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "minimalist watch"
+    },
+    {
+      "id": "prod23",
+      "description": "A copy of 'The Pragmatic Programmer' book on a shelf.",
+      "imageUrl": "https://images.unsplash.com/photo-1667964395070-2dd7bd81d914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwcm9ncmFtbWluZyUyMGJvb2t8ZW58MHx8fHwxNzYyNjc2MjA5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "programming book"
+    },
+    {
+      "id": "prod24",
+      "description": "A book with a futuristic cover for a sci-fi anthology.",
+      "imageUrl": "https://images.unsplash.com/photo-1716346752361-242bc4f1fc08?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxzY2lmaSUyMGJvb2t8ZW58MHx8fHwxNzYyNjg5ODM0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "scifi book"
+    },
+    {
+      "id": "course9",
+      "description": "A person speaking confidently at a podium to an audience.",
+      "imageUrl": "https://images.unsplash.com/photo-1710360683896-e0506fb3579a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxwdWJsaWMlMjBzcGVha2luZ3xlbnwwfHx8fDE3NjI1ODE1NjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "public speaking"
     }
   ]
 }
