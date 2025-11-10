@@ -498,21 +498,17 @@
         }
       },
       {
-        "path": "/users/{userId}/vendors/{vendorId}",
+        "path": "/vendors/{vendorId}",
         "definition": {
           "entityName": "Vendor",
           "schema": {
             "$ref": "#/backend/entities/Vendor"
           },
-          "description": "Stores vendor profiles, owned by a user.  User ID and Vendor ID are used for path-based ownership.",
+          "description": "Stores vendor profiles. The vendorId is the same as the user's UID for path-based ownership.",
           "params": [
             {
-              "name": "userId",
-              "description": "The unique identifier of the user."
-            },
-            {
               "name": "vendorId",
-              "description": "The unique identifier of the vendor."
+              "description": "The unique identifier of the vendor (matches owner's UID)."
             }
           ]
         }
@@ -698,6 +694,6 @@
         }
       }
     ],
-    "reasoning": "The Firestore data structure is designed to support the Learn & Shop platform, focusing on secure and scalable data access for users, vendors, products, courses, orders, and related entities. It emphasizes Authorization Independence (CRITICAL) through denormalization of authorization data, DBAC (Database-Based Access Control), QAPs (Rules are not Filters), and clarity for debugging.\n\n**Authorization Independence and QAPs:**\n\n*   **Vendors, Products, Courses:** Vendor ID is included directly within Product and Course documents, enabling rules to validate vendor ownership without requiring `get()` calls, thus achieving Authorization Independence. This also enables secure `list` operations, as rules can filter based on the denormalized `vendorId`.\n*   **Orders, OrderItems:** User ID is included directly within Order documents, enabling rules to validate user ownership. OrderItems are stored as a subcollection to the Order document.\n*   **Enrollments:** User ID is included directly within Enrollment documents, enabling rules to validate user ownership.\n*   **Recommendations:** User ID is included directly within Recommendation documents, enabling rules to validate user ownership.\n*   **Lessons:** Course ID is included directly within Lesson documents, enabling rules to validate course ownership.\n**Reviews:** Reviews for products and courses are stored in subcollections under their respective items. This allows for easy querying of all reviews for a specific item. The rules allow public read access but restrict writes to authenticated users who have purchased the item.\n\n**Structural Segregation:**\n\n*   User-specific data (Vendors, Orders, Enrollments, Recommendations, Wishlist, Addresses) is stored under the `/users/{userId}` path, ensuring that only the owning user or authorized roles can access it. This adheres to the principle of homogeneous security posture.\n\n**Access Modeling:**\n\n*   Path-Based Ownership: The `/users/{userId}/vendors/{vendorId}` pattern provides clear ownership semantics. Similarly, `/users/{userId}/orders/{orderId}`, `/users/{userId}/enrollments/{enrollmentId}`, `/users/{userId}/recommendations/{recommendationId}`, and `/users/{userId}/wishlist/{wishlistItemId}` follow this pattern.\n\n**Data Clarity and Predictability:**\n\n*   Entity relationships are explicitly defined through ID references (e.g., `productId` in `OrderItem`, `vendorId` in `Product` and `Course`).\n*   Consistent naming conventions are used (e.g., `userId`, `vendorId`, `courseId`) to improve readability and maintainability.\n"
+    "reasoning": "The Firestore data structure is designed to support the Learn & Shop platform, focusing on secure and scalable data access for users, vendors, products, courses, orders, and related entities. It emphasizes Authorization Independence (CRITICAL) through denormalization of authorization data, DBAC (Database-Based Access Control), QAPs (Rules are not Filters), and clarity for debugging.\n\n**Authorization Independence and QAPs:**\n\n*   **Vendors, Products, Courses:** Vendor ID is included directly within Product and Course documents, enabling rules to validate vendor ownership without requiring `get()` calls, thus achieving Authorization Independence. This also enables secure `list` operations, as rules can filter based on the denormalized `vendorId`.\n*   **Orders, OrderItems:** User ID is included directly within Order documents, enabling rules to validate user ownership. OrderItems are stored as a subcollection to the Order document.\n*   **Enrollments:** User ID is included directly within Enrollment documents, enabling rules to validate user ownership.\n*   **Recommendations:** User ID is included directly within Recommendation documents, enabling rules to validate user ownership.\n*   **Lessons:** Course ID is included directly within Lesson documents, enabling rules to validate course ownership.\n**Reviews:** Reviews for products and courses are stored in subcollections under their respective items. This allows for easy querying of all reviews for a specific item. The rules allow public read access but restrict writes to authenticated users who have purchased the item.\n\n**Structural Segregation:**\n\n*   User-specific data (Orders, Enrollments, Recommendations, Wishlist, Addresses) is stored under the `/users/{userId}` path, ensuring that only the owning user or authorized roles can access it.\n*   Vendor data is now in a top-level `/vendors` collection to simplify rules and queries.\n\n**Access Modeling:**\n\n*   Path-Based Ownership: The `/vendors/{vendorId}` pattern provides clear ownership semantics. Similarly, `/users/{userId}/orders/{orderId}`, `/users/{userId}/enrollments/{enrollmentId}`, `/users/{userId}/recommendations/{recommendationId}`, and `/users/{userId}/wishlist/{wishlistItemId}` follow this pattern.\n\n**Data Clarity and Predictability:**\n\n*   Entity relationships are explicitly defined through ID references (e.g., `productId` in `OrderItem`, `vendorId` in `Product` and `Course`).\n*   Consistent naming conventions are used (e.g., `userId`, `vendorId`, `courseId`) to improve readability and maintainability.\n"
   }
 }

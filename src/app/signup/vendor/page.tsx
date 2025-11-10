@@ -80,12 +80,12 @@ export default function VendorSignupPage() {
         };
         batch.set(userRef, userData, { merge: true });
 
-        // 3. Create the vendor document
-        const vendorId = user.uid; // Use user ID as vendor ID for simplicity
-        const vendorRef = doc(firestore, 'users', user.uid, 'vendors', vendorId);
+        // 3. Create the vendor document in the top-level 'vendors' collection
+        const vendorId = user.uid; // Use user ID as vendor ID
+        const vendorRef = doc(firestore, 'vendors', vendorId);
         const vendorData = {
             id: vendorId,
-            userId: user.uid,
+            userId: user.uid, // Keep userId for reference
             businessName: values.businessName,
             description: values.businessDescription,
             contactEmail: values.email,

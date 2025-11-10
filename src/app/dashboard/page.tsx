@@ -13,9 +13,9 @@ export default function DashboardPage() {
   // Path to the potential vendor document for the current user
   const vendorRef = useMemoFirebase(() => {
     if (!user) return null;
-    // This path assumes a user can only have one vendor profile, stored with their UID as the doc ID.
-    // The vendor document is now stored under the user's own document.
-    return doc(firestore, 'users', user.uid, 'vendors', user.uid);
+    // The vendor document is now in a top-level 'vendors' collection,
+    // with the document ID matching the user's UID.
+    return doc(firestore, 'vendors', user.uid);
   }, [firestore, user]);
 
   const { data: vendorDoc, isLoading: isVendorLoading } = useDoc(vendorRef);

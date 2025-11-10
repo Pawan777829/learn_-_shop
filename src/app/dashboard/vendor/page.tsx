@@ -46,11 +46,13 @@ export default function VendorDashboardPage() {
 
   const productsQuery = useMemoFirebase(() => {
     if (!user) return null;
+    // Path updated to top-level vendors collection
     return collection(firestore, 'vendors', user.uid, 'products');
   }, [firestore, user]);
 
   const coursesQuery = useMemoFirebase(() => {
     if (!user) return null;
+    // Path updated to top-level vendors collection
     return collection(firestore, 'vendors', user.uid, 'courses');
   }, [firestore, user]);
 
@@ -74,6 +76,7 @@ export default function VendorDashboardPage() {
     if (!itemToDelete || !user) return;
     
     const collectionName = itemToDelete.type === 'product' ? 'products' : 'courses';
+    // Path updated to top-level vendors collection
     const docRef = doc(firestore, 'vendors', user.uid, collectionName, itemToDelete.id);
 
     deleteDocumentNonBlocking(docRef);

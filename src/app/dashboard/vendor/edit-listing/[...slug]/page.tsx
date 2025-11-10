@@ -76,6 +76,7 @@ export default function EditListingPage() {
 
     const itemRef = useMemoFirebase(() => {
         if (!user || !id) return null;
+        // Path updated to top-level vendors collection
         return doc(firestore, 'vendors', user.uid, collectionName, id);
     }, [firestore, user, collectionName, id]);
 
@@ -97,12 +98,15 @@ export default function EditListingPage() {
     const itemType = form.watch('type');
 
     async function onSubmit(values: z.infer<typeof listingSchema>) {
-        if (!itemRef) {
+        if (!itemRef || !user) {
             toast({ variant: 'destructive', title: 'Error', description: 'Listing reference not found.' });
             return;
         }
 
-        const listingData: Partial<Item> & { name: string; description: string; price: number; type: 'product' | 'course'; category: ItemCategory; imageId: string; stock?: number | undefined; } = { ...values };
+        const listingData: Partial<Item> & { name: string; description: string; price: number; type: 'product' | 'course'; category: ItemCategory; imageId: string; stock?: number | undefined; vendorId: string; } = {
+            ...values,
+            vendorId: user.uid // Ensure vendorId is set for security rule validation
+        };
         if (values.type === 'course') {
             delete listingData.stock;
         }
