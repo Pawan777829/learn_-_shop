@@ -36,19 +36,22 @@ export default function CartPage() {
                                 <ul className="space-y-6">
                                     {cartItems.map((item) => {
                                         const placeholder = getImageById(item.imageId);
+                                        const itemUrl = `/${item.type}s/${item.id}`;
                                         return (
                                         <li key={item.id} className="flex flex-col sm:flex-row gap-4">
-                                            {placeholder && <Image
-                                                src={placeholder.imageUrl}
-                                                alt={placeholder.description}
-                                                width={100}
-                                                height={100}
-                                                className="rounded-md object-cover"
-                                                data-ai-hint={placeholder.imageHint}
-                                            />}
+                                            <Link href={itemUrl}>
+                                                {placeholder && <Image
+                                                    src={placeholder.imageUrl}
+                                                    alt={placeholder.description}
+                                                    width={100}
+                                                    height={100}
+                                                    className="rounded-md object-cover"
+                                                    data-ai-hint={placeholder.imageHint}
+                                                />}
+                                            </Link>
                                             <div className="flex-1 flex flex-col justify-between">
                                                 <div>
-                                                    <Link href={`/${item.type}s/${item.id}`} className="hover:underline">
+                                                    <Link href={itemUrl} className="hover:underline">
                                                         <h3 className="font-semibold">{item.name}</h3>
                                                     </Link>
                                                     <p className="text-lg font-medium text-primary">${item.price.toFixed(2)}</p>
