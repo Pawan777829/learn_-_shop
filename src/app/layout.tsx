@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Header from "@/components/layout/header";
@@ -10,11 +10,6 @@ import { CartProvider } from "@/context/cart-context";
 import Chatbot from "@/components/chatbot";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-  variable: "--font-headline",
-});
 
 export const metadata: Metadata = {
   title: "Learn & Shop",
@@ -31,8 +26,7 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-body antialiased",
-          inter.variable,
-          poppins.variable
+          inter.variable
         )}
       >
         <FirebaseClientProvider>
