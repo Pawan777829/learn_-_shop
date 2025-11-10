@@ -103,7 +103,7 @@ service cloud.firestore {
                get(/databases/$(database)/documents/users/$(request.auth.uid)/orders).data.keys()
                  .exists(orderId => exists(/databases/$(database)/documents/users/$(request.auth.uid)/orders/$(orderId)/orderItems/$(productId)));
       }
-      allow create: if isAuth() && request.resource.data.userId == request.auth.uid;
+      allow create: if isAuth() && request.resource.data.userId == request.auth.uid && hasPurchasedProduct();
     }
 
     /**
@@ -122,7 +122,12 @@ service cloud.firestore {
      */
     match /courses/{courseId}/reviews/{reviewId} {
         allow read: if true;
-        allow create: if isAuth() && exists(/databases/$(database)/documents/users/$(request.auth.uid)/enrollments/$(courseId));
+        function isEnrolled() {
+         return exists(/databases/$(database)/documents/users/$(request.auth.uid)/enrollments) &&
+                get(/databases/$(database)/documents/users/$(request.auth.uid)/enrollments).data.keys()
+                  .exists(enrollmentId => get(/databases/$(database)/documents/users/$(request.auth.uid)/enrollments/$(enrollmentId)).data.courseId == courseId);
+        }
+        allow create: if isAuth() && request.resource.data.userId == request.auth.uid && isEnrolled();
     }
 
     /**
