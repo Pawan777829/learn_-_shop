@@ -14,6 +14,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from '@/components/ui/input';
+import { Slider } from '@/components/ui/slider';
+import { Label } from '@/components/ui/label';
 
 function SearchPageContent() {
   const searchParams = useSearchParams();
@@ -24,6 +26,10 @@ function SearchPageContent() {
   const [searchTerm, setSearchTerm] = useState(initialQuery);
   const [typeFilter, setTypeFilter] = useState<'all' | 'product' | 'course'>(initialType);
   const [categoryFilter, setCategoryFilter] = useState<string>(initialCategory);
+  const [sortOrder, setSortOrder] = useState('relevance');
+  const maxPrice = useMemo(() => Math.ceil(Math.max(...allItems.map(item => item.price))), []);
+  const [priceRange, setPriceRange] = useState([0, maxPrice]);
+  const [ratingFilter, setRatingFilter] = useState(0);
 
   useEffect(() => {
     setSearchTerm(initialQuery);
@@ -55,15 +61,33 @@ function SearchPageContent() {
 
 
   const filteredItems = useMemo(() => {
-    return allItems.filter(item => {
+    let items = allItems.filter(item => {
       const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             item.description.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesType = typeFilter === 'all' || item.type === typeFilter;
       const matchesCategory = categoryFilter === 'all' || item.category === categoryFilter;
+      const matchesPrice = item.price >= priceRange[0] && item.price <= priceRange[1];
+      const matchesRating = item.rating >= ratingFilter;
 
-      return matchesSearch && matchesType && matchesCategory;
+      return matchesSearch && matchesType && matchesCategory && matchesPrice && matchesRating;
     });
-  }, [searchTerm, typeFilter, categoryFilter]);
+
+    switch (sortOrder) {
+        case 'price-asc':
+            items.sort((a, b) => a.price - b.price);
+            break;
+        case 'price-desc':
+            items.sort((a, b) => b.price - a.price);
+            break;
+        case 'rating':
+            items.sort((a, b) => b.rating - a.rating);
+            break;
+        default: // relevance
+            break;
+    }
+
+    return items;
+  }, [searchTerm, typeFilter, categoryFilter, sortOrder, priceRange, ratingFilter]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -77,13 +101,13 @@ function SearchPageContent() {
       </header>
 
       <div className="mb-8 p-4 border rounded-lg bg-card sticky top-20 z-40">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center">
           <Input 
             type="text"
             placeholder="Search by name or description..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="md:col-span-3"
+            className="md:col-span-2 lg:col-span-4"
           />
           <Select value={typeFilter} onValueChange={(value) => setTypeFilter(value as any)}>
             <SelectTrigger>
@@ -108,6 +132,38 @@ function SearchPageContent() {
               ))}
             </SelectContent>
           </Select>
+           <Select value={sortOrder} onValueChange={setSortOrder}>
+            <SelectTrigger>
+              <SelectValue placeholder="Sort by" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="relevance">Sort by Relevance</SelectItem>
+              <SelectItem value="price-asc">Price: Low to High</SelectItem>
+              <SelectItem value="price-desc">Price: High to Low</SelectItem>
+              <SelectItem value="rating">Highest Rating</SelectItem>
+            </SelectContent>
+          </Select>
+          <div className='space-y-2'>
+              <Label>Price Range: ${priceRange[0]} - ${priceRange[1]}</Label>
+              <Slider
+                min={0}
+                max={maxPrice}
+                step={10}
+                value={[priceRange[1]]}
+                onValueChange={(value) => setPriceRange([priceRange[0], value[0]])}
+              />
+          </div>
+           <div className='space-y-2'>
+              <Label>Minimum Rating: {ratingFilter} stars</Label>
+              <Slider
+                min={0}
+                max={5}
+                step={0.5}
+                value={[ratingFilter]}
+                onValueChange={(value) => setRatingFilter(value[0])}
+              />
+          </div>
+
         </div>
       </div>
 

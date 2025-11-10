@@ -17,11 +17,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useAuth, useFirestore, useUser } from '@/firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc } from 'firebase/firestore';
 import { setDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import { useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { initiateGoogleSignIn } from '@/firebase/non-blocking-login';
+import { Separator } from '@/components/ui/separator';
+import { Chrome } from 'lucide-react';
 
 const signupSchema = z.object({
   firstName: z.string().min(1, { message: 'First name is required.' }),
@@ -49,7 +52,7 @@ export default function SignupPage() {
 
   useEffect(() => {
     if (user && !isUserLoading) {
-      router.push('/dashboard/user');
+      router.push('/dashboard');
     }
   }, [user, isUserLoading, router]);
 
@@ -59,6 +62,12 @@ export default function SignupPage() {
       const user = userCredential.user;
 
       if (user) {
+        // Update user profile display name
+        await updateProfile(user, {
+            displayName: `${values.firstName} ${values.lastName}`
+        });
+
+        // Create user document in Firestore
         const userRef = doc(firestore, 'users', user.uid);
         const userData = {
           id: user.uid,
@@ -81,6 +90,10 @@ export default function SignupPage() {
         description: error.message || "An unexpected error occurred. Please try again.",
       });
     }
+  }
+
+  function onGoogleSignIn() {
+    initiateGoogleSignIn(auth);
   }
 
   if (isUserLoading || user) {
@@ -160,6 +173,14 @@ export default function SignupPage() {
               </Button>
             </form>
           </Form>
+           <div className="relative my-6">
+            <Separator />
+            <span className="absolute left-1/2 -translate-x-1/2 -top-3 bg-card px-2 text-sm text-muted-foreground">OR</span>
+          </div>
+          <Button variant="outline" className="w-full" size="lg" onClick={onGoogleSignIn}>
+            <Chrome className="mr-2 h-5 w-5" />
+            Sign up with Google
+          </Button>
           <div className="mt-6 text-center text-sm">
             <p className="text-muted-foreground">
               Already have an account?{' '}

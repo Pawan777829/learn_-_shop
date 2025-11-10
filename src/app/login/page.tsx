@@ -17,9 +17,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useAuth } from '@/firebase';
-import { initiateEmailSignIn } from '@/firebase/non-blocking-login';
+import { initiateEmailSignIn, initiateGoogleSignIn } from '@/firebase/non-blocking-login';
 import { useUser } from '@/firebase';
 import { useEffect } from 'react';
+import { Separator } from '@/components/ui/separator';
+import { Chrome } from 'lucide-react';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email address.' }),
@@ -41,7 +43,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (user && !isUserLoading) {
-      router.push('/dashboard/user');
+      router.push('/dashboard');
     }
   }, [user, isUserLoading, router]);
 
@@ -49,6 +51,10 @@ export default function LoginPage() {
     initiateEmailSignIn(auth, values.email, values.password);
   }
   
+   function onGoogleSignIn() {
+    initiateGoogleSignIn(auth);
+  }
+
   if (isUserLoading || user) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -98,6 +104,14 @@ export default function LoginPage() {
               </Button>
             </form>
           </Form>
+           <div className="relative my-6">
+            <Separator />
+            <span className="absolute left-1/2 -translate-x-1/2 -top-3 bg-card px-2 text-sm text-muted-foreground">OR</span>
+          </div>
+          <Button variant="outline" className="w-full" size="lg" onClick={onGoogleSignIn}>
+            <Chrome className="mr-2 h-5 w-5" />
+            Sign in with Google
+          </Button>
           <div className="mt-6 text-center text-sm">
             <p className="text-muted-foreground">
               Don&apos;t have an account?{' '}
