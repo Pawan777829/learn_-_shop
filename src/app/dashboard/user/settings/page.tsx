@@ -19,6 +19,7 @@ import { Separator } from '@/components/ui/separator';
 const profileSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().min(1, 'Last name is required'),
+  email: z.string().email(),
 });
 
 const addressSchema = z.object({
@@ -47,7 +48,7 @@ export default function SettingsPage() {
   
   const profileForm = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
-    defaultValues: { firstName: '', lastName: '' },
+    defaultValues: { firstName: '', lastName: '', email: '' },
   });
 
   useEffect(() => {
@@ -55,13 +56,19 @@ export default function SettingsPage() {
       profileForm.reset({
         firstName: userProfile.firstName,
         lastName: userProfile.lastName,
+        email: userProfile.email,
       });
+    } else if (user) {
+        profileForm.reset({
+            email: user.email || '',
+        })
     }
-  }, [userProfile, profileForm]);
+  }, [userProfile, user, profileForm]);
 
   function onProfileSubmit(values: z.infer<typeof profileSchema>) {
     if (!userRef) return;
-    updateDocumentNonBlocking(userRef, values);
+    const { email, ...profileData } = values;
+    updateDocumentNonBlocking(userRef, profileData);
     toast({ title: 'Profile Updated', description: 'Your changes have been saved.' });
   }
 
@@ -150,7 +157,7 @@ export default function SettingsPage() {
                 )} />
               </div>
                <FormField control={profileForm.control} name="email" render={({ field }) => (
-                  <FormItem><FormLabel>Email</FormLabel><FormControl><Input disabled value={user?.email || ''} /></FormControl><FormMessage /></FormItem>
+                  <FormItem><FormLabel>Email</FormLabel><FormControl><Input disabled {...field} /></FormControl><FormMessage /></FormItem>
                 )} />
               <Button type="submit" disabled={profileForm.formState.isSubmitting}>Save Changes</Button>
             </form>

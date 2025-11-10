@@ -14,7 +14,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useUser, useFirestore, useCollection, useMemoFirebase, addDocumentNonBlocking } from '@/firebase';
-import { collection, query, where, orderBy, getDocs, collectionGroup } from 'firebase/firestore';
+import { collection, query, where, orderBy, getDocs, doc } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 import type { Review, Item } from '@/lib/types';
 import ReviewCard from './review-card';
@@ -60,7 +60,6 @@ export default function Reviews({ itemId, itemType, itemVendorId }: ReviewsProps
             return;
         }
         
-        // A user cannot review their own product
         if (user.uid === itemVendorId) {
             setHasPurchased(false);
             setIsCheckingPurchase(false);
@@ -68,33 +67,34 @@ export default function Reviews({ itemId, itemType, itemVendorId }: ReviewsProps
         }
 
         setIsCheckingPurchase(true);
-        let purchased = false;
         try {
+            let purchased = false;
             if (itemType === 'product') {
                 const ordersCollectionRef = collection(firestore, `users/${user.uid}/orders`);
                 const ordersSnapshot = await getDocs(ordersCollectionRef);
                 for (const orderDoc of ordersSnapshot.docs) {
                     const orderItemsRef = collection(orderDoc.ref, 'orderItems');
-                    const orderItemsSnapshot = await getDocs(query(orderItemsRef, where('id', '==', itemId)));
+                    const q = query(orderItemsRef, where('id', '==', itemId));
+                    const orderItemsSnapshot = await getDocs(q);
                     if (!orderItemsSnapshot.empty) {
                         purchased = true;
                         break;
                     }
                 }
             } else { // 'course'
-                const enrollmentsRef = collection(firestore, `users/${user.uid}/enrollments`);
-                const q = query(enrollmentsRef, where('courseId', '==', itemId));
-                const enrollmentsSnapshot = await getDocs(q);
-                if (!enrollmentsSnapshot.empty) {
+                const enrollmentRef = doc(firestore, `users/${user.uid}/enrollments`, itemId);
+                const enrollmentSnap = await getDocs(query(collection(firestore, `users/${user.uid}/enrollments`), where('courseId', '==', itemId)));
+                if (!enrollmentSnap.empty) {
                     purchased = true;
                 }
             }
+            setHasPurchased(purchased);
         } catch (error) {
             console.error("Error checking purchase status:", error);
+            setHasPurchased(false);
+        } finally {
+            setIsCheckingPurchase(false);
         }
-        
-        setHasPurchased(purchased);
-        setIsCheckingPurchase(false);
     };
 
     checkPurchase();
