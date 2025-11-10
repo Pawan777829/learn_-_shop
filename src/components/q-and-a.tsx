@@ -14,7 +14,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useUser, useFirestore, useCollection, useMemoFirebase, addDocumentNonBlocking } from '@/firebase';
-import { collection, query, orderBy, doc } from 'firebase/firestore';
+import { collection, query, where, orderBy, doc } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 import type { Question, Answer } from '@/lib/types';
 import { Loader2, Plus } from 'lucide-react';
@@ -23,6 +23,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { Separator } from './ui/separator';
+import { Badge } from './ui/badge';
 
 const questionSchema = z.object({
   question: z.string().min(15, 'Question must be at least 15 characters long.'),
@@ -120,7 +121,7 @@ function QuestionCard({ question, itemVendorId }: { question: Question, itemVend
                                             <AvatarFallback>{answer.userName.charAt(0).toUpperCase()}</AvatarFallback>
                                         </Avatar>
                                         <div>
-                                            <p className="font-semibold text-sm">{answer.userName} {answer.userId === itemVendorId && &lt;Badge variant="secondary" className='ml-1'&gt;Vendor&lt;/Badge&gt;}</p>
+                                            <p className="font-semibold text-sm">{answer.userName} {answer.userId === itemVendorId && <Badge variant="secondary" className='ml-1'>Vendor</Badge>}</p>
                                             <p className="text-xs text-muted-foreground">
                                                 Answered {formatDistanceToNow(new Date(answer.createdAt), { addSuffix: true })}
                                             </p>
@@ -130,23 +131,23 @@ function QuestionCard({ question, itemVendorId }: { question: Question, itemVend
                                 </div>
                             ))}
                         </div>
-                    ) : &lt;p className="text-sm text-muted-foreground"&gt;No answers yet. Be the first to help!&lt;/p&gt;
+                    ) : <p className="text-sm text-muted-foreground">No answers yet. Be the first to help!</p>
                 )}
 
                 {user && (
-                    &lt;div className='mt-4'&gt;
+                    <div className='mt-4'>
                         {!showAnswerForm ? (
-                            &lt;Button variant="link" className="p-0 h-auto" onClick={() =&gt; setShowAnswerForm(true)}&gt;
-                                &lt;Plus className="h-4 w-4 mr-1" /&gt;
+                            <Button variant="link" className="p-0 h-auto" onClick={() => setShowAnswerForm(true)}>
+                                <Plus className="h-4 w-4 mr-1" />
                                 Write an answer
-                            &lt;/Button&gt;
+                            </Button>
                         ) : (
-                            &lt;AnswerForm questionId={question.id} onAnswerAdded={() =&gt; setShowAnswerForm(false)} /&gt;
+                            <AnswerForm questionId={question.id} onAnswerAdded={() => setShowAnswerForm(false)} />
                         )}
-                    &lt;/div&gt;
+                    </div>
                 )}
-            &lt;/CardContent&gt;
-        &lt;/Card&gt;
+            </CardContent>
+        </Card>
     )
 
 }
@@ -163,28 +164,28 @@ export default function QAndA({ itemId, itemType, itemVendorId }: QAndAProps) {
   const { toast } = useToast();
 
   // Query for questions related to this item
-  const questionsQuery = useMemoFirebase(() =&gt; {
+  const questionsQuery = useMemoFirebase(() => {
     if (!firestore) return null;
     return query(collection(firestore, 'questions'), where('itemId', '==', itemId), orderBy('createdAt', 'desc'));
   }, [firestore, itemId]);
 
-  const { data: questions, isLoading: isLoadingQuestions } = useCollection&lt;Question&gt;(questionsQuery);
+  const { data: questions, isLoading: isLoadingQuestions } = useCollection<Question>(questionsQuery);
 
-  const form = useForm&lt;z.infer&lt;typeof questionSchema&gt;&gt;({
+  const form = useForm<z.infer<typeof questionSchema>>({
     resolver: zodResolver(questionSchema),
     defaultValues: {
       question: '',
     },
   });
 
-  function onSubmit(values: z.infer&lt;typeof questionSchema&gt;) {
+  function onSubmit(values: z.infer<typeof questionSchema>) {
     if (!user || !firestore) {
       toast({ variant: 'destructive', title: 'Error', description: 'You must be logged in to ask a question.' });
       return;
     }
 
     const questionsRef = collection(firestore, 'questions');
-    const questionData: Omit&lt;Question, 'id'&gt; = {
+    const questionData: Omit<Question, 'id'> = {
         ...values,
         userId: user.uid,
         userName: user.displayName || 'Anonymous User',
@@ -199,50 +200,50 @@ export default function QAndA({ itemId, itemType, itemVendorId }: QAndAProps) {
   }
 
   return (
-    &lt;div className="mt-12 space-y-8"&gt;
-        &lt;Separator /&gt;
-        &lt;h2 className="text-2xl font-bold font-headline"&gt;Questions &amp; Answers&lt;/h2&gt;
+    <div className="mt-12 space-y-8">
+        <Separator />
+        <h2 className="text-2xl font-bold font-headline">Questions &amp; Answers</h2>
       
-        {user &amp;&amp; (
-            &lt;div className="border rounded-lg p-6"&gt;
-            &lt;h3 className="text-lg font-semibold mb-4"&gt;Ask a Question&lt;/h3&gt;
-            &lt;Form {...form}&gt;
-                &lt;form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4"&gt;
-                &lt;FormField
+        {user && (
+            <div className="border rounded-lg p-6">
+            <h3 className="text-lg font-semibold mb-4">Ask a Question</h3>
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <FormField
                     control={form.control}
                     name="question"
-                    render={({ field }) =&gt; (
-                    &lt;FormItem&gt;
-                        &lt;FormLabel&gt;Your Question&lt;/FormLabel&gt;
-                        &lt;FormControl&gt;
-                        &lt;Textarea placeholder="What would you like to know about this item?" {...field} /&gt;
-                        &lt;/FormControl&gt;
-                        &lt;FormMessage /&gt;
-                    &lt;/FormItem&gt;
+                    render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Your Question</FormLabel>
+                        <FormControl>
+                        <Textarea placeholder="What would you like to know about this item?" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
                     )}
-                /&gt;
-                &lt;Button type="submit" disabled={form.formState.isSubmitting}&gt;
+                />
+                <Button type="submit" disabled={form.formState.isSubmitting}>
                     {form.formState.isSubmitting ? 'Posting...' : 'Post Question'}
-                &lt;/Button&gt;
-                &lt;/form&gt;
-            &lt;/Form&gt;
-            &lt;/div&gt;
+                </Button>
+                </form>
+            </Form>
+            </div>
         )}
       
         {isLoadingQuestions ? (
-            &lt;div className="flex justify-center items-center py-10"&gt;
-                &lt;Loader2 className="h-8 w-8 animate-spin text-primary" /&gt;
-                &lt;p className="ml-2"&gt;Loading questions...&lt;/p&gt;
-            &lt;/div&gt;
-        ) : questions &amp;&amp; questions.length &gt; 0 ? (
-            &lt;div className="space-y-6"&gt;
-                {questions.map(q =&gt; (
-                    &lt;QuestionCard key={q.id} question={q} itemVendorId={itemVendorId} /&gt;
+            <div className="flex justify-center items-center py-10">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                <p className="ml-2">Loading questions...</p>
+            </div>
+        ) : questions && questions.length > 0 ? (
+            <div className="space-y-6">
+                {questions.map(q => (
+                    <QuestionCard key={q.id} question={q} itemVendorId={itemVendorId} />
                 ))}
-            &lt;/div&gt;
+            </div>
         ) : (
-            &lt;p className="text-muted-foreground"&gt;No questions have been asked yet. Be the first!&lt;/p&gt;
+            <p className="text-muted-foreground">No questions have been asked yet. Be the first!</p>
         )}
-    &lt;/div&gt;
+    </div>
   );
 }
