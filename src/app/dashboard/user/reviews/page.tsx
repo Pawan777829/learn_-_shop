@@ -3,7 +3,7 @@
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
 import { collectionGroup, query, where, orderBy } from 'firebase/firestore';
 import type { Review } from '@/lib/types';
-import { Loader2 } from 'lucide-react';
+import { Loader2, LogIn } from 'lucide-react';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Star } from 'lucide-react';
@@ -11,7 +11,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { Button } from '@/components/ui/button';
 
 export default function UserReviewsPage() {
-    const { user } = useUser();
+    const { user, isUserLoading } = useUser();
     const firestore = useFirestore();
 
     // This is a more complex query. It scans ALL 'reviews' subcollections across
@@ -33,11 +33,23 @@ export default function UserReviewsPage() {
 
     const { data: reviews, isLoading } = useCollection<Review>(reviewsQuery);
 
-    if (isLoading) {
+    if (isUserLoading || (isLoading && user)) {
         return (
             <div className="flex items-center justify-center h-full py-10">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
                 <p className="ml-2">Loading your reviews...</p>
+            </div>
+        );
+    }
+
+    if (!user) {
+         return (
+            <div className="text-center py-16 border-2 border-dashed rounded-lg">
+                <h2 className="text-2xl font-semibold">Please Log In</h2>
+                <p className="text-muted-foreground mt-2">You need to be logged in to view your reviews.</p>
+                <Button asChild className="mt-6">
+                    <Link href="/login"><LogIn className="mr-2 h-4 w-4" /> Log In</Link>
+                </Button>
             </div>
         );
     }
@@ -82,7 +94,7 @@ export default function UserReviewsPage() {
                     <h2 className="text-2xl font-semibold">You haven't written any reviews yet</h2>
                     <p className="text-muted-foreground mt-2">Share your thoughts on products you've purchased or courses you've taken.</p>
                     <Button asChild className="mt-6">
-                        <Link href="/dashboard/user">View My Orders & Courses</Link>
+                        <Link href="/dashboard/user">View My Orders &amp; Courses</Link>
                     </Button>
                 </div>
             )}
