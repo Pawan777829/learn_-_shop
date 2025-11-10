@@ -17,11 +17,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useAuth } from '@/firebase';
-import { initiateEmailSignIn, initiateGoogleSignIn } from '@/firebase/non-blocking-login';
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { useUser } from '@/firebase';
 import { useEffect } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { Chrome } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email address.' }),
@@ -32,6 +33,7 @@ export default function LoginPage() {
   const auth = useAuth();
   const router = useRouter();
   const { user, isUserLoading } = useUser();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -47,12 +49,45 @@ export default function LoginPage() {
     }
   }, [user, isUserLoading, router]);
 
-  function onSubmit(values: z.infer<typeof loginSchema>) {
-    initiateEmailSignIn(auth, values.email, values.password);
+  async function onSubmit(values: z.infer<typeof loginSchema>) {
+    try {
+        await signInWithEmailAndPassword(auth, values.email, values.password);
+    } catch (error: any) {
+        if (error.code === 'auth/operation-not-allowed') {
+            toast({
+                variant: 'destructive',
+                title: 'Sign-in method disabled',
+                description: "Email/Password sign-in is not enabled for this project. Please enable it in your Firebase Console under Authentication > Sign-in method.",
+            });
+        } else {
+            toast({
+                variant: 'destructive',
+                title: 'Login Failed',
+                description: error.message || 'An unexpected error occurred.',
+            });
+        }
+    }
   }
   
-   function onGoogleSignIn() {
-    initiateGoogleSignIn(auth);
+   async function onGoogleSignIn() {
+    const provider = new GoogleAuthProvider();
+    try {
+        await signInWithPopup(auth, provider);
+    } catch (error: any) {
+        if (error.code === 'auth/operation-not-allowed') {
+             toast({
+                variant: 'destructive',
+                title: 'Sign-in method disabled',
+                description: "Google Sign-in is not enabled for this project. Please enable it in your Firebase Console under Authentication > Sign-in method.",
+            });
+        } else {
+            toast({
+                variant: 'destructive',
+                title: 'Google Sign-in Failed',
+                description: error.message || 'An unexpected error occurred.',
+            });
+        }
+    }
   }
 
   if (isUserLoading || user) {
@@ -99,8 +134,8 @@ export default function LoginPage() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full" size="lg">
-                Log In
+              <Button type="submit" className="w-full" size="lg" disabled={form.formState.isSubmitting}>
+                {form.formState.isSubmitting ? 'Logging In...' : 'Log In'}
               </Button>
             </form>
           </Form>

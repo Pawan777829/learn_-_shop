@@ -17,12 +17,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useAuth, useFirestore, useUser } from '@/firebase';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { doc } from 'firebase/firestore';
 import { setDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import { useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { initiateGoogleSignIn } from '@/firebase/non-blocking-login';
 import { Separator } from '@/components/ui/separator';
 import { Chrome } from 'lucide-react';
 
@@ -83,17 +82,41 @@ export default function SignupPage() {
         })
       }
     } catch (error: any) {
-      console.error('Error signing up:', error);
-       toast({
-        variant: "destructive",
-        title: "Signup Failed",
-        description: error.message || "An unexpected error occurred. Please try again.",
-      });
+      if (error.code === 'auth/operation-not-allowed') {
+        toast({
+            variant: 'destructive',
+            title: 'Sign-up method disabled',
+            description: "Email/Password sign-up is not enabled for this project. Please enable it in your Firebase Console under Authentication > Sign-in method.",
+        });
+      } else {
+        toast({
+            variant: "destructive",
+            title: "Signup Failed",
+            description: error.message || "An unexpected error occurred. Please try again.",
+        });
+      }
     }
   }
 
-  function onGoogleSignIn() {
-    initiateGoogleSignIn(auth);
+  async function onGoogleSignIn() {
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (error: any) {
+        if (error.code === 'auth/operation-not-allowed') {
+             toast({
+                variant: 'destructive',
+                title: 'Sign-in method disabled',
+                description: "Google Sign-in is not enabled for this project. Please enable it in your Firebase Console under Authentication > Sign-in method.",
+            });
+        } else {
+            toast({
+                variant: 'destructive',
+                title: 'Google Sign-in Failed',
+                description: error.message || 'An unexpected error occurred.',
+            });
+        }
+    }
   }
 
   if (isUserLoading || user) {

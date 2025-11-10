@@ -104,12 +104,19 @@ export default function VendorSignupPage() {
         router.push('/dashboard/vendor');
       }
     } catch (error: any) {
-      console.error('Error signing up as vendor:', error);
-       toast({
-        variant: "destructive",
-        title: "Signup Failed",
-        description: error.message || "An unexpected error occurred. Please try again.",
-      });
+      if (error.code === 'auth/operation-not-allowed') {
+        toast({
+            variant: 'destructive',
+            title: 'Sign-up method disabled',
+            description: "Email/Password sign-up is not enabled for this project. Please enable it in your Firebase Console under Authentication > Sign-in method.",
+        });
+      } else {
+        toast({
+            variant: "destructive",
+            title: "Signup Failed",
+            description: error.message || "An unexpected error occurred. Please try again.",
+        });
+      }
     }
   }
 
