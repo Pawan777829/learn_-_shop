@@ -28,55 +28,116 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useUser, useFirestore, useCollection, useMemoFirebase, deleteDocumentNonBlocking } from "@/firebase";
-import { collection, doc } from "firebase/firestore";
-import type { Item } from "@/lib/types";
+import { collection, doc, collectionGroup, query, where, getDocs } from "firebase/firestore";
+import type { Item, Order, OrderItem, UserProfile } from "@/lib/types";
 import { Edit, Trash2, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import AnalyticsOverview from "@/components/dashboard/vendor/analytics-overview";
 import RevenueChart from "@/components/dashboard/vendor/revenue-chart";
 import RecentSales from "@/components/dashboard/vendor/recent-sales";
+
+export type VendorSale = {
+    orderId: string;
+    item: OrderItem;
+    user: UserProfile | null;
+    orderDate: string;
+}
 
 export default function VendorDashboardPage() {
   const { user } = useUser();
   const firestore = useFirestore();
   const { toast } = useToast();
   const [itemToDelete, setItemToDelete] = useState<Item | null>(null);
+  const [sales, setSales] = useState<VendorSale[]>([]);
+  const [isSalesLoading, setIsSalesLoading] = useState(true);
 
+  // Fetch all of the vendor's own listings
   const productsQuery = useMemoFirebase(() => {
     if (!user) return null;
-    // Path updated to top-level vendors collection
     return collection(firestore, 'vendors', user.uid, 'products');
   }, [firestore, user]);
 
   const coursesQuery = useMemoFirebase(() => {
     if (!user) return null;
-    // Path updated to top-level vendors collection
     return collection(firestore, 'vendors', user.uid, 'courses');
   }, [firestore, user]);
 
   const { data: products, isLoading: isLoadingProducts } = useCollection<Item>(productsQuery);
   const { data: courses, isLoading: isLoadingCourses } = useCollection<Item>(coursesQuery);
 
-  const isLoading = isLoadingProducts || isLoadingCourses;
-
   const allListings = useMemo(() => {
     const combined: Item[] = [];
-    if (products) {
-      combined.push(...products.map(p => ({...p, type: 'product' as const})));
-    }
-    if (courses) {
-      combined.push(...courses.map(c => ({...c, type: 'course' as const})));
-    }
+    if (products) combined.push(...products.map(p => ({...p, type: 'product' as const})));
+    if (courses) combined.push(...courses.map(c => ({...c, type: 'course' as const})));
     return combined.map((item, index) => ({...item, uniqueId: item.id || `item-${index}`}));
   }, [products, courses]);
+
+  // This is a complex effect to find all sales related to this vendor.
+  // It queries all 'orderItems' collections across all users.
+  useEffect(() => {
+    const fetchSales = async () => {
+        if (!user || !firestore || allListings.length === 0) {
+            setIsSalesLoading(false);
+            return;
+        };
+
+        setIsSalesLoading(true);
+        const vendorSales: VendorSale[] = [];
+        const vendorItemIds = new Set(allListings.map(item => item.id));
+
+        try {
+            // Query all 'orderItems' subcollections in the entire database
+            const orderItemsGroupRef = collectionGroup(firestore, 'orderItems');
+            // Find order items where the item ID is one of the vendor's items
+            const q = query(orderItemsGroupRef, where('id', 'in', Array.from(vendorItemIds)));
+            const querySnapshot = await getDocs(q);
+
+            const userPromises: Promise<void>[] = [];
+
+            for (const itemDoc of querySnapshot.docs) {
+                const item = itemDoc.data() as OrderItem;
+                const orderRef = itemDoc.ref.parent.parent; // Gives the /orders/{orderId} document
+                
+                if (orderRef) {
+                    const orderDoc = await getDocs(query(collection(firestore, orderRef.path)));
+                    const orderData = orderDoc.docs[0].data() as Order;
+                    const userRef = doc(firestore, 'users', orderData.userId);
+                    
+                    // Create a promise to fetch user data and resolve sales details
+                    const userPromise = getDocs(query(collection(firestore, userRef.path))).then(userSnapshot => {
+                        const userData = userSnapshot.docs[0].data() as UserProfile;
+                         vendorSales.push({
+                            orderId: orderData.id,
+                            item: item,
+                            user: userData,
+                            orderDate: orderData.orderDate,
+                        });
+                    });
+                    userPromises.push(userPromise);
+                }
+            }
+            await Promise.all(userPromises);
+            setSales(vendorSales);
+
+        } catch (error) {
+            console.error("Error fetching vendor sales:", error);
+            toast({ variant: 'destructive', title: 'Could not load sales data.' });
+        } finally {
+            setIsSalesLoading(false);
+        }
+    }
+
+    if (!isLoadingProducts && !isLoadingCourses) {
+        fetchSales();
+    }
+  }, [user, firestore, allListings, toast, isLoadingProducts, isLoadingCourses]);
 
   const handleDelete = () => {
     if (!itemToDelete || !user) return;
     
     const collectionName = itemToDelete.type === 'product' ? 'products' : 'courses';
-    // Path updated to top-level vendors collection
     const docRef = doc(firestore, 'vendors', user.uid, collectionName, itemToDelete.id);
 
     deleteDocumentNonBlocking(docRef);
@@ -88,6 +149,8 @@ export default function VendorDashboardPage() {
     setItemToDelete(null);
   };
   
+  const isLoading = isLoadingProducts || isLoadingCourses || isSalesLoading;
+
   if (!user) {
     return (
         <div className="flex items-center justify-center h-full">
@@ -106,7 +169,7 @@ export default function VendorDashboardPage() {
         </p>
       </header>
 
-      <AnalyticsOverview listings={allListings} />
+      <AnalyticsOverview listings={allListings} sales={sales} isLoading={isLoading}/>
       
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
         <Card className="lg:col-span-4">
@@ -114,16 +177,16 @@ export default function VendorDashboardPage() {
                 <CardTitle>Revenue Overview</CardTitle>
             </CardHeader>
             <CardContent className="pl-2">
-                <RevenueChart />
+                <RevenueChart sales={sales} isLoading={isLoading}/>
             </CardContent>
         </Card>
         <Card className="lg:col-span-3">
             <CardHeader>
                 <CardTitle>Recent Sales</CardTitle>
-                <CardDescription>You made 265 sales this month. (mock data)</CardDescription>
+                <CardDescription>Your most recent transactions.</CardDescription>
             </CardHeader>
             <CardContent>
-                <RecentSales />
+                <RecentSales sales={sales} isLoading={isLoading}/>
             </CardContent>
         </Card>
       </div>
@@ -142,7 +205,7 @@ export default function VendorDashboardPage() {
           </Button>
         </CardHeader>
         <CardContent>
-           {isLoading ? (
+           {isLoadingProducts || isLoadingCourses ? (
             <div className="flex justify-center items-center py-10">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
@@ -203,12 +266,10 @@ export default function VendorDashboardPage() {
             </AlertDialogHeader>
             <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
+            <AlertDialogAction onClick={handleDelete} className="bg-destructive hover:bg-destructive/90">Delete</AlertDialogAction>
             </AlertDialogFooter>
         </AlertDialogContent>
     </AlertDialog>
     </>
   );
 }
-
-    

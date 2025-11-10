@@ -1,21 +1,38 @@
 'use client';
 
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartTooltipContent } from "@/components/ui/chart";
+import { useMemo } from "react";
+import type { VendorSale } from "@/app/dashboard/vendor/page";
+import { Loader2 } from "lucide-react";
 
-// Mock data for the chart
-const data = [
-  { month: "Jan", revenue: Math.floor(Math.random() * 5000) + 1000 },
-  { month: "Feb", revenue: Math.floor(Math.random() * 5000) + 1000 },
-  { month: "Mar", revenue: Math.floor(Math.random() * 5000) + 1000 },
-  { month: "Apr", revenue: Math.floor(Math.random() * 5000) + 1000 },
-  { month: "May", revenue: Math.floor(Math.random() * 5000) + 1000 },
-  { month: "Jun", revenue: Math.floor(Math.random() * 5000) + 1000 },
-  { month: "Jul", revenue: Math.floor(Math.random() * 5000) + 1000 },
-];
+export default function RevenueChart({ sales, isLoading }: { sales: VendorSale[], isLoading: boolean }) {
+  
+  const data = useMemo(() => {
+    const monthlyRevenue: { [key: string]: number } = {
+        "Jan": 0, "Feb": 0, "Mar": 0, "Apr": 0, "May": 0, "Jun": 0,
+        "Jul": 0, "Aug": 0, "Sep": 0, "Oct": 0, "Nov": 0, "Dec": 0
+    };
 
-export default function RevenueChart() {
+    sales.forEach(sale => {
+        const month = new Date(sale.orderDate).toLocaleString('default', { month: 'short' });
+        monthlyRevenue[month] += sale.item.price * sale.item.quantity;
+    });
+
+    return Object.entries(monthlyRevenue).map(([month, revenue]) => ({
+        month,
+        revenue: Math.floor(revenue) // Using floor for cleaner chart
+    }));
+  }, [sales]);
+
+  if (isLoading) {
+    return (
+        <div className="flex justify-center items-center h-[350px]">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+    )
+  }
+
   return (
     <ResponsiveContainer width="100%" height={350}>
       <BarChart data={data}>
@@ -45,5 +62,3 @@ export default function RevenueChart() {
     </ResponsiveContainer>
   );
 }
-
-    
