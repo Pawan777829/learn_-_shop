@@ -3,7 +3,7 @@
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { allItems } from '@/lib/data';
-import { getImageById } from '@/lib/placeholder-images';
+import { getImageById, placeholderImages } from '@/lib/placeholder-images';
 import { useCart } from '@/context/cart-context';
 import { Button } from '@/components/ui/button';
 import { Star, ShoppingCart, Heart, Minus, Plus, ShieldCheck, Truck, Undo2 } from 'lucide-react';
@@ -14,17 +14,35 @@ import { useUser, useFirestore, useDoc, useMemoFirebase, setDocumentNonBlocking,
 import { doc } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 import type { Item, WishlistItem } from '@/lib/types';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Separator } from '@/components/ui/separator';
 import FrequentlyBoughtTogether from '@/components/frequently-bought-together';
 import PincodeChecker from '@/components/pincode-checker';
 import QAndA from '@/components/q-and-a';
+import { cn } from '@/lib/utils';
 
 export default function ProductDetailPage() {
   const { id } = useParams() as { id: string };
   const { addToCart } = useCart();
   const product = allItems.find(item => item.id === id && item.type === 'product') as Item | undefined;
-  const placeholder = product ? getImageById(product.imageId) : null;
+  
+  const galleryImages = useMemo(() => {
+    if (!product) return [];
+    const mainImage = getImageById(product.imageId);
+    const relatedCategoryImages = placeholderImages
+        .filter(img => allItems.some(item => item.imageId === img.id && item.category === product.category && item.id !== product.id))
+        .slice(0, 3);
+    return mainImage ? [mainImage, ...relatedCategoryImages] : relatedCategoryImages;
+  }, [product]);
+
+  const [selectedImage, setSelectedImage] = useState(galleryImages[0]);
+
+  useEffect(() => {
+    if (galleryImages.length > 0) {
+      setSelectedImage(galleryImages[0]);
+    }
+  }, [galleryImages]);
+
   const relatedProducts = allItems.filter(item => item.type === 'product' && item.id !== id).slice(0, 4);
   
   const { user } = useUser();
@@ -69,7 +87,7 @@ export default function ProductDetailPage() {
   };
 
 
-  if (!product || !placeholder) {
+  if (!product || !selectedImage) {
     return (
       <div className="container mx-auto px-4 py-12 text-center">
         <h1 className="text-2xl font-bold">Product not found</h1>
@@ -84,14 +102,34 @@ export default function ProductDetailPage() {
     <div className="container mx-auto px-4 py-12">
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
         <div>
-          <div className="relative aspect-video overflow-hidden rounded-lg shadow-lg">
+          <div className="relative aspect-square overflow-hidden rounded-lg shadow-lg mb-4">
             <Image
-              src={placeholder.imageUrl}
-              alt={placeholder.description}
+              src={selectedImage.imageUrl}
+              alt={selectedImage.description}
               fill
               className="object-cover"
-              data-ai-hint={placeholder.imageHint}
+              data-ai-hint={selectedImage.imageHint}
             />
+          </div>
+          <div className="grid grid-cols-4 gap-2">
+            {galleryImages.map(image => (
+              <button
+                key={image.id}
+                onClick={() => setSelectedImage(image)}
+                className={cn(
+                  "relative aspect-square rounded-md overflow-hidden ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring",
+                  selectedImage.id === image.id && "ring-2 ring-primary"
+                )}
+              >
+                <Image
+                  src={image.imageUrl}
+                  alt={image.description}
+                  fill
+                  className="object-cover"
+                />
+                 <div className={cn("absolute inset-0 bg-black/50 transition-opacity", selectedImage.id === image.id ? 'opacity-0' : 'opacity-100 hover:opacity-50')} />
+              </button>
+            ))}
           </div>
         </div>
         <div className="flex flex-col">

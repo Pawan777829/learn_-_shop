@@ -83,7 +83,7 @@ export default function Header() {
         </div>
         
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-          <div className="w-full flex-1 md:w-auto md:flex-none">
+          <div id="header-search-bar" className="w-full flex-1 md:w-auto md:flex-none">
             <form onSubmit={handleSearch}>
               <div className="relative">
                 <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -97,83 +97,87 @@ export default function Header() {
             </form>
           </div>
           <nav className="flex items-center">
-            <Link href="/cart">
-              <Button variant="ghost" size="icon" className="relative">
-                {cartItemCount > 0 && (
-                  <Badge className="absolute -top-2 -right-2 h-5 w-5 justify-center p-0">{cartItemCount}</Badge>
-                )}
-                <ShoppingCart className="h-5 w-5" />
-                <span className="sr-only">Shopping Cart</span>
-              </Button>
-            </Link>
+            <div id="header-cart-button">
+              <Link href="/cart">
+                <Button variant="ghost" size="icon" className="relative">
+                  {cartItemCount > 0 && (
+                    <Badge className="absolute -top-2 -right-2 h-5 w-5 justify-center p-0">{cartItemCount}</Badge>
+                  )}
+                  <ShoppingCart className="h-5 w-5" />
+                  <span className="sr-only">Shopping Cart</span>
+                </Button>
+              </Link>
+            </div>
             
-            {isUserLoading ? (
-              <div className="w-8 h-8 rounded-full bg-muted animate-pulse" />
-            ) : user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                    <Avatar className="h-8 w-8">
-                       <AvatarImage src={user.photoURL || undefined} alt={user.displayName || user.email || 'User'} />
-                      <AvatarFallback>{getInitials(user.email)}</AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>{user.displayName || user.email}</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild>
-                    <Link href="/dashboard">
-                      <User className="mr-2 h-4 w-4" />
-                      <span>Dashboard</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/dashboard/vendor">
-                       <Store className="mr-2 h-4 w-4" />
-                       <span>Vendor Dashboard</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout}>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-               <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <User className="h-5 w-5" />
-                    <span className="sr-only">User Menu</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild>
-                    <Link href="/login">
-                      <LogIn className="mr-2 h-4 w-4" />
-                      <span>Log In</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/signup">
-                      <UserPlus className="mr-2 h-4 w-4" />
-                      <span>Sign Up</span>
-                    </Link>
-                  </DropdownMenuItem>
-                   <DropdownMenuSeparator />
-                   <DropdownMenuItem asChild>
-                    <Link href="/signup/vendor">
-                      <Store className="mr-2 h-4 w-4" />
-                      <span>Become a Vendor</span>
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            )}
+            <div id="header-user-menu">
+              {isUserLoading ? (
+                <div className="w-8 h-8 rounded-full bg-muted animate-pulse" />
+              ) : user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src={user.photoURL || undefined} alt={user.displayName || user.email || 'User'} />
+                        <AvatarFallback>{getInitials(user.email)}</AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>{user.displayName || user.email}</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href="/dashboard">
+                        <User className="mr-2 h-4 w-4" />
+                        <span>Dashboard</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/dashboard/vendor">
+                        <Store className="mr-2 h-4 w-4" />
+                        <span>Vendor Dashboard</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleLogout}>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Log out</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                      <User className="h-5 w-5" />
+                      <span className="sr-only">User Menu</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href="/login">
+                        <LogIn className="mr-2 h-4 w-4" />
+                        <span>Log In</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/signup">
+                        <UserPlus className="mr-2 h-4 w-4" />
+                        <span>Sign Up</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href="/signup/vendor">
+                        <Store className="mr-2 h-4 w-4" />
+                        <span>Become a Vendor</span>
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+            </div>
           </nav>
         </div>
       </div>

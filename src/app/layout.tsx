@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { FirebaseClientProvider } from "@/firebase";
 import { CartProvider } from "@/context/cart-context";
 import Chatbot from "@/components/chatbot";
+import WelcomeTour from "@/components/welcome-tour";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -37,6 +38,7 @@ export default function RootLayout({
               <Footer />
             </div>
             <Chatbot />
+            <WelcomeTour />
             <Toaster />
           </CartProvider>
         </FirebaseClientProvider>
