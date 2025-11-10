@@ -16,13 +16,16 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { useAuth } from '@/firebase';
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { useAuth, useFirestore } from '@/firebase';
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, User } from 'firebase/auth';
 import { useUser } from '@/firebase';
 import { useEffect } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { Chrome } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { doc, getDoc } from 'firebase/firestore';
+import { setDocumentNonBlocking } from '@/firebase/non-blocking-updates';
+
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email address.' }),
@@ -31,6 +34,7 @@ const loginSchema = z.object({
 
 export default function LoginPage() {
   const auth = useAuth();
+  const firestore = useFirestore();
   const router = useRouter();
   const { user, isUserLoading } = useUser();
   const { toast } = useToast();
@@ -48,6 +52,26 @@ export default function LoginPage() {
       router.push('/dashboard');
     }
   }, [user, isUserLoading, router]);
+
+  // Helper function to create a user profile if it doesn't exist
+  const createUserProfileIfNotExists = async (user: User) => {
+    const userRef = doc(firestore, 'users', user.uid);
+    const userSnap = await getDoc(userRef);
+    if (!userSnap.exists()) {
+      const { displayName, email } = user;
+      const firstName = displayName?.split(' ')[0] || '';
+      const lastName = displayName?.split(' ').slice(1).join(' ') || '';
+      
+      const userData = {
+        id: user.uid,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        dateJoined: new Date().toISOString(),
+      };
+      setDocumentNonBlocking(userRef, userData, { merge: true });
+    }
+  };
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
     try {
@@ -72,7 +96,8 @@ export default function LoginPage() {
    async function onGoogleSignIn() {
     const provider = new GoogleAuthProvider();
     try {
-        await signInWithPopup(auth, provider);
+        const result = await signInWithPopup(auth, provider);
+        await createUserProfileIfNotExists(result.user);
     } catch (error: any) {
         if (error.code === 'auth/operation-not-allowed') {
              toast({

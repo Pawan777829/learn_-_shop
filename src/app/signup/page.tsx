@@ -17,8 +17,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useAuth, useFirestore, useUser } from '@/firebase';
-import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { doc } from 'firebase/firestore';
+import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider, User } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 import { setDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import { useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
@@ -54,6 +54,26 @@ export default function SignupPage() {
       router.push('/dashboard');
     }
   }, [user, isUserLoading, router]);
+
+  // Helper function to create a user profile if it doesn't exist
+  const createUserProfileIfNotExists = async (user: User) => {
+    const userRef = doc(firestore, 'users', user.uid);
+    const userSnap = await getDoc(userRef);
+    if (!userSnap.exists()) {
+      const { displayName, email } = user;
+      const firstName = displayName?.split(' ')[0] || '';
+      const lastName = displayName?.split(' ').slice(1).join(' ') || '';
+      
+      const userData = {
+        id: user.uid,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        dateJoined: new Date().toISOString(),
+      };
+      setDocumentNonBlocking(userRef, userData, { merge: true });
+    }
+  };
 
   async function onSubmit(values: z.infer<typeof signupSchema>) {
     try {
@@ -101,7 +121,8 @@ export default function SignupPage() {
   async function onGoogleSignIn() {
     const provider = new GoogleAuthProvider();
     try {
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      await createUserProfileIfNotExists(result.user);
     } catch (error: any) {
         if (error.code === 'auth/operation-not-allowed') {
              toast({

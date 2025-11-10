@@ -3,45 +3,62 @@
 import { useUser, useFirestore, useDoc, useMemoFirebase } from '@/firebase';
 import { doc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function DashboardPage() {
   const { user, isUserLoading } = useUser();
   const firestore = useFirestore();
   const router = useRouter();
+  const [hasChecked, setHasChecked] = useState(false);
 
-  // Path to the potential vendor document for the current user
   const vendorRef = useMemoFirebase(() => {
     if (!user) return null;
-    // The vendor document is now in a top-level 'vendors' collection,
-    // with the document ID matching the user's UID.
     return doc(firestore, 'vendors', user.uid);
+  }, [firestore, user]);
+  
+  const userRef = useMemoFirebase(() => {
+    if (!user) return null;
+    return doc(firestore, 'users', user.uid);
   }, [firestore, user]);
 
   const { data: vendorDoc, isLoading: isVendorLoading } = useDoc(vendorRef);
+  const { data: userDoc, isLoading: isUserDocLoading } = useDoc(userRef);
 
   useEffect(() => {
-    if (isUserLoading || isVendorLoading) {
-      // Still loading, wait for auth and firestore data
+    // Wait until Firebase has checked auth state AND we have tried to fetch the user/vendor docs.
+    if (isUserLoading || isVendorLoading || isUserDocLoading) {
+      return;
+    }
+
+    // If the check has already been performed, do nothing to prevent loops.
+    if (hasChecked) {
       return;
     }
 
     if (!user) {
-      // If no user is logged in, send them to the login page
+      // If there's no authenticated user, redirect to login.
       router.replace('/login');
+      setHasChecked(true);
       return;
     }
 
     if (vendorDoc) {
-      // If a vendor document exists, they are a vendor
+      // If a vendor document exists, they are a vendor.
       router.replace('/dashboard/vendor');
-    } else {
-      // Otherwise, they are a regular user
+      setHasChecked(true);
+    } else if (userDoc) {
+      // If a user document exists, they are a regular user.
       router.replace('/dashboard/user');
+      setHasChecked(true);
     }
-  }, [user, vendorDoc, isUserLoading, isVendorLoading, router]);
+    // If neither document exists yet, we don't redirect. The component will
+    // continue showing the loading spinner, and this useEffect will re-run
+    // when useDoc provides updated data. This handles the race condition for
+    // new user sign-ups.
 
-  // Render a loading state while we determine the user's role
+  }, [user, userDoc, vendorDoc, isUserLoading, isVendorLoading, isUserDocLoading, router, hasChecked]);
+
+  // Render a loading state while we determine the user's role and auth status
   return (
     <div className="flex h-full w-full items-center justify-center">
       <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
