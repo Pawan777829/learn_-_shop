@@ -17,6 +17,8 @@ import type { Item, WishlistItem } from '@/lib/types';
 import { useEffect, useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import FrequentlyBoughtTogether from '@/components/frequently-bought-together';
+import PincodeChecker from '@/components/pincode-checker';
+import QAndA from '@/components/q-and-a';
 
 export default function ProductDetailPage() {
   const { id } = useParams() as { id: string };
@@ -138,6 +140,10 @@ export default function ProductDetailPage() {
           
           <Separator className="my-8" />
           
+          <PincodeChecker />
+
+          <Separator className="my-8" />
+          
           <div className="space-y-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-3">
               <Truck className="h-5 w-5" />
@@ -157,7 +163,9 @@ export default function ProductDetailPage() {
       
       <FrequentlyBoughtTogether productId={id} />
 
-      <Reviews itemId={id} itemType="product" />
+      <Reviews itemId={id} itemType="product" itemVendorId={product.vendorId} />
+
+      <QAndA itemId={id} itemType="product" itemVendorId={product.vendorId} />
 
       <div className="mt-20">
           <h2 className="text-2xl font-bold font-headline mb-6">Related Products</h2>

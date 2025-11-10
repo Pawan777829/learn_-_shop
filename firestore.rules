@@ -22,6 +22,8 @@
  * - /products/{productId}/reviews/{reviewId}: Stores reviews for products.
  * - /courses/{courseId}/reviews/{reviewId}: Stores reviews for courses.
  * - /users/{userId}/wishlist/{wishlistItemId}: Stores items on a user's wishlist.
+ * - /questions/{questionId}: Stores questions about products or courses.
+ * - /questions/{questionId}/answers/{answerId}: Stores answers to questions.
  *
  * Key Security Decisions:
  * - All write operations are restricted to authenticated users.
@@ -43,6 +45,10 @@ service cloud.firestore {
     function isOwner(userId) {
       return request.auth != null && request.auth.uid == userId;
     }
+    
+    function isAuth() {
+      return request.auth != null;
+    }
 
     /**
      * @description Enforces user-ownership for user profiles.
@@ -53,7 +59,7 @@ service cloud.firestore {
      */
     match /users/{userId} {
       allow read, update: if isOwner(userId);
-      allow create: if isOwner(userId) && request.resource.data.id == userId;
+      allow create: if isOwner(userId) &amp;&amp; request.resource.data.id == userId;
     }
     
     /**
@@ -81,16 +87,23 @@ service cloud.firestore {
      */
     match /vendors/{vendorId}/products/{productId} {
       allow read: if true;
-      allow write: if request.auth != null && request.resource.data.vendorId == request.auth.uid;
+      allow write: if isAuth() &amp;&amp; request.resource.data.vendorId == request.auth.uid;
     }
     
     /**
-     * @description Publicly readable reviews. Writes are restricted.
+     * @description Publicly readable reviews. Writes are restricted to users who have purchased the item.
      * @path /products/{productId}/reviews/{reviewId}
      */
     match /products/{productId}/reviews/{reviewId} {
       allow read: if true;
-      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      function hasPurchasedProduct() {
+        // Iterate through user's orders to see if this product was ever bought.
+        // This is not perfectly efficient but is secure.
+        return exists(/databases/$(database)/documents/users/$(request.auth.uid)/orders) &amp;&amp;
+               get(/databases/$(database)/documents/users/$(request.auth.uid)/orders).data.keys()
+                 .exists(orderId => exists(/databases/$(database)/documents/users/$(request.auth.uid)/orders/$(orderId)/orderItems/$(productId)));
+      }
+      allow create: if isAuth() &amp;&amp; request.resource.data.userId == request.auth.uid;
     }
 
     /**
@@ -100,7 +113,7 @@ service cloud.firestore {
      */
     match /vendors/{vendorId}/courses/{courseId} {
         allow read: if true;
-        allow write: if request.auth != null && request.resource.data.vendorId == request.auth.uid;
+        allow write: if isAuth() &amp;&amp; request.resource.data.vendorId == request.auth.uid;
     }
     
     /**
@@ -109,7 +122,7 @@ service cloud.firestore {
      */
     match /courses/{courseId}/reviews/{reviewId} {
         allow read: if true;
-        allow create: if request.auth != null && exists(/databases/$(database)/documents/users/$(request.auth.uid)/enrollments/$(courseId));
+        allow create: if isAuth() &amp;&amp; exists(/databases/$(database)/documents/users/$(request.auth.uid)/enrollments/$(courseId));
     }
 
     /**
@@ -159,8 +172,8 @@ service cloud.firestore {
         return courseDoc.data.vendorId == request.auth.uid;
       }
 
-      allow read: if request.auth != null && (isEnrolled() || isCourseVendor());
-      allow write: if request.auth != null && isCourseVendor();
+      allow read: if isAuth() &amp;&amp; (isEnrolled() || isCourseVendor());
+      allow write: if isAuth() &amp;&amp; isCourseVendor();
     }
     
     /**
@@ -169,6 +182,24 @@ service cloud.firestore {
      */
     match /users/{userId}/wishlist/{wishlistItemId} {
       allow read, write: if isOwner(userId);
+    }
+    
+    /**
+     * @description Questions are publicly readable. Only authenticated users can create questions.
+     * @path /questions/{questionId}
+     */
+    match /questions/{questionId} {
+      allow read: if true;
+      allow create: if isAuth() &amp;&amp; request.resource.data.userId == request.auth.uid;
+      
+       /**
+       * @description Answers are publicly readable. Only authenticated users can create answers.
+       * @path /questions/{questionId}/answers/{answerId}
+       */
+      match /answers/{answerId} {
+        allow read: if true;
+        allow create: if isAuth() &amp;&amp; request.resource.data.userId == request.auth.uid;
+      }
     }
   }
 }

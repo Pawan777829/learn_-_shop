@@ -21,6 +21,7 @@ import ReviewCard from './review-card';
 import { Star, Loader2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { allItems } from '@/lib/data';
+import { Separator } from './ui/separator';
 
 const reviewSchema = z.object({
   rating: z.number().min(1, 'Rating is required').max(5),
@@ -30,9 +31,10 @@ const reviewSchema = z.object({
 type ReviewsProps = {
   itemId: string;
   itemType: 'product' | 'course';
+  itemVendorId: string;
 };
 
-export default function Reviews({ itemId, itemType }: ReviewsProps) {
+export default function Reviews({ itemId, itemType, itemVendorId }: ReviewsProps) {
   const { user } = useUser();
   const firestore = useFirestore();
   const { toast } = useToast();
@@ -54,6 +56,13 @@ export default function Reviews({ itemId, itemType }: ReviewsProps) {
   useEffect(() => {
     const checkPurchase = async () => {
         if (!user || !firestore) {
+            setIsCheckingPurchase(false);
+            return;
+        }
+        
+        // A user cannot review their own product
+        if (user.uid === itemVendorId) {
+            setHasPurchased(false);
             setIsCheckingPurchase(false);
             return;
         }
@@ -89,7 +98,7 @@ export default function Reviews({ itemId, itemType }: ReviewsProps) {
     };
 
     checkPurchase();
-  }, [user, firestore, itemId, itemType]);
+  }, [user, firestore, itemId, itemType, itemVendorId]);
 
 
   const form = useForm<z.infer<typeof reviewSchema>>({
@@ -128,6 +137,7 @@ export default function Reviews({ itemId, itemType }: ReviewsProps) {
 
   return (
     <div className="mt-12 space-y-8">
+      <Separator />
       <h2 className="text-2xl font-bold font-headline">Customer Reviews</h2>
       
       {canShowReviewForm && (

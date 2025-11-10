@@ -10,12 +10,12 @@ import { Star, BookOpen, Clock, Heart } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import ItemCard from '@/components/item-card';
-import Reviews from '@/components/reviews';
 import { useUser, useFirestore, useDoc, useMemoFirebase, setDocumentNonBlocking, deleteDocumentNonBlocking } from '@/firebase';
 import { doc } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 import type { Item, WishlistItem } from '@/lib/types';
 import { useEffect, useState } from 'react';
+import QAndA from '@/components/q-and-a';
 
 
 export default function CourseDetailPage() {
@@ -154,7 +154,9 @@ export default function CourseDetailPage() {
         </div>
       </div>
 
-      <Reviews itemId={id} itemType="course" />
+      <Reviews itemId={id} itemType="course" itemVendorId={course.vendorId} />
+
+      <QAndA itemId={id} itemType="course" itemVendorId={course.vendorId} />
       
        <div className="mt-20">
           <h2 className="text-2xl font-bold font-headline mb-6">Related Courses</h2>

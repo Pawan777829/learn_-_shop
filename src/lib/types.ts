@@ -31,6 +31,7 @@ export type Item = {
   type: 'product' | 'course';
   category: ItemCategory;
   vendor: string;
+  vendorId: string;
   rating: number;
   imageId: string;
   stock?: number;
@@ -126,3 +127,22 @@ export type UserProfile = {
   email: string;
   dateJoined: string;
 }
+
+export type Question = {
+    id: string;
+    userId: string;
+    userName: string;
+    itemId: string;
+    itemType: 'product' | 'course';
+    question: string;
+    createdAt: string;
+};
+
+export type Answer = {
+    id: string;
+    questionId: string;
+    userId: string;
+    userName: string;
+    answer: string;
+    createdAt: string;
+};

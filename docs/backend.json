@@ -460,6 +460,37 @@
         }
       },
       "required": ["id", "userId", "itemId", "itemType", "addedAt"]
+    },
+    "Question": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Question",
+        "type": "object",
+        "description": "Represents a user-submitted question about a product or course.",
+        "properties": {
+            "id": { "type": "string", "description": "Unique identifier for the question." },
+            "userId": { "type": "string", "description": "The ID of the user who asked the question." },
+            "userName": { "type": "string", "description": "The name of the user asking." },
+            "itemId": { "type": "string", "description": "The ID of the product or course in question." },
+            "itemType": { "type": "string", "enum": ["product", "course"] },
+            "question": { "type": "string", "description": "The content of the question." },
+            "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp of when the question was asked." }
+        },
+        "required": ["id", "userId", "userName", "itemId", "itemType", "question", "createdAt"]
+    },
+    "Answer": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Answer",
+        "type": "object",
+        "description": "Represents an answer to a user-submitted question.",
+        "properties": {
+            "id": { "type": "string", "description": "Unique identifier for the answer." },
+            "questionId": { "type": "string", "description": "The ID of the question this answer is for." },
+            "userId": { "type": "string", "description": "The ID of the user who provided the answer." },
+            "userName": { "type": "string", "description": "The name of the user answering." },
+            "answer": { "type": "string", "description": "The content of the answer." },
+            "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp of when the answer was provided." }
+        },
+        "required": ["id", "questionId", "userId", "userName", "answer", "createdAt"]
     }
   },
   "auth": {
@@ -693,8 +724,31 @@
             { "name": "wishlistItemId", "description": "The unique identifier of the wishlist item." }
           ]
         }
+      },
+      {
+        "path": "/questions/{questionId}",
+        "definition": {
+            "entityName": "Question",
+            "schema": { "$ref": "#/backend/entities/Question" },
+            "description": "Top-level collection for questions about any item. Publicly readable.",
+            "params": [
+                { "name": "questionId", "description": "The unique ID of the question." }
+            ]
+        }
+      },
+      {
+        "path": "/questions/{questionId}/answers/{answerId}",
+        "definition": {
+            "entityName": "Answer",
+            "schema": { "$ref": "#/backend/entities/Answer" },
+            "description": "Subcollection for answers to a specific question. Publicly readable.",
+            "params": [
+                { "name": "questionId", "description": "The unique ID of the parent question." },
+                { "name": "answerId", "description": "The unique ID of the answer." }
+            ]
+        }
       }
     ],
-    "reasoning": "The Firestore data structure is designed to support the Learn & Shop platform, focusing on secure and scalable data access for users, vendors, products, courses, orders, and related entities. It emphasizes Authorization Independence (CRITICAL) through denormalization of authorization data, DBAC (Database-Based Access Control), QAPs (Rules are not Filters), and clarity for debugging.\n\n**Authorization Independence and QAPs:**\n\n*   **Vendors, Products, Courses:** Vendor ID is included directly within Product and Course documents, enabling rules to validate vendor ownership without requiring `get()` calls, thus achieving Authorization Independence. This also enables secure `list` operations, as rules can filter based on the denormalized `vendorId`.\n*   **Orders, OrderItems:** User ID is included directly within Order documents, enabling rules to validate user ownership. OrderItems are stored as a subcollection to the Order document.\n*   **Enrollments:** User ID is included directly within Enrollment documents, enabling rules to validate user ownership.\n*   **Recommendations:** User ID is included directly within Recommendation documents, enabling rules to validate user ownership.\n*   **Lessons:** Course ID is included directly within Lesson documents, enabling rules to validate course ownership.\n**Reviews:** Reviews for products and courses are stored in subcollections under their respective items. This allows for easy querying of all reviews for a specific item. The rules allow public read access but restrict writes to authenticated users who have purchased the item.\n\n**Structural Segregation:**\n\n*   User-specific data (Orders, Enrollments, Recommendations, Wishlist, Addresses) is stored under the `/users/{userId}` path, ensuring that only the owning user or authorized roles can access it.\n*   Vendor data is now in a top-level `/vendors` collection to simplify rules and queries.\n\n**Access Modeling:**\n\n*   Path-Based Ownership: The `/vendors/{vendorId}` pattern provides clear ownership semantics. Similarly, `/users/{userId}/orders/{orderId}`, `/users/{userId}/enrollments/{enrollmentId}`, `/users/{userId}/recommendations/{recommendationId}`, and `/users/{userId}/wishlist/{wishlistItemId}` follow this pattern.\n\n**Data Clarity and Predictability:**\n\n*   Entity relationships are explicitly defined through ID references (e.g., `productId` in `OrderItem`, `vendorId` in `Product` and `Course`).\n*   Consistent naming conventions are used (e.g., `userId`, `vendorId`, `courseId`) to improve readability and maintainability.\n"
+    "reasoning": "The Firestore data structure is designed to support the Learn & Shop platform, focusing on secure and scalable data access for users, vendors, products, courses, orders, and related entities. It emphasizes Authorization Independence (CRITICAL) through denormalization of authorization data, DBAC (Database-Based Access Control), QAPs (Rules are not Filters), and clarity for debugging.\n\n**Authorization Independence and QAPs:**\n\n*   **Vendors, Products, Courses:** Vendor ID is included directly within Product and Course documents, enabling rules to validate vendor ownership without requiring `get()` calls, thus achieving Authorization Independence. This also enables secure `list` operations, as rules can filter based on the denormalized `vendorId`.\n*   **Orders, OrderItems:** User ID is included directly within Order documents, enabling rules to validate user ownership. OrderItems are stored as a subcollection to the Order document.\n*   **Enrollments:** User ID is included directly within Enrollment documents, enabling rules to validate user ownership.\n*   **Recommendations:** User ID is included directly within Recommendation documents, enabling rules to validate user ownership.\n*   **Lessons:** Course ID is included directly within Lesson documents, enabling rules to validate course ownership.\n**Reviews:** Reviews for products and courses are stored in subcollections under their respective items. This allows for easy querying of all reviews for a specific item. The rules allow public read access but restrict writes to authenticated users who have purchased the item.\n\n**Structural Segregation:**\n\n*   User-specific data (Orders, Enrollments, Recommendations, Wishlist, Addresses) is stored under the `/users/{userId}` path, ensuring that only the owning user or authorized roles can access it.\n*   Vendor data is now in a top-level `/vendors` collection to simplify rules and queries.\n*   **Q&A Structure**: A top-level `/questions` collection is used to store all questions. This allows for efficient querying of all questions for a given item (`where('itemId', '==', ...)`). Answers are a subcollection under each question, which is a natural 1-to-many relationship.\n\n**Access Modeling:**\n\n*   Path-Based Ownership: The `/vendors/{vendorId}` pattern provides clear ownership semantics. Similarly, `/users/{userId}/orders/{orderId}`, `/users/{userId}/enrollments/{enrollmentId}`, `/users/{userId}/recommendations/{recommendationId}`, and `/users/{userId}/wishlist/{wishlistItemId}` follow this pattern.\n\n**Data Clarity and Predictability:**\n\n*   Entity relationships are explicitly defined through ID references (e.g., `productId` in `OrderItem`, `vendorId` in `Product` and `Course`).\n*   Consistent naming conventions are used (e.g., `userId`, `vendorId`, `courseId`) to improve readability and maintainability.\n"
   }
 }
