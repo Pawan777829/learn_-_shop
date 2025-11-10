@@ -3,368 +3,356 @@
     {
       "id": "prod1",
       "description": "A pair of modern, sleek, white wireless headphones on a clean background.",
-      "imageUrl": "https://images.unsplash.com/photo-1713618651165-a3cf7f85506c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBoZWFkcGhvbmVzfGVufDB8fHx8MTc2MjY3Mjk4NHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "modern headphones"
+      "imageUrl": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "sleek headphones"
     },
     {
       "id": "prod2",
-      "description": "An ergonomic mechanical keyboard with backlit keys.",
-      "imageUrl": "https://images.unsplash.com/photo-1760708551269-6967f18ed919?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZXJnb25vbWljJTIwa2V5Ym9hcmR8ZW58MHx8fHwxNzYyNTg0MTQ1fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "ergonomic keyboard"
+      "description": "An ergonomic mechanical keyboard with vibrant RGB backlighting on a dark desk.",
+      "imageUrl": "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "glowing keyboard"
     },
     {
       "id": "prod3",
-      "description": "A smartwatch with a dark screen displaying the time and health metrics.",
-      "imageUrl": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzbWFydCUyMHdhdGNofGVufDB8fHx8MTc2MjU4MTYwN3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "smart watch"
+      "description": "A close-up of a modern smartwatch displaying a colorful watch face with health metrics.",
+      "imageUrl": "https://images.unsplash.com/photo-1544117519-31a4b71922bb?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "smartwatch face"
     },
     {
       "id": "course1",
-      "description": "A computer screen showing lines of code for a web development project.",
-      "imageUrl": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3ZWIlMjBkZXZlbG9wbWVudHxlbnwwfHx8fDE3NjI2NDA4ODR8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "web development"
+      "description": "A person's hands typing on a laptop with lines of colorful code visible on the screen.",
+      "imageUrl": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "coding on laptop"
     },
     {
       "id": "course2",
-      "description": "A graphic designer's desk with a tablet showing a colorful illustration.",
-      "imageUrl": "https://images.unsplash.com/photo-1626785774625-ddcddc3445e9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxncmFwaGljJTIwZGVzaWdufGVufDB8fHx8MTc2MjYyOTY5NXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "graphic design"
+      "description": "A graphic designer's workspace with a graphics tablet, stylus, and computer monitor showing design software.",
+      "imageUrl": "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "designer workspace"
     },
     {
       "id": "course3",
-      "description": "A complex data visualization chart on a digital display, representing data science.",
-      "imageUrl": "https://images.unsplash.com/photo-1662638600476-d563fffbb072?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxkYXRhJTIwc2NpZW5jZXxlbnwwfHx8fDE3NjI1NjczODJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "data science"
-    },
-    {
-      "id": "cart-item-1",
-      "description": "A close up of a wireless mouse.",
-      "imageUrl": "https://images.unsplash.com/photo-1739742473235-34a7bd9b8f87?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3aXJlbGVzcyUyMG1vdXNlfGVufDB8fHx8MTc2MjYyODYzOHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "wireless mouse"
-    },
-    {
-      "id": "cart-item-2",
-      "description": "A leather-bound journal and a pen.",
-      "imageUrl": "https://images.unsplash.com/photo-1663809087021-21bdd11cad36?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bGVhdGhlciUyMGpvdXJuYWx8ZW58MHx8fHwxNzYyNTk2MTQzfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "leather journal"
+      "description": "A laptop displaying complex data visualization charts and graphs, representing data science concepts.",
+      "imageUrl": "https://images.unsplash.com/photo-1551288049-bebda4e28f81?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "data charts"
     },
     {
       "id": "prod4",
-      "description": "A central smart home hub device on a wooden table.",
-      "imageUrl": "https://images.unsplash.com/photo-1519558260268-cde7e03a0152?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzbWFydCUyMGhvbWV8ZW58MHx8fHwxNzYyNjg2NzI2fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "smart home"
+      "description": "A central smart home hub device glowing on a coffee table in a modern living room.",
+      "imageUrl": "https://images.unsplash.com/photo-1589016335129-281907f7c40d?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "smart home hub"
     },
     {
       "id": "prod5",
-      "description": "A physical book with a JavaScript logo on the cover.",
-      "imageUrl": "https://images.unsplash.com/photo-1696402627658-43f79d8ed156?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxqYXZhc2NyaXB0JTIwYm9va3xlbnwwfHx8fDE3NjI2ODQ5NTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "javascript book"
+      "description": "An open book with a modern cover about JavaScript, resting on a clean surface.",
+      "imageUrl": "https://images.unsplash.com/photo-1632882765352-3a323a155554?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "programming book"
     },
     {
       "id": "prod6",
-      "description": "A rolled-up, high-quality yoga mat in a calm setting.",
-      "imageUrl": "https://images.unsplash.com/photo-1591291621164-2c6367723315?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx5b2dhJTIwbWF0fGVufDB8fHx8MTc2MjYwNjI3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A high-quality, rolled-up yoga mat in a tranquil, well-lit studio.",
+      "imageUrl": "https://images.unsplash.com/photo-1599447462464-65972a94f6e1?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "yoga mat"
     },
     {
       "id": "prod7",
-      "description": "A digital drawing tablet with a stylus, displaying a colorful artwork.",
-      "imageUrl": "https://images.unsplash.com/photo-1671957694269-fe1eaa1f9385?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxkcmF3aW5nJTIwdGFibGV0fGVufDB8fHx8MTc2MjY4OTM0M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A person's hand using a stylus on a professional digital drawing tablet.",
+      "imageUrl": "https://images.unsplash.com/photo-1581451319015-c1877b1e8460?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "drawing tablet"
     },
     {
       "id": "course4",
-      "description": "A screen showing social media icons and marketing analytics.",
-      "imageUrl": "https://images.unsplash.com/photo-1586880244406-556ebe35f282?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZGlnaXRhbCUyMG1hcmtldGluZ3xlbnwwfHx8fDE3NjI2Nzc3Njl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "digital marketing"
+      "description": "A laptop screen showing social media analytics charts and marketing keywords.",
+      "imageUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "marketing analytics"
     },
     {
       "id": "prod8",
-      "description": "A portable bluetooth speaker on a desk.",
-      "imageUrl": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxibHVldG9vdGglMjBzcGVha2VyfGVufDB8fHx8MTc2MjYzMjA2OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A stylish portable bluetooth speaker sitting on a wooden surface, with blurred background.",
+      "imageUrl": "https://images.unsplash.com/photo-1629131726692-1accd0c53ce0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "bluetooth speaker"
     },
     {
       "id": "prod9",
-      "description": "An action camera mounted on a helmet.",
-      "imageUrl": "https://images.unsplash.com/photo-1644959069577-f62c1f6b584d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YWN0aW9uJTIwY2FtZXJhfGVufDB8fHx8MTc2MjY4OTgzNHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A rugged 4K action camera capturing a scenic outdoor adventure.",
+      "imageUrl": "https://images.unsplash.com/photo-1559056199-551733d3b610?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "action camera"
     },
     {
       "id": "prod10",
-      "description": "A gaming mouse with RGB lighting.",
-      "imageUrl": "https://images.unsplash.com/photo-1629429408708-3a59f51979c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Z2FtaW5nJTIwbW91c2V8ZW58MHx8fHwxNzYyNjYzMzk1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A sleek gaming mouse with colorful RGB lighting, positioned on a mousepad.",
+      "imageUrl": "https://images.unsplash.com/photo-1563297007-162a82a83239?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "gaming mouse"
     },
     {
       "id": "prod11",
-      "description": "A wide curved computer monitor showing a game.",
-      "imageUrl": "https://images.unsplash.com/photo-1668979324621-67bb2cf542f7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjdXJ2ZWQlMjBtb25pdG9yfGVufDB8fHx8MTc2MjYxMzk1MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A large, immersive ultra-wide curved monitor displaying a high-resolution wallpaper.",
+      "imageUrl": "https://images.unsplash.com/photo-1616710032515-56832a8e411b?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "curved monitor"
     },
     {
       "id": "prod12",
-      "description": "An espresso machine brewing coffee.",
-      "imageUrl": "https://images.unsplash.com/photo-1627902511858-6ad7e004fd35?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxlc3ByZXNzbyUyMG1hY2hpbmV8ZW58MHx8fHwxNzYyNTg1ODI0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A stainless steel espresso machine brewing a rich shot of coffee into a cup.",
+      "imageUrl": "https://images.unsplash.com/photo-1588075592446-265fd1e6e76f?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "espresso machine"
     },
     {
       "id": "prod13",
-      "description": "A robotic vacuum cleaning a wooden floor.",
-      "imageUrl": "https://images.unsplash.com/photo-1754297813436-28cba2aec2da?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cm9ib3RpYyUyMHZhY3V1bXxlbnwwfHx8fDE3NjI2ODcwNTF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A black robotic vacuum cleaner autonomously cleaning a hardwood floor in a home.",
+      "imageUrl": "https://images.unsplash.com/photo-1628359281534-15494a899684?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "robotic vacuum"
     },
     {
       "id": "prod14",
-      "description": "An air fryer with french fries inside.",
-      "imageUrl": "https://images.unsplash.com/photo-1690642109567-940e7fc2cd5d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhaXIlMjBmcnllcnxlbnwwfHx8fDE3NjI2MDEyNjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "An air fryer basket filled with crispy, golden french fries.",
+      "imageUrl": "https://images.unsplash.com/photo-1596486025219-4a43403350a4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "air fryer"
     },
     {
       "id": "prod15",
-      "description": "A person wearing a classic black leather jacket.",
-      "imageUrl": "https://images.unsplash.com/photo-1553640662-9ab20b8fa2ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxsZWF0aGVyJTIwamFja2V0fGVufDB8fHx8MTc2MjYxODIwMnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A person wearing a stylish, classic black leather moto jacket.",
+      "imageUrl": "https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?q=80&w=1995&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "leather jacket"
     },
     {
       "id": "prod16",
-      "description": "A pair of trail running shoes on a rock.",
-      "imageUrl": "https://images.unsplash.com/photo-1597892657493-6847b9640bac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxydW5uaW5nJTIwc2hvZXN8ZW58MHx8fHwxNzYyNjE4MzU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A pair of rugged trail running shoes on a mossy forest path.",
+      "imageUrl": "https://images.unsplash.com/photo-1530389912609-ac099503d3a8?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "running shoes"
     },
     {
       "id": "prod17",
-      "description": "A book titled 'The Art of Programming' on a desk.",
-      "imageUrl": "https://images.unsplash.com/photo-1674664985250-4d023c679b39?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxwcm9ncmFtbWluZyUyMGJvb2t8ZW58MHx8fHwxNzYyNjc2MjA5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A programming book titled 'The Art of Programming' sitting on a modern desk.",
+      "imageUrl": "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=2100&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "programming book"
     },
     {
       "id": "course5",
-      "description": "A professional camera on a tripod, ready to take a picture of a landscape.",
-      "imageUrl": "https://images.unsplash.com/photo-1653924308766-73632d766dde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwaG90b2dyYXBoeSUyMGNsYXNzfGVufDB8fHx8MTc2MjY4OTM0M3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "photography class"
+      "description": "A photographer holding a professional camera, composing a shot outdoors.",
+      "imageUrl": "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "photographer"
     },
     {
       "id": "course6",
-      "description": "A collection of coins, a piggy bank, and a calculator symbolizing personal finance.",
-      "imageUrl": "https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxwZXJzb25hbCUyMGZpbmFuY2V8ZW58MHx8fHwxNzYyNjA5NzcyfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "personal finance"
+      "description": "A piggy bank, stacks of coins, and a calculator on a desk, symbolizing financial planning.",
+      "imageUrl": "https://images.unsplash.com/photo-1579621970795-87facc2f976d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "financial planning"
     },
     {
       "id": "course7",
-      "description": "An open notebook with handwritten notes, alongside a classic typewriter.",
-      "imageUrl": "https://images.unsplash.com/photo-1455390582262-044cdead277a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjcmVhdGl2ZSUyMHdyaXRpbmd8ZW58MHx8fHwxNzYyNjg5MzQzfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "creative writing"
+      "description": "An old-fashioned typewriter with a blank sheet of paper, ready for a story.",
+      "imageUrl": "https://images.unsplash.com/photo-1517400508447-f8a61528c342?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "story writing"
     },
     {
       "id": "course8",
-      "description": "Abstract visualization of neural networks and AI.",
-      "imageUrl": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlfGVufDB8fHx8MTc2MjY4MjExMXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "artificial intelligence"
+      "description": "An abstract digital illustration of a brain with glowing neural networks.",
+      "imageUrl": "https://images.unsplash.com/photo-1535378620166-273708d44e4c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "neural network"
     },
     {
       "id": "prod18",
-      "description": "A quadcopter drone flying over a mountain range.",
-      "imageUrl": "https://images.unsplash.com/photo-1712489899293-120c6378a0f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxkcm9uZSUyMGZseWluZ3xlbnwwfHx8fDE3NjI2NDI4MjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A white quadcopter drone with a 4K camera hovering in the air against a blue sky.",
+      "imageUrl": "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "drone flying"
     },
     {
       "id": "prod19",
-      "description": "A pair of white wireless earbuds in their charging case.",
-      "imageUrl": "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx3aXJlbGVzcyUyMGVhcmJ1ZHN8ZW58MHx8fHwxNzYyNjQ4NzY1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A pair of sleek, black wireless earbuds resting in their open charging case.",
+      "imageUrl": "https://images.unsplash.com/photo-1606220588913-b3fac1d7c18b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "wireless earbuds"
     },
     {
       "id": "prod20",
-      "description": "A sleek metal laptop stand on a clean desk.",
-      "imageUrl": "https://images.unsplash.com/photo-1629317480826-910f729d1709?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxsYXB0b3AlMjBzdGFuZHxlbnwwfHx8fDE3NjI2NzU5Njh8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "laptop stand"
+      "description": "An aluminum laptop stand elevating a laptop on a modern, organized desk.",
+      "imageUrl": "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "laptop on stand"
     },
     {
       "id": "prod21",
-      "description": "A smart coffee maker brewing coffee into a glass carafe.",
-      "imageUrl": "https://images.unsplash.com/photo-1458060390477-1b8bc1cfe017?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjb2ZmZWUlMjBtYWtlcnxlbnwwfHx8fDE3NjI2Mjg2MzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "coffee maker"
+      "description": "A smart coffee maker brewing fresh coffee into a glass pot in a bright kitchen.",
+      "imageUrl": "https://images.unsplash.com/photo-1617395041393-278c772c6f14?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "smart coffee maker"
     },
     {
       "id": "prod22",
-      "description": "A minimalist watch with a black strap on a person's wrist.",
-      "imageUrl": "https://images.unsplash.com/photo-1580226223521-5412ec88237a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtaW5pbWFsaXN0JTIwd2F0Y2h8ZW58MHx8fHwxNzYyNjU3ODA2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A close-up of a minimalist watch with a leather strap on a person's wrist.",
+      "imageUrl": "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "minimalist watch"
     },
     {
       "id": "prod23",
-      "description": "A copy of 'The Pragmatic Programmer' book on a shelf.",
-      "imageUrl": "https://images.unsplash.com/photo-1667964395070-2dd7bd81d914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwcm9ncmFtbWluZyUyMGJvb2t8ZW58MHx8fHwxNzYyNjc2MjA5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A copy of 'The Pragmatic Programmer' book on a wooden table next to a laptop.",
+      "imageUrl": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "programming book"
     },
     {
       "id": "prod24",
-      "description": "A book with a futuristic cover for a sci-fi anthology.",
-      "imageUrl": "https://images.unsplash.com/photo-1716346752361-242bc4f1fc08?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxzY2lmaSUyMGJvb2t8ZW58MHx8fHwxNzYyNjg5ODM0fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "scifi book"
+      "description": "A stack of classic science fiction books with colorful, retro covers.",
+      "imageUrl": "https://images.unsplash.com/photo-1589998059171-988d887df646?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "books stacked"
     },
     {
       "id": "course9",
-      "description": "A person speaking confidently at a podium to an audience.",
-      "imageUrl": "https://images.unsplash.com/photo-1710360683896-e0506fb3579a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxwdWJsaWMlMjBzcGVha2luZ3xlbnwwfHx8fDE3NjI1ODE1NjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "public speaking"
+      "description": "A confident person giving a presentation on a stage in front of an audience.",
+      "imageUrl": "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "stage presentation"
     },
     {
       "id": "prod25",
-      "description": "A sleek, modern smartphone displaying a vibrant home screen.",
-      "imageUrl": "https://images.unsplash.com/photo-1580910051074-3eb694886505?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtb2JpbGUlMjBwaG9uZXxlbnwwfHx8fDE3NjI3MjA0MjJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "smartphone screen"
+      "description": "The latest model of a sleek smartphone, showcasing its vibrant screen and design.",
+      "imageUrl": "https://images.unsplash.com/photo-1616348436168-de43ad0db179?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "modern smartphone"
     },
     {
       "id": "prod26",
-      "description": "A white, minimalist air purifier in a modern living room.",
-      "imageUrl": "https://images.unsplash.com/photo-1628157774945-c424483d3527?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhdXQlMjBwdXJpZmllcnxlbnwwfHx8fDE3NjI3MTk1ODJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A modern, white smart air purifier operating silently in a clean bedroom.",
+      "imageUrl": "https://images.unsplash.com/photo-1631049234405-15456a9a8b6a?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "air purifier"
     },
     {
       "id": "prod27",
-      "description": "A pair of stylish sunglasses resting on a sandy beach.",
-      "imageUrl": "https://images.unsplash.com/photo-1593998399332-5f2127278d65?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxzdW5nbGFzc2VzfGVufDB8fHx8MTc2MjcxOTUzMHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A pair of stylish, dark sunglasses on a reflective surface.",
+      "imageUrl": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "stylish sunglasses"
     },
     {
       "id": "prod28",
-      "description": "A set of aesthetic skincare bottles on a marble surface.",
-      "imageUrl": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxza2luY2FyZXxlbnwwfHx8fDE3NjI3MTE4MTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "skincare set"
+      "description": "A set of beautifully packaged organic skincare products on a clean, white background.",
+      "imageUrl": "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "skincare products"
     },
     {
       "id": "prod29",
-      "description": "A close-up shot of a high-performance car tire.",
-      "imageUrl": "https://images.unsplash.com/photo-1588289018449-f4335aa94a73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjYXIlMjB0aXJlc3xlbnwwfHx8fDE3NjI3MjA0MjJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "car tire"
+      "description": "A close-up of a high-performance car tire's tread pattern.",
+      "imageUrl": "https://images.unsplash.com/photo-1617469767050-14e542a8b53f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "tire tread"
     },
     {
       "id": "prod30",
-      "description": "A person holding a smartphone mounted on a gimbal stabilizer.",
-      "imageUrl": "https://images.unsplash.com/photo-1629828910406-38256e489345?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzbWFydHBob25lJTIwZ2ltYmFsfGVufDB8fHx8MTc2Mjg3ODg3NHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "smartphone gimbal"
+      "description": "A vlogger using a smartphone on a gimbal stabilizer to film themselves.",
+      "imageUrl": "https://images.unsplash.com/photo-1569705462214-716538374244?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "smartphone vlogging"
     },
     {
       "id": "prod31",
-      "description": "A smartphone lying on a sleek wireless charging pad.",
-      "imageUrl": "https://images.unsplash.com/photo-1715607590483-34e35dfc5222?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3aXJlbGVzcyUyMGNoYXJnaW5nfGVufDB8fHx8MTc2Mjg4MTEyNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A smartphone being charged wirelessly on a minimalist charging pad on a nightstand.",
+      "imageUrl": "https://images.unsplash.com/photo-1545037323-f5383c31456c?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "wireless charging"
     },
     {
       "id": "prod32",
-      "description": "A compact portable power bank with USB ports.",
-      "imageUrl": "https://images.unsplash.com/photo-1626075283839-4444c1f61536?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwb3dlciUyMGJhbmt8ZW58MHx8fHwxNzYyODgxMTI2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A high-capacity portable power bank charging a smartphone and a tablet simultaneously.",
+      "imageUrl": "https://images.unsplash.com/photo-1588701107569-af434a413a96?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "power bank"
     },
     {
       "id": "prod33",
-      "description": "A bluetooth adapter plugged into a car's AUX port.",
-      "imageUrl": "https://images.unsplash.com/photo-1605510427383-a757ce486f99?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjYXIlMjBibHVldG9vdGh8ZW58MHx8fHwxNzYyODgwODIxfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "car bluetooth"
+      "description": "A bluetooth adapter plugged into a car's dashboard, glowing softly.",
+      "imageUrl": "https://images.unsplash.com/photo-1628178129764-58b6574f6305?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "car adapter"
     },
     {
       "id": "prod34",
-      "description": "A high-quality chef's knife on a wooden cutting board.",
-      "imageUrl": "https://images.unsplash.com/photo-1626880011598-756d13328225?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjaGVmJTIwa25pZmV8ZW58MHx8fHwxNzYyODgwODIxfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "chef knife"
+      "description": "A professional chef's knife finely slicing vegetables on a cutting board.",
+      "imageUrl": "https://images.unsplash.com/photo-1617953213329-847c1f36a43b?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "slicing vegetables"
     },
     {
       "id": "prod35",
-      "description": "A set of clean, non-stick cookware stacked together.",
-      "imageUrl": "https://images.unsplash.com/photo-1583777526419-3f3099955134?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjb29rd2FyZSUyMHNldHxlbnwwfHx8fDE3NjI4NzkyOTJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A complete set of matching, non-stick pots and pans neatly arranged.",
+      "imageUrl": "https://images.unsplash.com/photo-1591116212077-057917633590?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "cookware set"
     },
     {
       "id": "prod36",
-      "description": "A modern stainless steel electric kettle.",
-      "imageUrl": "https://images.unsplash.com/photo-1625997230491-a80a22a38b55?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxlbGVjdHJpYyUyMGtldHRsZXxlbnwwfHx8fDE3NjI4ODAxNzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "electric kettle"
+      "description": "A sleek stainless steel electric kettle boiling water, with steam rising.",
+      "imageUrl": "https://images.unsplash.com/photo-1574516744828-58a2b6a95393?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "boiling kettle"
     },
     {
       "id": "prod37",
-      "description": "A glass french press filled with dark coffee.",
-      "imageUrl": "https://images.unsplash.com/photo-1616091488420-a6815f483c74?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxGcmVuY2glMjBwcmVzc3xlbnwwfHx8fDE3NjI4ODAyNTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A French press coffee maker pushing down on coffee grounds, ready to pour.",
+      "imageUrl": "https://images.unsplash.com/photo-1560933939-6597ba0631b6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "french press"
     },
     {
       "id": "prod38",
-      "description": "A white bottle of face moisturizer.",
-      "imageUrl": "https://images.unsplash.com/photo-1608571424266-936495045451?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxmYWNlJTIwbW9pc3R1cml6ZXJ8ZW58MHx8fHwxNzYyODc3NjkzfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "face moisturizer"
+      "description": "A bottle of organic face moisturizer surrounded by natural ingredients.",
+      "imageUrl": "https://images.unsplash.com/photo-1556228724-43cde7b55b95?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "organic moisturizer"
     },
     {
       "id": "prod39",
-      "description": "A dropper bottle of Vitamin C serum.",
-      "imageUrl": "https://images.unsplash.com/photo-1631749833596-a787251390b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx2aXRhbWluJTIwYyUyMHNlcnVtfGVufDB8fHx8fDE3NjI4NzkxODF8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "vitamin serum"
+      "description": "A dropper bottle of Vitamin C serum with a drop falling from the pipette.",
+      "imageUrl": "https://images.unsplash.com/photo-1629198688000-71f288426f69?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "serum drop"
     },
     {
       "id": "prod40",
-      "description": "An electric toothbrush on a clean bathroom counter.",
-      "imageUrl": "https://images.unsplash.com/photo-1663044081045-8968987b1404?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxlbGVjdHJpYyUyMHRvb3RoYnJ1c2h8ZW58MHx8fHwxNzYyODgwMDU4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A person brushing their teeth with a modern electric toothbrush.",
+      "imageUrl": "https://images.unsplash.com/photo-1609146143584-1d3315ee609a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "electric toothbrush"
     },
     {
       "id": "prod41",
-      "description": "A stick of natural deodorant.",
-      "imageUrl": "https://images.unsplash.com/photo-1633088018318-208a0026f862?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxuYXR1cmFsJTIwZGVvZG9yYW50fGVufDB8fHx8MTc2Mjg3NzY5M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A stick of natural deodorant displayed with fresh botanicals.",
+      "imageUrl": "https://images.unsplash.com/photo-1621005239103-34e8b39417f7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "natural deodorant"
     },
     {
       "id": "prod42",
-      "description": "A person standing on a digital body weight scale.",
-      "imageUrl": "https://images.unsplash.com/photo-1627808779148-d31e9a4f5c2e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3ZWlnaHQlMjBzY2FsZXxlbnwwfHx8fDE3NjI4ODExMjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "weight scale"
+      "description": "A sleek digital smart scale on a clean bathroom floor.",
+      "imageUrl": "https://images.unsplash.com/photo-1534503289012-70b1812a65de?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "digital scale"
     },
     {
       "id": "prod43",
-      "description": "A set of colorful resistance bands.",
-      "imageUrl": "https://images.unsplash.com/photo-1594735515152-c24ed449a518?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxyZXNpc3RhbmNlJTIwYmFuZHN8ZW58MHx8fHwxNzYyODgwMjU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A set of colorful resistance bands for exercise laid out on the floor.",
+      "imageUrl": "https://images.unsplash.com/photo-1574680178050-55c6a6a96e0a?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "resistance bands"
     },
     {
       "id": "prod44",
-      "description": "A stainless steel insulated water bottle.",
-      "imageUrl": "https://images.unsplash.com/photo-1602143407151-247e163d4350?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3YXRlciUyMGJvdHRsZXxlbnwwfHx8fDE3NjI4ODA2Mjd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A stylish, insulated stainless steel water bottle next to a backpack.",
+      "imageUrl": "https://images.unsplash.com/photo-1550981504-744958c25b34?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "water bottle"
     },
     {
       "id": "prod45",
-      "description": "A person using a foam roller on their back.",
-      "imageUrl": "https://images.unsplash.com/photo-1590560945396-330a59b407a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxmb2FtJTIwcm9sbGVyfGVufDB8fHx8MTc2Mjg3NzM5M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A high-density foam roller for muscle recovery on a gym floor.",
+      "imageUrl": "https://images.unsplash.com/photo-1579758629938-03607ccdbaba?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "foam roller"
     },
     {
       "id": "prod46",
-      "description": "A set of adjustable dumbbells on the floor.",
-      "imageUrl": "https://images.unsplash.com/photo-1581009137042-c552b485697a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkdW1iYmVsbHN8ZW58MHx8fHwxNzYyODgwMjU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "dumbbells set"
+      "description": "A set of adjustable dumbbells ready for a home workout.",
+      "imageUrl": "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "adjustable dumbbells"
     },
     {
       "id": "prod47",
-      "description": "A dash cam mounted on a car windshield.",
-      "imageUrl": "https://images.unsplash.com/photo-1608660341077-844c803310f3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkYXNoJTIwY2FtZXJhfGVufDB8fHx8MTc2Mjg4MDM0M3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "dash cam"
+      "description": "A compact dash cam recording the view through a car's front windshield.",
+      "imageUrl": "https://images.unsplash.com/photo-1561588725-70e6085a5a76?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "dash cam view"
     },
     {
       "id": "prod48",
-      "description": "A smartphone held in a car phone mount.",
-      "imageUrl": "https://images.unsplash.com/photo-1616258417204-c579808d41c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjYXIlMjBwaG9uZSUyMG1vdW50fGVufDB8fHx8MTc2Mjg3NzM5M3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "phone mount"
+      "description": "A smartphone securely held in a car phone mount for GPS navigation.",
+      "imageUrl": "https://images.unsplash.com/photo-1575239151029-79a4e4099516?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "car phone mount"
     },
     {
       "id": "prod49",
-      "description": "A portable tire inflator being used on a car tire.",
-      "imageUrl": "https://images.unsplash.com/photo-1628286900694-3259b6c16b1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0aXJlJTIwaW5mbGF0b3J8ZW58MHx8fHwxNzYyODgxMTI2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A portable electric tire inflator connected to a car tire.",
+      "imageUrl": "https://images.unsplash.com/photo-1608678252909-245f782c91a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "tire inflator"
     },
     {
       "id": "prod50",
-      "description": "A set of colorful acrylic paint tubes.",
-      "imageUrl": "https://images.unsplash.com/photo-1621447291129-b6f799a43a2c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhY3J5bGljJTIwcGFpbnR8ZW58MHx8fHwxNzYyODgwMjU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "acrylic paint"
+      "description": "A vibrant set of acrylic paint tubes arranged in a rainbow on a wooden palette.",
+      "imageUrl": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "acrylic paint set"
     }
   ]
 }
