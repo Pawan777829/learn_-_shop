@@ -194,7 +194,7 @@ service cloud.firestore {
      * @path /questions/{questionId}
      */
     match /questions/{questionId} {
-      allow get, list: if true;
+      allow list, get: if true;
       allow create: if isAuth() && request.resource.data.userId == request.auth.uid;
       
        /**
@@ -202,7 +202,7 @@ service cloud.firestore {
        * @path /questions/{questionId}/answers/{answerId}
        */
       match /answers/{answerId} {
-        allow get, list: if true;
+        allow list, get: if true;
         allow create: if isAuth() && request.resource.data.userId == request.auth.uid;
       }
     }
