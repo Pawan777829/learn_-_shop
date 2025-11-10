@@ -460,37 +460,6 @@
         }
       },
       "required": ["id", "userId", "itemId", "itemType", "addedAt"]
-    },
-    "Question": {
-        "$schema": "http://json-schema.org/draft-07/schema#",
-        "title": "Question",
-        "type": "object",
-        "description": "Represents a user-submitted question about a product or course.",
-        "properties": {
-            "id": { "type": "string", "description": "Unique identifier for the question." },
-            "userId": { "type": "string", "description": "The ID of the user who asked the question." },
-            "userName": { "type": "string", "description": "The name of the user asking." },
-            "itemId": { "type": "string", "description": "The ID of the product or course in question." },
-            "itemType": { "type": "string", "enum": ["product", "course"] },
-            "question": { "type": "string", "description": "The content of the question." },
-            "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp of when the question was asked." }
-        },
-        "required": ["id", "userId", "userName", "itemId", "itemType", "question", "createdAt"]
-    },
-    "Answer": {
-        "$schema": "http://json-schema.org/draft-07/schema#",
-        "title": "Answer",
-        "type": "object",
-        "description": "Represents an answer to a user-submitted question.",
-        "properties": {
-            "id": { "type": "string", "description": "Unique identifier for the answer." },
-            "questionId": { "type": "string", "description": "The ID of the question this answer is for." },
-            "userId": { "type": "string", "description": "The ID of the user who provided the answer." },
-            "userName": { "type": "string", "description": "The name of the user answering." },
-            "answer": { "type": "string", "description": "The content of the answer." },
-            "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp of when the answer was provided." }
-        },
-        "required": ["id", "questionId", "userId", "userName", "answer", "createdAt"]
     }
   },
   "auth": {
@@ -723,29 +692,6 @@
             { "name": "userId", "description": "The unique identifier of the user." },
             { "name": "wishlistItemId", "description": "The unique identifier of the wishlist item." }
           ]
-        }
-      },
-      {
-        "path": "/questions/{questionId}",
-        "definition": {
-            "entityName": "Question",
-            "schema": { "$ref": "#/backend/entities/Question" },
-            "description": "Top-level collection for questions about any item. Publicly readable.",
-            "params": [
-                { "name": "questionId", "description": "The unique ID of the question." }
-            ]
-        }
-      },
-      {
-        "path": "/questions/{questionId}/answers/{answerId}",
-        "definition": {
-            "entityName": "Answer",
-            "schema": { "$ref": "#/backend/entities/Answer" },
-            "description": "Subcollection for answers to a specific question. Publicly readable.",
-            "params": [
-                { "name": "questionId", "description": "The unique ID of the parent question." },
-                { "name": "answerId", "description": "The unique ID of the answer." }
-            ]
         }
       }
     ],

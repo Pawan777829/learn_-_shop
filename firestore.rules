@@ -188,23 +188,5 @@ service cloud.firestore {
     match /users/{userId}/wishlist/{wishlistItemId} {
       allow read, write: if isOwner(userId);
     }
-    
-    /**
-     * @description Questions are publicly readable. Only authenticated users can create questions.
-     * @path /questions/{questionId}
-     */
-    match /questions/{questionId} {
-      allow list, get: if true;
-      allow create: if isAuth() && request.resource.data.userId == request.auth.uid;
-      
-       /**
-       * @description Answers are publicly readable. Only authenticated users can create answers.
-       * @path /questions/{questionId}/answers/{answerId}
-       */
-      match /answers/{answerId} {
-        allow list, get: if true;
-        allow create: if isAuth() && request.resource.data.userId == request.auth.uid;
-      }
-    }
   }
 }

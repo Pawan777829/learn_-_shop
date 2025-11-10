@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useParams } from 'next/navigation';
@@ -18,7 +19,6 @@ import { useEffect, useState, useMemo } from 'react';
 import { Separator } from '@/components/ui/separator';
 import FrequentlyBoughtTogether from '@/components/frequently-bought-together';
 import PincodeChecker from '@/components/pincode-checker';
-import QAndA from '@/components/q-and-a';
 import { cn } from '@/lib/utils';
 
 export default function ProductDetailPage() {
@@ -202,8 +202,6 @@ export default function ProductDetailPage() {
       <FrequentlyBoughtTogether productId={id} />
 
       <Reviews itemId={id} itemType="product" itemVendorId={product.vendorId} />
-
-      <QAndA itemId={id} itemType="product" itemVendorId={product.vendorId} />
 
       <div className="mt-20">
           <h2 className="text-2xl font-bold font-headline mb-6">Related Products</h2>

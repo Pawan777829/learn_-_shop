@@ -16,7 +16,6 @@ import { doc } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 import type { Item, WishlistItem } from '@/lib/types';
 import { useEffect, useState } from 'react';
-import QAndA from '@/components/q-and-a';
 import Reviews from '@/components/reviews';
 
 
@@ -157,8 +156,6 @@ export default function CourseDetailPage() {
       </div>
 
       <Reviews itemId={id} itemType="course" itemVendorId={course.vendorId} />
-
-      <QAndA itemId={id} itemType="course" itemVendorId={course.vendorId} />
       
        <div className="mt-20">
           <h2 className="text-2xl font-bold font-headline mb-6">Related Courses</h2>
