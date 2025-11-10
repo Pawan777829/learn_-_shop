@@ -160,7 +160,7 @@ export default function Footer() {
                 <Link href="/search?category=Books" className="block text-muted-foreground hover:text-primary">Books</Link>
               </nav>
             </div>
-            {isClient && <SupportLinks />}
+            {isClient ? <SupportLinks /> : <div className="text-sm"><p className="font-semibold">Support</p></div>}
             <div className="text-sm">
                 <p className="font-semibold">Stay Updated</p>
                  <p className="mt-4 text-muted-foreground">
