@@ -6,26 +6,10 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-export default function Footer() {
-  const { toast } = useToast();
-  const [activeContent, setActiveContent] = useState<'faq' | 'privacy' | 'terms' | null>(null);
-
-  const handleNewsletterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const email = e.currentTarget.email.value;
-    if (email) {
-        toast({
-            title: "Subscribed!",
-            description: "Thanks for subscribing to our newsletter.",
-        });
-        e.currentTarget.reset();
-    }
-  };
-
-  const supportContent = {
+const supportContent = {
     faq: {
       title: 'Frequently Asked Questions',
       content: (
@@ -76,10 +60,69 @@ export default function Footer() {
         </div>
       )
     }
+};
+
+const SupportLinks = () => {
+    const [activeContent, setActiveContent] = useState<'faq' | 'privacy' | 'terms' | null>(null);
+
+    const currentTitle = activeContent ? supportContent[activeContent].title : '';
+    const currentContent = activeContent ? supportContent[activeContent].content : null;
+
+    return (
+        <Sheet onOpenChange={(open) => !open && setActiveContent(null)}>
+            <div className="text-sm">
+                <p className="font-semibold">Support</p>
+                <ul className="mt-4 space-y-2">
+                     <li>
+                        <SheetTrigger asChild>
+                            <button onClick={() => setActiveContent('faq')} className="text-muted-foreground hover:text-primary transition-colors">FAQ</button>
+                        </SheetTrigger>
+                    </li>
+                    <li>
+                        <SheetTrigger asChild>
+                            <button onClick={() => setActiveContent('privacy')} className="text-muted-foreground hover:text-primary transition-colors">Privacy Policy</button>
+                        </SheetTrigger>
+                    </li>
+                    <li>
+                        <SheetTrigger asChild>
+                            <button onClick={() => setActiveContent('terms')} className="text-muted-foreground hover:text-primary transition-colors">Terms of Service</button>
+                        </SheetTrigger>
+                    </li>
+                </ul>
+            </div>
+            <SheetContent className="w-full max-w-lg">
+                <SheetHeader>
+                    <SheetTitle className="text-2xl">{currentTitle}</SheetTitle>
+                </SheetHeader>
+                <ScrollArea className="h-[calc(100%-4rem)] pr-6 mt-4">
+                    {currentContent}
+                </ScrollArea>
+            </SheetContent>
+        </Sheet>
+    );
+}
+
+export default function Footer() {
+  const { toast } = useToast();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+
+  const handleNewsletterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const email = e.currentTarget.email.value;
+    if (email) {
+        toast({
+            title: "Subscribed!",
+            description: "Thanks for subscribing to our newsletter.",
+        });
+        e.currentTarget.reset();
+    }
   };
 
-  const currentTitle = activeContent ? supportContent[activeContent].title : '';
-  const currentContent = activeContent ? supportContent[activeContent].content : null;
 
   return (
     <footer className="bg-card text-card-foreground border-t">
@@ -117,36 +160,7 @@ export default function Footer() {
                 <Link href="/search?category=Books" className="block text-muted-foreground hover:text-primary">Books</Link>
               </nav>
             </div>
-            <Sheet onOpenChange={(open) => !open && setActiveContent(null)}>
-              <div className="text-sm">
-                  <p className="font-semibold">Support</p>
-                  <nav className="mt-4 space-y-2">
-                       <li>
-                          <SheetTrigger asChild>
-                              <button onClick={() => setActiveContent('faq')} className="text-muted-foreground hover:text-primary transition-colors">FAQ</button>
-                          </SheetTrigger>
-                      </li>
-                      <li>
-                          <SheetTrigger asChild>
-                              <button onClick={() => setActiveContent('privacy')} className="text-muted-foreground hover:text-primary transition-colors">Privacy Policy</button>
-                          </SheetTrigger>
-                      </li>
-                      <li>
-                            <SheetTrigger asChild>
-                              <button onClick={() => setActiveContent('terms')} className="text-muted-foreground hover:text-primary transition-colors">Terms of Service</button>
-                          </SheetTrigger>
-                      </li>
-                  </nav>
-              </div>
-              <SheetContent className="w-full max-w-lg">
-                  <SheetHeader>
-                      <SheetTitle className="text-2xl">{currentTitle}</SheetTitle>
-                  </SheetHeader>
-                  <ScrollArea className="h-[calc(100%-4rem)] pr-6 mt-4">
-                      {currentContent}
-                  </ScrollArea>
-              </SheetContent>
-            </Sheet>
+            {isClient && <SupportLinks />}
             <div className="text-sm">
                 <p className="font-semibold">Stay Updated</p>
                  <p className="mt-4 text-muted-foreground">
