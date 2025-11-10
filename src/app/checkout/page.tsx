@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useForm } from 'react-hook-form';
@@ -106,10 +107,9 @@ export default function CheckoutPage() {
         });
         
         // For each course in cart, create an enrollment
-        const enrollmentsRef = collection(firestore, 'users', user.uid, 'enrollments');
         cartItems.filter(item => item.type === 'course').forEach(course => {
             const enrollmentId = course.id; // Use course ID as enrollment ID for simplicity
-            const enrollmentRef = doc(enrollmentsRef, enrollmentId);
+            const enrollmentRef = doc(firestore, 'users', user.uid, 'enrollments', enrollmentId);
             const enrollmentData = {
                 id: enrollmentId,
                 userId: user.uid,

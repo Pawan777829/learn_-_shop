@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useParams } from 'next/navigation';
@@ -51,7 +52,7 @@ export default function OrderDetailPage() {
     }
     
     const subtotal = orderItems?.reduce((acc, item) => acc + item.price * item.quantity, 0) || 0;
-    const shipping = order.totalAmount - subtotal;
+    const shipping = order.totalAmount > subtotal ? order.totalAmount - subtotal : 0;
 
 
     return (
