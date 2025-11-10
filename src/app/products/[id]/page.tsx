@@ -16,6 +16,7 @@ import { useToast } from '@/hooks/use-toast';
 import type { Item, WishlistItem } from '@/lib/types';
 import { useEffect, useState } from 'react';
 import { Separator } from '@/components/ui/separator';
+import FrequentlyBoughtTogether from '@/components/frequently-bought-together';
 
 export default function ProductDetailPage() {
   const { id } = useParams() as { id: string };
@@ -153,6 +154,8 @@ export default function ProductDetailPage() {
           </div>
         </div>
       </div>
+      
+      <FrequentlyBoughtTogether productId={id} />
 
       <Reviews itemId={id} itemType="product" />
 
