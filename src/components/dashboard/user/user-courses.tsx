@@ -1,59 +1,16 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useFirestore, useDoc, useMemoFirebase } from '@/firebase';
-import { doc, collectionGroup, query, where, getDocs } from 'firebase/firestore';
-import type { Enrollment, Course, Item } from '@/lib/types';
-import { useEffect, useState } from 'react';
+import type { Enrollment, Item } from '@/lib/types';
 import Link from 'next/link';
 import { allItems } from '@/lib/data';
 
 function EnrolledCourse({ enrollment }: { enrollment: Enrollment }) {
-    const firestore = useFirestore();
-    const [course, setCourse] = useState<Item | null>(null);
-    const [loading, setLoading] = useState(true);
+    const course = allItems.find(item => item.id === enrollment.courseId && item.type === 'course');
 
-    useEffect(() => {
-        const fetchCourse = async () => {
-            if (!firestore || !enrollment.courseId) return;
-
-            setLoading(true);
-            try {
-                // Since we don't know the vendor, we search in allItems first as a fallback.
-                const foundCourse = allItems.find(item => item.id === enrollment.courseId && item.type === 'course');
-                if (foundCourse) {
-                    setCourse(foundCourse);
-                } else {
-                    // If not in static data, query across all vendor subcollections.
-                    // This is less efficient but necessary if data isn't in allItems.
-                    const coursesRef = collectionGroup(firestore, 'courses');
-                    const q = query(coursesRef, where('id', '==', enrollment.courseId));
-                    const querySnapshot = await getDocs(q);
-
-                    if (!querySnapshot.empty) {
-                        const courseDoc = querySnapshot.docs[0];
-                        setCourse(courseDoc.data() as Item);
-                    }
-                }
-            } catch (error) {
-                console.error("Error fetching course: ", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchCourse();
-    }, [firestore, enrollment.courseId]);
-
-
-    if (loading) {
-        return <li className="text-sm text-muted-foreground">Loading course details...</li>;
-    }
-    
     if (!course) {
         return <li className="text-sm text-muted-foreground">Could not load course: {enrollment.courseId.substring(0,5)}...</li>;
     }
-
 
     return (
         <li>

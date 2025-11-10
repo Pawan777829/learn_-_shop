@@ -28,7 +28,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useUser, useFirestore, useCollection, useMemoFirebase, deleteDocumentNonBlocking } from "@/firebase";
-import { collection, doc, collectionGroup, query, where, getDocs } from "firebase/firestore";
+import { collection, doc, collectionGroup, query, where, getDocs, getDoc } from "firebase/firestore";
 import type { Item, Order, OrderItem, UserProfile } from "@/lib/types";
 import { Edit, Trash2, Loader2 } from "lucide-react";
 import Link from "next/link";
@@ -88,38 +88,36 @@ export default function VendorDashboardPage() {
         const vendorItemIds = new Set(allListings.map(item => item.id));
 
         try {
-            // Query all 'orderItems' subcollections in the entire database
+            // 1. Find all order items that match the vendor's product IDs
             const orderItemsGroupRef = collectionGroup(firestore, 'orderItems');
-            // Find order items where the item ID is one of the vendor's items
             const q = query(orderItemsGroupRef, where('id', 'in', Array.from(vendorItemIds)));
             const querySnapshot = await getDocs(q);
 
-            const userPromises: Promise<void>[] = [];
-
-            for (const itemDoc of querySnapshot.docs) {
+            const salesPromises = querySnapshot.docs.map(async (itemDoc) => {
                 const item = itemDoc.data() as OrderItem;
-                const orderRef = itemDoc.ref.parent.parent; // Gives the /orders/{orderId} document
-                
+                const orderRef = itemDoc.ref.parent.parent; // Gives the /users/{userId}/orders/{orderId} document
+
                 if (orderRef) {
-                    const orderDoc = await getDocs(query(collection(firestore, orderRef.path)));
-                    const orderData = orderDoc.docs[0].data() as Order;
-                    const userRef = doc(firestore, 'users', orderData.userId);
-                    
-                    // Create a promise to fetch user data and resolve sales details
-                    const userPromise = getDocs(query(collection(firestore, userRef.path))).then(userSnapshot => {
-                        const userData = userSnapshot.docs[0].data() as UserProfile;
-                         vendorSales.push({
+                    const orderSnap = await getDoc(orderRef);
+                    if (orderSnap.exists()) {
+                        const orderData = orderSnap.data() as Order;
+                        const userRef = doc(firestore, 'users', orderData.userId);
+                        const userSnap = await getDoc(userRef);
+                        const userData = userSnap.exists() ? userSnap.data() as UserProfile : null;
+
+                        return {
                             orderId: orderData.id,
                             item: item,
                             user: userData,
                             orderDate: orderData.orderDate,
-                        });
-                    });
-                    userPromises.push(userPromise);
+                        };
+                    }
                 }
-            }
-            await Promise.all(userPromises);
-            setSales(vendorSales);
+                return null;
+            });
+
+            const resolvedSales = (await Promise.all(salesPromises)).filter((sale): sale is VendorSale => sale !== null);
+            setSales(resolvedSales);
 
         } catch (error) {
             console.error("Error fetching vendor sales:", error);
