@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useParams } from 'next/navigation';
@@ -16,6 +17,7 @@ import { useToast } from '@/hooks/use-toast';
 import type { Item, WishlistItem } from '@/lib/types';
 import { useEffect, useState } from 'react';
 import QAndA from '@/components/q-and-a';
+import Reviews from '@/components/reviews';
 
 
 export default function CourseDetailPage() {
