@@ -124,6 +124,7 @@ export type UserProfile = {
   id: string;
   firstName: string;
   lastName: string;
-  email: string;
+  email?: string;
+  phoneNumber?: string;
   dateJoined: string;
 }

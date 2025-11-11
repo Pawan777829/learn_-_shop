@@ -60,7 +60,7 @@ export default function SignupPage() {
     const userRef = doc(firestore, 'users', user.uid);
     const userSnap = await getDoc(userRef);
     if (!userSnap.exists()) {
-      const { displayName, email } = user;
+      const { displayName, email, phoneNumber } = user;
       const firstName = displayName?.split(' ')[0] || '';
       const lastName = displayName?.split(' ').slice(1).join(' ') || '';
       
@@ -69,6 +69,7 @@ export default function SignupPage() {
         firstName: firstName,
         lastName: lastName,
         email: email,
+        phoneNumber: phoneNumber,
         dateJoined: new Date().toISOString(),
       };
       setDocumentNonBlocking(userRef, userData, { merge: true });

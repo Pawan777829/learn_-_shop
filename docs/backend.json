@@ -24,6 +24,10 @@
           "description": "The email address of the user.",
           "format": "email"
         },
+        "phoneNumber": {
+          "type": "string",
+          "description": "The phone number of the user."
+        },
         "profilePicture": {
           "type": "string",
           "description": "URL to the user's profile picture.",
@@ -39,7 +43,6 @@
         "id",
         "firstName",
         "lastName",
-        "email",
         "dateJoined"
       ]
     },
@@ -465,7 +468,8 @@
   "auth": {
     "providers": [
       "password",
-      "google.com"
+      "google.com",
+      "phone"
     ]
   },
   "firestore": {
