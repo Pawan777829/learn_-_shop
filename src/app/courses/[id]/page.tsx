@@ -1,13 +1,13 @@
 
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { allItems } from '@/lib/data';
 import { getImageById } from '@/lib/placeholder-images';
 import { useCart } from '@/context/cart-context';
 import { Button } from '@/components/ui/button';
-import { Star, BookOpen, Clock, Heart } from 'lucide-react';
+import { Star, BookOpen, Clock, Heart, ShoppingCart, Zap } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import ItemCard from '@/components/item-card';
@@ -22,6 +22,7 @@ import Reviews from '@/components/reviews';
 export default function CourseDetailPage() {
   const { id } = useParams() as { id: string };
   const { addToCart } = useCart();
+  const router = useRouter();
   const course = allItems.find(item => item.id === id && item.type === 'course') as Item | undefined;
   const placeholder = course ? getImageById(course.imageId) : null;
   const relatedCourses = allItems.filter(item => item.type === 'course' && item.id !== id).slice(0, 4);
@@ -65,12 +66,19 @@ export default function CourseDetailPage() {
     }
   };
 
+  const handleBuyNow = () => {
+    if (course) {
+        addToCart(course, 1);
+        router.push('/checkout');
+    }
+  };
+
   const lessons = course?.lessons || [
-    { title: 'Introduction to the Course', duration: '15 min' },
-    { title: 'Core Concepts of the Subject', duration: '45 min' },
-    { title: 'First Project: Building the Foundation', duration: '1 hr 30 min' },
-    { title: 'Advanced Topics', duration: '2 hr' },
-    { title: 'Final Project and Wrap-up', duration: '3 hr' },
+    { title: 'Introduction to the Course', duration: '15 min', content: 'Lesson content will be shown here.' },
+    { title: 'Core Concepts of the Subject', duration: '45 min', content: 'Lesson content will be shown here.' },
+    { title: 'First Project: Building the Foundation', duration: '1 hr 30 min', content: 'Lesson content will be shown here.' },
+    { title: 'Advanced Topics', duration: '2 hr', content: 'Lesson content will be shown here.' },
+    { title: 'Final Project and Wrap-up', duration: '3 hr', content: 'Lesson content will be shown here.' },
   ];
 
   if (!course || !placeholder) {
@@ -128,11 +136,17 @@ export default function CourseDetailPage() {
             <div className="sticky top-24">
                 <div className="border rounded-lg bg-card text-card-foreground shadow-sm p-6">
                     <p className="text-4xl font-bold text-primary mb-4">${course.price.toFixed(2)}</p>
-                    <div className="flex items-center gap-2">
-                        <Button size="lg" className="h-12 text-lg flex-grow" onClick={() => addToCart(course, 1)}>
-                            <BookOpen className="mr-2" />
-                            Enroll Now
+                    <div className="grid grid-cols-2 gap-2">
+                        <Button size="lg" className="h-12 text-lg" variant="outline" onClick={() => addToCart(course, 1)}>
+                            <ShoppingCart className="mr-2" />
+                            Add to Cart
                         </Button>
+                        <Button size="lg" className="h-12 text-lg" onClick={handleBuyNow}>
+                            <Zap className="mr-2" />
+                            Buy Now
+                        </Button>
+                    </div>
+                     <div className="flex justify-center mt-2">
                         <Button variant="outline" size="icon" className="h-12 w-12" onClick={handleWishlistToggle} aria-label="Add to wishlist">
                             <Heart className={`h-6 w-6 ${isWishlisted ? 'fill-red-500 text-red-500' : ''}`} />
                         </Button>

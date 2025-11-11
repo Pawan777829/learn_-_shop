@@ -1,13 +1,13 @@
 
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { allItems } from '@/lib/data';
 import { getImageById, placeholderImages } from '@/lib/placeholder-images';
 import { useCart } from '@/context/cart-context';
 import { Button } from '@/components/ui/button';
-import { Star, ShoppingCart, Heart, Minus, Plus, ShieldCheck, Truck, Undo2 } from 'lucide-react';
+import { Star, ShoppingCart, Heart, Minus, Plus, ShieldCheck, Truck, Undo2, Zap } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import ItemCard from '@/components/item-card';
 import Reviews from '@/components/reviews';
@@ -24,6 +24,7 @@ import { cn } from '@/lib/utils';
 export default function ProductDetailPage() {
   const { id } = useParams() as { id: string };
   const { addToCart } = useCart();
+  const router = useRouter();
   const product = allItems.find(item => item.id === id && item.type === 'product') as Item | undefined;
   
   const galleryImages = useMemo(() => {
@@ -38,10 +39,10 @@ export default function ProductDetailPage() {
   const [selectedImage, setSelectedImage] = useState(galleryImages[0]);
 
   useEffect(() => {
-    if (galleryImages.length > 0) {
+    if (galleryImages.length > 0 && !selectedImage) {
       setSelectedImage(galleryImages[0]);
     }
-  }, [galleryImages]);
+  }, [galleryImages, selectedImage]);
 
   const relatedProducts = allItems.filter(item => item.type === 'product' && item.id !== id).slice(0, 4);
   
@@ -85,6 +86,13 @@ export default function ProductDetailPage() {
       toast({ title: 'Added to Wishlist', description: `${product.name} has been added to your wishlist.` });
     }
   };
+
+  const handleBuyNow = () => {
+    if (product) {
+      addToCart(product, quantity);
+      router.push('/checkout');
+    }
+  }
 
 
   if (!product || !selectedImage) {
@@ -166,12 +174,16 @@ export default function ProductDetailPage() {
             </div>
           </div>
           
-          <div className="mt-8 flex items-center gap-4">
-            <Button size="lg" className="h-12 text-lg sm:w-auto flex-grow" onClick={() => addToCart(product, quantity)} disabled={isOutOfStock}>
+          <div className="mt-8 grid grid-cols-2 gap-4">
+            <Button size="lg" className="h-12 text-lg" variant="outline" onClick={() => addToCart(product, quantity)} disabled={isOutOfStock}>
               <ShoppingCart className="mr-2" />
               Add to Cart
             </Button>
-            <Button variant="outline" size="icon" className="h-12 w-12" onClick={handleWishlistToggle} aria-label="Add to wishlist">
+            <Button size="lg" className="h-12 text-lg" onClick={handleBuyNow} disabled={isOutOfStock}>
+              <Zap className="mr-2" />
+              Buy Now
+            </Button>
+            <Button variant="outline" size="icon" className="h-12 w-12 col-start-2 row-start-1 justify-self-end hidden" onClick={handleWishlistToggle} aria-label="Add to wishlist">
                 <Heart className={`h-6 w-6 ${isWishlisted ? 'fill-red-500 text-red-500' : ''}`} />
             </Button>
           </div>
