@@ -66,7 +66,7 @@ export default function CourseDetailPage() {
     }
   };
 
-  const handleBuyNow = () => {
+  const handleEnrollNow = () => {
     if (course) {
         addToCart(course, 1);
         if (user) {
@@ -74,7 +74,7 @@ export default function CourseDetailPage() {
         } else {
             toast({
                 title: 'Please Log In',
-                description: 'You need to log in to proceed to checkout.',
+                description: 'You need to log in to enroll in a course.',
             });
             router.push('/login');
         }
@@ -145,13 +145,9 @@ export default function CourseDetailPage() {
                 <div className="border rounded-lg bg-card text-card-foreground shadow-sm p-6">
                     <p className="text-4xl font-bold text-primary mb-4">${course.price.toFixed(2)}</p>
                     <div className="grid grid-cols-1 gap-2">
-                        <Button size="lg" className="h-12 text-lg" onClick={() => addToCart(course, 1)}>
-                            <ShoppingCart className="mr-2" />
-                            Add to Cart
-                        </Button>
-                        <Button size="lg" className="h-12 text-lg" onClick={handleBuyNow}>
+                        <Button size="lg" className="h-12 text-lg" onClick={handleEnrollNow}>
                             <Zap className="mr-2" />
-                            Buy Now
+                            Enroll Now
                         </Button>
                     </div>
                      <div className="flex justify-center mt-4">
