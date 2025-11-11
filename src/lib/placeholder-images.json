@@ -44,9 +44,9 @@
     },
     {
       "id": "prod5",
-      "description": "An open book with a modern cover about JavaScript, resting on a clean surface.",
+      "description": "An open book about Javascript next to a laptop displaying code.",
       "imageUrl": "https://images.unsplash.com/photo-1632882765352-3a323a155554?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "imageHint": "programming book"
+      "imageHint": "javascript book"
     },
     {
       "id": "prod6",
@@ -122,9 +122,9 @@
     },
     {
       "id": "prod17",
-      "description": "A programming book titled 'The Art of Programming' sitting on a modern desk.",
+      "description": "A shelf full of computer science and programming books.",
       "imageUrl": "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=2100&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "imageHint": "programming book"
+      "imageHint": "programming books"
     },
     {
       "id": "course5",
