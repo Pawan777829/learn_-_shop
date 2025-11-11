@@ -144,8 +144,8 @@ export default function CourseDetailPage() {
             <div className="sticky top-24">
                 <div className="border rounded-lg bg-card text-card-foreground shadow-sm p-6">
                     <p className="text-4xl font-bold text-primary mb-4">${course.price.toFixed(2)}</p>
-                    <div className="grid grid-cols-2 gap-2">
-                        <Button size="lg" className="h-12 text-lg" variant="outline" onClick={() => addToCart(course, 1)}>
+                    <div className="grid grid-cols-1 gap-2">
+                        <Button size="lg" className="h-12 text-lg" onClick={() => addToCart(course, 1)}>
                             <ShoppingCart className="mr-2" />
                             Add to Cart
                         </Button>
@@ -154,7 +154,7 @@ export default function CourseDetailPage() {
                             Buy Now
                         </Button>
                     </div>
-                     <div className="flex justify-center mt-2">
+                     <div className="flex justify-center mt-4">
                         <Button variant="outline" size="icon" className="h-12 w-12" onClick={handleWishlistToggle} aria-label="Add to wishlist">
                             <Heart className={`h-6 w-6 ${isWishlisted ? 'fill-red-500 text-red-500' : ''}`} />
                         </Button>
