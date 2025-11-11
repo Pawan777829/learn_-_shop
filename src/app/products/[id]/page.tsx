@@ -90,7 +90,15 @@ export default function ProductDetailPage() {
   const handleBuyNow = () => {
     if (product) {
       addToCart(product, quantity);
-      router.push('/checkout');
+      if (user) {
+        router.push('/checkout');
+      } else {
+        toast({
+            title: 'Please Log In',
+            description: 'You need to log in to proceed to checkout.',
+        });
+        router.push('/login');
+      }
     }
   }
 

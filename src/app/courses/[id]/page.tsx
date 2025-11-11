@@ -69,7 +69,15 @@ export default function CourseDetailPage() {
   const handleBuyNow = () => {
     if (course) {
         addToCart(course, 1);
-        router.push('/checkout');
+        if (user) {
+            router.push('/checkout');
+        } else {
+            toast({
+                title: 'Please Log In',
+                description: 'You need to log in to proceed to checkout.',
+            });
+            router.push('/login');
+        }
     }
   };
 
