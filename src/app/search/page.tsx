@@ -100,7 +100,7 @@ function SearchPageContent() {
         </p>
       </header>
 
-      <div className="mb-8 p-4 border rounded-lg bg-card sticky top-20 z-40">
+      <div className="mb-8 p-4 border rounded-lg bg-card">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center">
           <Input 
             type="text"

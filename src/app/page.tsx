@@ -1,3 +1,4 @@
+
 'use client';
 import ItemCard from "@/components/item-card";
 import { Button } from "@/components/ui/button";
@@ -15,15 +16,15 @@ import {
 } from "@/components/ui/carousel"
 
 // Helper function to render a category section
-const CategorySection = ({ title, items, categoryId }: { title: string; items: Item[], categoryId: string }) => (
-  <section className="py-12 md:py-16" id={categoryId}>
+const CategorySection = ({ title, items, viewAllLink }: { title: string; items: Item[], viewAllLink: string }) => (
+  <section className="py-12 md:py-16">
     <div className="container mx-auto px-4">
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-3xl font-bold font-headline tracking-tight">
           {title}
         </h2>
         <Button variant="outline" asChild>
-          <Link href={`/search?category=${encodeURIComponent(title)}`}>View All</Link>
+          <Link href={viewAllLink}>View All</Link>
         </Button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -40,9 +41,13 @@ export default function Home() {
     return allItems.filter((item) => item.category === category).slice(0, limit);
   };
   
-  const featuredItems = [...getItemsByCategory("Electronics", 2), ...getItemsByCategory("Courses", 2)];
+  const getItemsByType = (type: 'product' | 'course', limit: number) => {
+    return allItems.filter((item) => item.type === type).slice(0, limit);
+  };
+
+  const featuredItems = [...getItemsByCategory("Electronics", 2), ...getItemsByType("course", 2)];
   const electronics = getItemsByCategory("Electronics", 4);
-  const courses = getItemsByCategory("Courses", 4);
+  const courses = getItemsByType("course", 4);
 
   return (
     <div className="flex flex-col">
@@ -135,8 +140,8 @@ export default function Home() {
       </section>
 
       {/* Categories Sections */}
-      {electronics.length > 0 && <CategorySection title="Top Electronics" items={electronics} categoryId="electronics" />}
-      {courses.length > 0 && <CategorySection title="Popular Courses" items={courses} categoryId="courses" />}
+      {electronics.length > 0 && <CategorySection title="Top Electronics" items={electronics} viewAllLink="/search?category=Electronics" />}
+      {courses.length > 0 && <CategorySection title="Popular Courses" items={courses} viewAllLink="/search?type=course" />}
       
     </div>
   );
