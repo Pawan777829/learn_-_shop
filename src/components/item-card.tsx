@@ -56,7 +56,9 @@ export default function ItemCard({ item }: ItemCardProps) {
           )}
           </CardHeader>
           <CardContent className="p-4 flex-grow">
-          <CardTitle as="h3" className="text-lg font-headline mb-1 leading-tight group-hover:underline">{item.name}</CardTitle>
+          <CardTitle className="text-lg font-headline mb-1 leading-tight group-hover:underline">
+              <h3>{item.name}</h3>
+          </CardTitle>
           <CardDescription className="text-sm text-muted-foreground line-clamp-2">
               {item.description}
           </CardDescription>
